@@ -25,7 +25,9 @@ var cors = require("cors");
 app.use(cors());
 
 //Aquí vendrán las rutas
-
+//*Rutas de Users
+const UserRoutes = require("./src/api/routes/User.routes");
+app.use("/artbstrat/user", UserRoutes);
 
 //Errores de rutas y server
 app.use("*", (req, res, next) => {
