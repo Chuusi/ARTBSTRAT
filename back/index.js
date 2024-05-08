@@ -29,6 +29,10 @@ app.use(cors());
 const UserRoutes = require("./src/api/routes/User.routes");
 app.use("/artbstrat/user", UserRoutes);
 
+//*Rutas de Product
+const ProductRoutes = require("./src/api/routes/Product.routes");
+app.use("/artbstrat/product", ProductRoutes);
+
 //Errores de rutas y server
 app.use("*", (req, res, next) => {
     const error = new Error("❌ Ruta no encontrada ❌");
@@ -45,6 +49,6 @@ app.use((error, req, res) => {
 //Escucha y conexión al puerto
 app.listen(PORT, () => {
     console.log(
-        `🎊Backend ARTBSTRAT en funcionamiento en el puerto "http://localhost:${PORT}"🎊`
+        `🎊 Backend ARTBSTRAT en funcionamiento en el puerto "http://localhost:${PORT}" 🎊`
     );
 });

@@ -35,7 +35,7 @@ const getProductById = async (req, res, next) => {
     try {
         const { id } = req.params;
 
-        const productById = await Product.fingById(id);
+        const productById = await Product.findById(id);
 
         if(productById){
             return res.status(200).json(productById)
@@ -195,38 +195,45 @@ const updateProduct = async (req, res, next) => {
 //?----------------------------------- DELETE PRODUCT ------------------------------------------ 
 const deleteProduct = async (req, res, next) => {
     try {
-        const { id } = req.param;
-        const product = await Product.findByIdAndDelete(id);
-        const imageToDelete = product.image;
-    
-        deleteImgCloudinary(imageToDelete);
-    
-        if(product){
-            const findByIdProduct = await Product.fingById(id);
+        const { id } = req.params;
+        const productToDelete = await Product.findById(id);
+        const imageToDelete = productToDelete.image;
 
-            if(findByIdProduct){
-                //Si borramos el producto de la DB, lo borramos tambien de la lista de FAVS de cada usuario que lo tenga agregado
-                try {
-                    const test = await User.updateMany(
-                        { favUsers : id },
-                        { $pull: {favUsers : id}}
-                    );
-                } catch (error) {
-                    return res.status(404).json({
-                        message: "❌ No se ha podido actualizar la lista de productos Favs de los usuarios al borrar el producto ❌",
-                        error: error,
-                    })
-                };
+        //Si borramos el producto de la DB, lo borramos tambien de la lista de FAVS de cada usuario que lo tenga agregado
+        try {
+            const test = await User.updateMany(
+                { favUsers : id },
+                { $pull: {favUsers : id}}
+            );
 
-                return res.status(200).json(findByIdProduct)
+            console.log(test);
 
-            }else{
-                return res.status(404).json({
-                    message: "❌ No se ha podido encontrar un producto con esa ID ❌",
-                    error: "ERROR 404: if/else  deleteProduct"
-                })
-            };
+        } catch (error) {
+            return res.status(404).json({
+                message: "❌ No se ha podido actualizar la lista de productos Favs de los usuarios al borrar el producto ❌",
+                error: error,
+            })
         };
+
+        try {
+            await Product.findByIdAndDelete(id);
+            deleteImgCloudinary(imageToDelete);
+
+            if(await Product.findById(id)){
+                return res.status(404).json({
+                    message: "❌ No se ha borrado correctamente el producto de la DB ❌",
+                    error: "ERROR 404: if/else de deleteProduct para comprobar si se ha borrado el producto"
+                })
+            }else{
+                return res.status(200).json("El producto se ha borrado de la DB con éxito")
+            }
+
+        } catch (error) {
+            return res.status(500).json({
+                message: "❌ No se ha podido ejecutar el findByIdAndDelete ❌",
+                error: error
+            })
+        }
 
     } catch (error) {
         return res.status(500).json({
