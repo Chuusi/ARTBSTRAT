@@ -839,6 +839,30 @@ const adminUser = async(req,res,next) => {
     }
 }
 
+//? ------------------------------ GET USER BY EMAIL---------------------------------------
+const getUserByEmail = async(req, res, next) => {
+    try {
+        const {email} = req.body;
+
+        const userByName = await User.find({email});
+
+        if (userByName.length > 0) {
+            return res.status(200).json(userByName);
+        } else {
+            return res.status(404).json({
+                message: "❌ No se encontró el user con ese mail ❌",
+                error: "ERROR 404 en el if/else de getUserByName",
+            });
+        }
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "❌ Error en el try/catch general del getUserByEmail ❌",
+            error: error,
+        });
+    }
+}
+
 
 module.exports = {
     registerUser,
@@ -853,5 +877,6 @@ module.exports = {
     addFavProduct,
     addFavPost,
     addBasket,
-    adminUser
+    adminUser,
+    getUserByEmail
 }
