@@ -8,8 +8,22 @@ const Post = require("../models/Post.model")
 const createComment = async (req, res, next) => {
     try {
         const newComment = new Comment(req.body);
+        const { id } = req.user;
+        newComment.owner = id
 
         const saveComment = await newComment.save();
+
+
+        //Añadir el comentario a la lista de comentarios del usuario
+        try {
+            await User.findByIdAndUpdate( id, {$push: {listOfComments : newComment._id}});
+
+        } catch (error) {
+            return res.status(404).json({
+                message: "❌ No se ha podido actualizar la lista de comentarios del usuario al borrar el comentario ❌",
+                error: error,
+            })
+        };
 
         if(saveComment){
             return res.status(200).json("El comentario ha sido creado con éxito")
@@ -111,16 +125,26 @@ const updateComment = async (req, res, next) => {
 const deleteComment = async (req, res, next) => {
     try {
         const { id } = req.params;
-        await Comment.findByIdAndDelete(id);
+        const currentComment = await Comment.findById(id);
+        const userID = req.user.id;
 
-            //Si borramos el post de la DB, lo borramos tambien de la lista de FAVS de cada usuario que lo tenga agregado
+        if (currentComment._id == userID){
+            await Comment.findByIdAndDelete(id);
+        }else{
+            return res.status(404).json({
+                message: "❌ No puedes borrar un comentario del que no eres propietario ❌",
+                error: "ERROR 404: if/else para comprobar si un usario es propietario de un comentario",
+            })
+        }
+        
+
+        //Si borramos el comentario de la DB, lo borramos tambien de la lista de comentarios del usuario que lo hizo
         try {
-            const test = await User.updateMany(
-                { listOfComments : id },
+            const userId = req.user.id
+            await User.findByIdAndUpdate(
+                userId,
                 { $pull: {listOfComments : id}}
             );
-
-            console.log(test);
 
         } catch (error) {
             return res.status(404).json({
@@ -131,12 +155,11 @@ const deleteComment = async (req, res, next) => {
 
         //Si borramos el comentario de la DB, lo borramos tambien de la lista de comentarios del post en el que se encuentra
         try {
-            const test = await Post.updateMany(
-                { comments : id },
+            const idPost = req.body;
+            await Post.updateMany(
+                idPost,
                 { $pull: {comments : id}}
             );
-
-            console.log(test);
 
         } catch (error) {
             return res.status(404).json({

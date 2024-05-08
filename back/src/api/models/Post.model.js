@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 const PostSchema = new mongoose.Schema(
     {
-        title: {type: String, required: true, unique: true},
+        title: {type: String},
 
         image: {type: String, required: true},
 

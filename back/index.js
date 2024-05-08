@@ -24,6 +24,7 @@ app.use(express.urlencoded({ limit: "5mb", extended: false }));
 var cors = require("cors");
 app.use(cors());
 
+
 //Aquí vendrán las rutas
 //*Rutas de Users
 const UserRoutes = require("./src/api/routes/User.routes");
@@ -36,6 +37,11 @@ app.use("/artbstrat/product", ProductRoutes);
 //*Rutas de Posts
 const PostRoutes = require("./src/api/routes/Post.routes");
 app.use("/artbstrat/post", PostRoutes);
+
+//*Rutas de Comments
+const CommentRoutes = require("./src/api/routes/Comment.routes");
+app.use("/artbstrat/comment", CommentRoutes);
+
 
 //Errores de rutas y server
 app.use("*", (req, res, next) => {
