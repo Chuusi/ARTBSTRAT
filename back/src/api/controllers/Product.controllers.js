@@ -202,8 +202,8 @@ const deleteProduct = async (req, res, next) => {
         //Si borramos el producto de la DB, lo borramos tambien de la lista de FAVS de cada usuario que lo tenga agregado
         try {
             const test = await User.updateMany(
-                { favUsers : id },
-                { $pull: {favUsers : id}}
+                { favProducts : id },
+                { $pull: {favProducts : id}}
             );
 
             console.log(test);
