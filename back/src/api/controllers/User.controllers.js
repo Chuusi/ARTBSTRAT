@@ -2,6 +2,7 @@ const { getTestSendMail, setTestSendMail } = require("../../state/state.data");
 const randomCode = require("../../utils/randomCode");
 const {sendEmail} = require("../../utils/sendEmail");
 const User = require("../models/User.model");
+const Product = require("../models/Product.model")
 const {deleteImgCloudinary} = require("../../middleware/files.middleware")
 const bcrypt = require("bcrypt");
 const { generateToken, verifyToken } = require("../../utils/token");
@@ -458,6 +459,386 @@ const changeForgottenPassword = async(req,res,next) => {
     }
 }
 
+//? --------------------------------- UPDATE USER -----------------------------------------
+const updateUser = async(req,res,next) => {
+    let catchImg = req.file?.path;
+
+    try {
+        
+        await User.syncIndexes();
+
+        const updateUser = new User(req.body);
+
+        req.file && (updateUser.image = catchImg);
+
+        updateUser._id = req.user._id;
+        updateUser.password = req.user.password;
+        updateUser.role = req.user.role;
+        updateUser.checkCode = req.user.checkCode;
+        updateUser.email = req.user.email;
+        updateUser.check = req.user.check;
+        updateUser.favPosts = req.user.favPosts;
+        updateUser.favProducts = req.user.favProducts;
+        updateUser.status = req.user.status;
+        updateUser.basket = req.user.basket;
+
+        try {
+            await User.findByIdAndUpdate(req.user._id, updateUser);
+            if(req.file) deleteImgCloudinary(req.user.image);
+
+            //testing
+            const testUpdateUser = await User.findById(req.user._id);
+            const updateKeys = Object.keys(req.body);
+            const testUpdate = [];
+
+            //* Recorre todas las keys que encontremos en el req.body
+            updateKeys.forEach((item) => {
+                //* Compara si el usuario (en principio ya updated) coincide con la información del body
+                if(testUpdateUser[item] === req.body[item]){
+                    //* Si la información del usuario updated no coincide con la anterior, almacena el item con el boolean true.
+                    if(testUpdateUser[item] != req.user[item]){
+                        testUpdate.push({[item]: true})
+                    } else {
+                        testUpdate.push({
+                            [item] : false,
+                        })
+                    }
+                } else {
+                    testUpdate.push({ [item]: false });
+                }
+            });
+
+            if(req.file){
+                testUpdateUser.image === catchImg
+                    ? testUpdate.push({image:true})
+                    : testUpdate.push({image:false})
+            }
+
+            return res.status(200).json({
+                message: "Petición de actualización de información exitosa",
+                testUpdate,
+            })
+        } catch (error) {
+            if (req.file) deleteImgCloudinary(catchImg);
+            return res.status(404).json({
+                message:"❌ No se actualizó la información en la DB ❌",
+                error: error,
+            });
+        }
+
+    } catch (error) {
+        return res.status(500).json({
+            message:
+                "❌ Error en el try/catch general del updateUser ❌",
+            error: error,
+        });
+    }
+}
+
+//? --------------------------------- DELETE USER -----------------------------------------
+const deleteUser = async(req,res,next) => {
+    try {
+        const {_id,image} = req.user;
+        await User.findByIdAndDelete(_id);
+
+        if (await User.findById(_id)) {
+            return res.status(404).json({
+                message:"❌ Usuario no borrado de la DB ❌",
+                error: error,
+            });
+        } else {
+            deleteImgCloudinary(image);
+            return res.status(200).json({
+                message:"Usuario borrado correctamente"
+            })
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: "❌ Error en el try/catch general del deleteUser ❌",
+            error: error,
+        });
+    }
+}
+
+//? ----------------------------- AÑADIR PRODUCTO A FAV -----------------------------------
+const addFavProduct = async(req,res,next) => {
+    try {
+        const {id} = req.user;
+        const product = req.body.product;
+        const userExist = await User.findById(id);
+
+        console.log(product);
+        if (userExist.favProducts.includes(product)) {
+            //* Modificamos el user
+            try {
+                await User.findByIdAndUpdate(id, {
+                    $pull: {
+                        favProducts: product,
+                    },
+                });
+                //* Modificamos el producto
+                try {
+                    await Product.findByIdAndUpdate(product, {
+                        $pull: {
+                            favUsers: userExist._id,
+                        },
+                    });
+                } catch (error) {
+                    return res.status(404).json({
+                        message:
+                            "❌ No se pudo quitar el user de la lista de favoritos ❌",
+                        error: error,
+                    });
+                }
+            } catch (error) {
+                return res.status(404).json({
+                    message:"❌ No se pudo quitar el producto de la lista de favoritos ❌",
+                    error: error,
+                })
+            }
+        } else {
+            try {
+                await User.findByIdAndUpdate(id, {
+                    $push: {
+                        favProducts: product,
+                    },
+                });
+                try {
+                    await Product.findByIdAndUpdate(product, {
+                        $push: {
+                            favUsers: userExist._id,
+                        },
+                    });
+                } catch (error) {
+                    return res.status(404).json({
+                        message:
+                            "❌ No se pudo añadir el user a la lista de favoritos ❌",
+                        error: error,
+                    });
+                }
+            } catch (error) {
+                return res.status(404).json({
+                    message:
+                        "❌ No se pudo añadir el producto a la lista de favoritos ❌",
+                    error: error,
+                });
+            }
+        }
+
+        //testing
+
+        try {
+            const userUpdate = await User.findById(id);
+            if(userUpdate.favProducts == userExist.favProducts){
+                return res.status(404).json({
+                    message: "❌ La lista de favoritos no se actualizó correctamente ❌",
+                    error: "ERROR 404 en el if/else de addFavProduct al comprobar las listas"
+                });
+            } else {
+                return res.status(200).json({
+                    message: `${userExist.name}, se modificó tu lista de favoritos con éxito.`,
+                    favProducts: userUpdate.favProducts,
+                });
+            }
+
+        } catch (error) {
+            return res.status(404).json({
+                message:
+                    "❌ No se encontró el user por id en el testeo ❌",
+                error: error,
+            });
+        }
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "❌ Error en el try/catch general del addFavProduct ❌",
+            error: error,
+        });
+    }
+}
+
+//? ------------------------------- AÑADIR POST A FAV -------------------------------------
+const addFavPost = async(req,res,next) => {
+    try {
+        const { id } = req.user;
+        const post = req.body.post;
+        const userExist = await User.findById(id);
+
+        if (userExist.favPosts.includes(post)) {
+            //* Modificamos el user
+            try {
+                await User.findByIdAndUpdate(id, {
+                    $pull: {
+                        favPosts: post,
+                    },
+                });
+            } catch (error) {
+                return res.status(404).json({
+                    message:
+                        "❌ No se pudo quitar el post de la lista de favoritos ❌",
+                    error: error,
+                });
+            }
+        } else {
+            try {
+                await User.findByIdAndUpdate(id, {
+                    $push: {
+                        favPosts: post,
+                    },
+                });
+            } catch (error) {
+                return res.status(404).json({
+                    message:
+                        "❌ No se pudo añadir el post a la lista de favoritos ❌",
+                    error: error,
+                });
+            }
+        }
+
+        //testing
+
+        try {
+            const userUpdate = await User.findById(id);
+            if (userUpdate.favPosts == userExist.favPosts) {
+                return res.status(404).json({
+                    message:
+                        "❌ La lista de posts no se actualizó correctamente ❌",
+                    error: "ERROR 404 en el if/else de addFavPost al comprobar las listas",
+                });
+            } else {
+                return res.status(200).json({
+                    message: `${userExist.name}, se modificó tu lista de posts favoritos con éxito.`,
+                    favPosts: userUpdate.favPosts,
+                });
+            }
+        } catch (error) {
+            return res.status(404).json({
+                message: "❌ No se encontró el user por id en el testeo ❌",
+                error: error,
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: "❌ Error en el try/catch general del addFavPosts ❌",
+            error: error,
+        });
+    }
+}
+
+//? ------------------------- AÑADIR PRODUCTO AL CARRITO ----------------------------------
+const addBasket = async(req,res,next) => {
+    try {
+        const { id } = req.user;
+        const product = req.body.product;
+        const userExist = await User.findById(id);
+
+        if (userExist.basket.includes(product)) {
+            //* Modificamos el user
+            try {
+                await User.findByIdAndUpdate(id, {
+                    $pull: {
+                        basket: product,
+                    },
+                });
+            } catch (error) {
+                return res.status(404).json({
+                    message:
+                        "❌ No se pudo quitar el producto del carrito ❌",
+                    error: error,
+                });
+            }
+        } else {
+            try {
+                await User.findByIdAndUpdate(id, {
+                    $push: {
+                        basket: product,
+                    },
+                });
+            } catch (error) {
+                return res.status(404).json({
+                    message:
+                        "❌ No se pudo añadir el producto al carrito ❌",
+                    error: error,
+                });
+            }
+        }
+
+        //testing
+
+        try {
+            const userUpdate = await User.findById(id);
+            if (userUpdate.basket == userExist.basket) {
+                return res.status(404).json({
+                    message:
+                        "❌ El carrito no se actualizó correctamente ❌",
+                    error: "ERROR 404 en el if/else de addBasket al comprobar las listas",
+                });
+            } else {
+                return res.status(200).json({
+                    message: `${userExist.name}, se modificó tu carrito con éxito.`,
+                    basket: userUpdate.basket,
+                });
+            }
+        } catch (error) {
+            return res.status(404).json({
+                message: "❌ No se encontró el user por id en el testeo ❌",
+                error: error,
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: "❌ Error en el try/catch general del addBasket ❌",
+            error: error,
+        });
+    }
+}
+
+//? ------------------------------ ADMINISTRAR USER ---------------------------------------
+const adminUser = async(req,res,next) => {
+    try {
+        await User.syncIndexes();
+        const email = req.body.email;
+        const userToUpdate = await User.findOne({email});
+
+        await User.findByIdAndUpdate(userToUpdate._id, {
+            status: req.body?.status ? req.body.status : userToUpdate.status,
+            role: req.body?.role ? req.body.role : userToUpdate.role,
+        });
+
+
+        //testing
+
+
+        try {
+            const userUpdated = await User.findOne({email});
+
+            if (
+                userToUpdate.status == userUpdated.status
+                && userToUpdate.role == userUpdated.role
+            ) {
+                return res.status(200).json({
+                    message:"No se ha cambiado la información del usuario"
+                })
+            } else {
+                return res.status(200).json({
+                    message: "Se ha cambiado la información del usuario",
+                });
+            }
+        } catch (error) {
+            return res.status(404).json({
+                message: "❌ No se llevo a cabo el testeo ❌",
+                error: error,
+            });
+        }
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "❌ Error en el try/catch general del adminUser ❌",
+            error: error,
+        });
+    }
+}
+
 
 module.exports = {
     registerUser,
@@ -467,4 +848,10 @@ module.exports = {
     changePassword,
     forgottenPassword,
     changeForgottenPassword,
+    updateUser,
+    deleteUser,
+    addFavProduct,
+    addFavPost,
+    addBasket,
+    adminUser
 }

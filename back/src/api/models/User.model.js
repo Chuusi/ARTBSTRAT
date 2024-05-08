@@ -46,6 +46,7 @@ const UserSchema = new mongoose.Schema(
         },
         favProducts: [{type: mongoose.Schema.Types.ObjectId, ref: "Product"}],
         favPosts: [{type: mongoose.Schema.Types.ObjectId, ref: "Post"}],
+        listOfComments: [{type: mongoose.Schema.Types.ObjectId, ref:"Comment"}],
         check: {
             type: Boolean,
             default: false,
@@ -67,6 +68,7 @@ const UserSchema = new mongoose.Schema(
         status: {
             type: String,
             enum: ["ok", "muted", "block"],
+            default: "ok",
         },
         basket: [{type: mongoose.Schema.Types.ObjectId, ref: "Product"}],
     },
