@@ -19,7 +19,7 @@ const ProductSchema = new mongoose.Schema(
 
         offer: {type: Boolean, default: false},
 
-        offerPrice: {type: Number, required: true},
+        offerPrice: {type: Number},
 
         favUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     },
