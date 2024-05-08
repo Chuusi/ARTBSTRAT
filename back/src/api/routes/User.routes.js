@@ -6,6 +6,12 @@ const {
     changePassword,
     forgottenPassword,
     changeForgottenPassword,
+    updateUser,
+    deleteUser,
+    addFavProduct,
+    addFavPost,
+    addBasket,
+    adminUser,
 } = require("../controllers/User.controllers");
 const {upload} = require("../../middleware/files.middleware")
 const express = require("express");
@@ -19,6 +25,14 @@ UserRoutes.post("/forgottenPassword", forgottenPassword);
 UserRoutes.patch("/resendCheckCode", resendCheckCode);
 UserRoutes.patch("/checkUser", checkUser);
 UserRoutes.patch("/changePassword", [isAuth], changePassword);
-UserRoutes.patch("/changeForgottenPassword/:token", changeForgottenPassword)
+UserRoutes.patch("/changeForgottenPassword/:token", changeForgottenPassword);
+UserRoutes.patch("/updateUser", [isAuth], updateUser);
+UserRoutes.patch("/addFavProduct", [isAuth], addFavProduct);
+UserRoutes.patch("/addFavPost", [isAuth], addFavPost);
+UserRoutes.patch("/addBasket", [isAuth], addBasket);
+
+UserRoutes.delete("/deleteUser", [isAuth], deleteUser);
+
+UserRoutes.patch("/adminUser", [isAuthAdmin], adminUser)
 
 module.exports = UserRoutes;
