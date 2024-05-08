@@ -33,6 +33,10 @@ app.use("/artbstrat/user", UserRoutes);
 const ProductRoutes = require("./src/api/routes/Product.routes");
 app.use("/artbstrat/product", ProductRoutes);
 
+//*Rutas de Posts
+const PostRoutes = require("./src/api/routes/Post.routes");
+app.use("/artbstrat/post", PostRoutes);
+
 //Errores de rutas y server
 app.use("*", (req, res, next) => {
     const error = new Error("❌ Ruta no encontrada ❌");

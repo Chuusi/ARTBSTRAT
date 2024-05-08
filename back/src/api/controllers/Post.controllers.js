@@ -1,4 +1,7 @@
+const { deleteImgCloudinary } = require("../../middleware/files.middleware");
 const Post = require("../models/Post.model");
+const User = require("../models/User.model");
+
 
 //?-------------------------------------- CREATE POST -------------------------------------------
 const createPost = async (req, res, next) => {
@@ -163,26 +166,54 @@ const updatePost = async (req, res, next) => {
 
 
 //?---------------------------------------- DELETE ----------------------------------------------
-const detelePost = async (req, res, next) => {
+const deletePost = async (req, res, next) => {
     try {
         const { id } = req.params;
+        const postToDelete = await Post.findById(id);
+        const imageToDelete = postToDelete.image;
 
-        await Post.findByIdAndDelete(id);
+        //Si borramos el post de la DB, lo borramos tambien de la lista de FAVS de cada usuario que lo tenga agregado
+        try {
+            const test = await User.updateMany(
+                { favPosts : id },
+                { $pull: {favPosts : id}}
+            );
 
-        if (await Post.findById(id)){
+            console.log(test);
+
+        } catch (error) {
             return res.status(404).json({
-                message: "❌ No se ha podido borrar el post ❌",
-                error: "ERROR 404: if/else del deletePost"
+                message: "❌ No se ha podido actualizar la lista de post Favs de los usuarios al borrar el post ❌",
+                error: error,
             })
-        }else{
-            return res.status(200).json("El post se ha borrado correctament 👍")
+        };
+
+        try {
+            await Post.findByIdAndDelete(id);
+            deleteImgCloudinary(imageToDelete);
+
+            if(await Post.findById(id)){
+                return res.status(404).json({
+                    message: "❌ No se ha borrado correctamente el post de la DB ❌",
+                    error: "ERROR 404: if/else de deletePost para comprobar si se ha borrado el post"
+                })
+            }else{
+                return res.status(200).json("El post se ha borrado de la DB con éxito")
+            }
+
+        } catch (error) {
+            return res.status(500).json({
+                message: "❌ No se ha podido ejecutar el findByIdAndDelete en el deletePost ❌",
+                error: error
+            })
         }
+
     } catch (error) {
         return res.status(500).json({
-            message: "❌ No ha podido realizarse el delete del post en la DB ❌",
+            message: "❌ No se ha podido llevar a cabo el borrado del post de la DB ❌",
             error: error,
         })
-    }
+    };
 };
 
 
@@ -191,5 +222,5 @@ module.exports = {
     getPostById,
     getAllPost,
     updatePost,
-    detelePost
+    deletePost
 }
