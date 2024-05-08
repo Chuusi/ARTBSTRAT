@@ -47,63 +47,69 @@ const createComment = async (req, res, next) => {
 const updateComment = async (req, res, next) => {
     try {
         await Comment.syncIndexes();
-        const { id } = req.params;
-        const commentById = await Post.findById(id);
+        const { id } = req.body;
+        const userId = req.user.id;
+        const commentById = await Comment.findById(id);
 
         if(commentById){
-
-            const customBody = {
-                _id: commentById._id,
-                content: req.body?.content ? req.body?.content : commentById.content,
-                status: req.body?.status ? req.body?.status : commentById.status
-            };
-
-            try {
-                await Post.findByIdAndUpdate(id, customBody);
-
-                //Testeo para saber si el post se ha actualizado correctamente
-                const commentByIdUpdated = await Comment.findById(id);
-                const elementUpdate = Object.keys(req.body);
-
-                let test = {};
-                elementUpdate.forEach((item) => {
-                    if(req.body[item] == commentByIdUpdated[item]){
-                        test[item] = true;
+            if (userId == commentById.owner){
+                const customBody = {
+                    _id: commentById._id,
+                    content: req.body?.content ? req.body?.content : commentById.content,
+                    status: req.body?.status ? req.body?.status : commentById.status
+                };
+    
+                try {
+                    await Post.findByIdAndUpdate(id, customBody);
+    
+                    //Testeo para saber si el post se ha actualizado correctamente
+                    const commentByIdUpdated = await Comment.findById(id);
+                    const elementUpdate = Object.keys(req.body);
+    
+                    let test = {};
+                    elementUpdate.forEach((item) => {
+                        if(req.body[item] == commentByIdUpdated[item]){
+                            test[item] = true;
+                        }else{
+                            test[item] = false;
+                        }
+                    });
+    
+                    if(req.file){
+                        commentByIdUpdated.image == req.file?.path
+                        ? (test = { ...test, file: true})
+                        : (test = { ...test, file: false})
+                    };
+    
+                    let acc = 0;
+                    if(acc >0){
+                        return res.status(404).json({
+                            dataTest: test,
+                            message: "❌ El test de actualización ha salido negativo. El comentario no se ha actualizado correctamente ❌",
+                            update: false,
+                            currentComment: commentByIdUpdated
+                        })
                     }else{
-                        test[item] = false;
-                    }
-                });
-
-                if(req.file){
-                    commentByIdUpdated.image == req.file?.path
-                    ? (test = { ...test, file: true})
-                    : (test = { ...test, file: false})
-                };
-
-                let acc = 0;
-                if(acc >0){
+                        return res.status(200).json({
+                            dataTest: test,
+                            message: "El comentario se ha actualizado con éxito",
+                            update: true,
+                            currentComment: commentByIdUpdated
+                        })
+                    };
+    
+                } catch (error) {
                     return res.status(404).json({
-                        dataTest: test,
-                        message: "❌ El test de actualización ha salido negativo. El comentario no se ha actualizado correctamente ❌",
-                        update: false,
-                        currentComment: commentByIdUpdated
-                    })
-                }else{
-                    return res.status(200).json({
-                        dataTest: test,
-                        message: "El comentario se ha actualizado con éxito",
-                        update: true,
-                        currentComment: commentByIdUpdated
+                        message: "❌ No ha podido realizar el findByIdAndUpdate al actualizar el comentario ❌",
+                        error: error,
                     })
                 };
-
-
-            } catch (error) {
+            }else{
                 return res.status(404).json({
-                    message: "❌ No ha podido realizar el findByIdAndUpdate al actualizar el comentario ❌",
-                    error: error,
+                    message: "No puedes actualizar un comentario del que no eres propietario",
+                    error: "ERROR 404: en el if/else del update comment",
                 })
-            };
+            }
 
         }else{
             return res.status(404).json({
@@ -124,11 +130,11 @@ const updateComment = async (req, res, next) => {
 //?-------------------------------------- DELETE COMMENT -------------------------------------------
 const deleteComment = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const { id } = req.body;
         const currentComment = await Comment.findById(id);
         const userID = req.user.id;
 
-        if (currentComment._id == userID){
+        if (currentComment.owner == userID){
             await Comment.findByIdAndDelete(id);
         }else{
             return res.status(404).json({
@@ -190,7 +196,7 @@ const deleteComment = async (req, res, next) => {
 //?---------------------------------------- GET BY ID ----------------------------------------------
 const getCommentById = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const { id } = req.body;
 
         const commentById = await Comment.findById(id);
 

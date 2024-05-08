@@ -5,9 +5,9 @@ const { isAuth, isAuthAdmin } = require("../../middleware/auth.middleware");
 const CommentRoutes = require("express").Router();
 
 CommentRoutes.post("/createComment", [isAuth],  createComment);
-CommentRoutes.get("/byid/:id", getCommentById);
-CommentRoutes.patch("/update/:id", [isAuth], updateComment);
-CommentRoutes.delete("/delete/:id", [isAuth], deleteComment);
+CommentRoutes.get("/byid", getCommentById);
+CommentRoutes.patch("/update", [isAuth], updateComment);
+CommentRoutes.delete("/delete", [isAuth], deleteComment);
 
 
 module.exports = CommentRoutes;
