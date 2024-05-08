@@ -14,6 +14,8 @@ const UserSchema = new mongoose.Schema(
             required: true,
             trim: true,
             unique: true,
+            maxLength: 20,
+            minLength: 1,
         },
         password: {
             type: String,
@@ -51,6 +53,11 @@ const UserSchema = new mongoose.Schema(
         checkCode: {
             type: Number,
             required: true,
+        },
+        checkCodeTrys: {
+            type: Number,
+            required: true,
+            default: 0,
         },
         role: {
             type: String,
