@@ -7,9 +7,9 @@ const PostSchema = new mongoose.Schema(
 
         image: {type: String, required: true},
 
-        likes: {type: Number},
+        likes: {type: Number,  default: 0},
 
-        comments :{type: String, trim: true, maxLength:140, minLength: 1},
+        comments :[{type: mongoose.Schema.Types.ObjectId, ref: "Comment"}],
 
     },
     {
