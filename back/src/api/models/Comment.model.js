@@ -7,7 +7,7 @@ const CommentSchema = new mongoose.Schema(
 
         content: {type: String, trim: true, maxLength:140, minLength: 1},
 
-        likes: {type: Numbe, default: 0},
+        likes: {type: Number, default: 0},
 
         status: {type: Boolean, default:true}
     },
