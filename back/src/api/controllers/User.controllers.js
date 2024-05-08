@@ -394,6 +394,7 @@ const forgottenPassword = async(req,res,next) => {
 }
 
 //? --------------------- CHANGE FORGOTTEN PASSWORD FROM EMAIL ----------------------------
+//* ---> Cambio de contraseña usando token en param
 const changeForgottenPassword = async(req,res,next) => {
     try {
 
