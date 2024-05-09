@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="./mailsToSend.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Artbstrat</title>
+    <style>
+      *{
+        font-family: "Montserrat", sans-serif;
+        margin: 0;
+        padding: 0;
+        color: black;
+      }
+
+      body{
+        background-color: rgb(232, 230, 230);
+        padding-left: 50%;
+        height: 100vh;
+      }
+
+      .container{
+        background-color: white;
+      }
+
+      .white_conteiner{
+        width: 20% !important;
+      }
+
+      header{
+        height: 50px;
+        margin-left: 5vw;
+        margin-right: 5vw;
+        margin-bottom: 5vh;
+      }
+
+      .logoHeader{
+        height: 120px;
+        border-radius: 50%;
+        padding: 15px 15px 15px 15px;
+      }
+
+      h1{
+          margin-left: 5vw;
+          margin-right: 5vw;
+          margin-top: 2vh;
+          margin-bottom: 2vh;
+          text-align: center;
+          font-size: 55px;
+          letter-spacing: 20px;
+          background: rgb(218,255,112);
+          background: linear-gradient(90deg, rgba(218,255,112,1) 0%, rgba(154,200,255,1) 64%);
+      }
+
+      h2{
+        padding-left: 5vw;
+        padding-right: 5vw;
+        font-size: 40px;
+        font-style: bold;
+        margin-bottom: 1vh;
+      }
+
+      p{
+        padding-left: 5vw;
+        padding-right: 5vw;
+        font-size: 20px;
+        margin-top: 1vh;
+      }
+
+      .signature{
+        font-style: italic;
+      }
+
+      footer{
+        padding-top: 30px;
+        margin-left: 5vw;
+        margin-right: 5vw;
+        margin-top: 5vh;
+        border-top: 10px solid rgba(154,200,255,1);
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .logoFooter{
+        height: 140px;
+        width: 140px;
+        border-radius: 50%;
+        margin-left: 5vw;
+        padding: 15px 15px 15px 15px;
+        background: rgb(218,255,112);
+        background: linear-gradient(90deg, rgba(218,255,112,1) 0%, rgba(154,200,255,1) 64%);
+      }
+
+      main{
+        height: 50vh;
+      }
+
+      .instagram{
+        padding-left: 20px;
+        width: 100px;
+      }
+
+      a:visited {
+        color: rgba(154,200,255,1)
+      }
+
+      a:hover {
+        color: rgba(218,255,112,1) ;
+      }
+    </style>
+  </head>
+
+
+  <body>
+    <div class="white_conteiner"></div>
+    <div class="container">
+      <header>
+      </header>
+      
+      <main>
+        <h2>¡Bievenido a Artbstrat <span id="user">{{user}}</span>!</h2>
+        <p>Tu nueva cuenta te permitirá disfrutar de todo el contenido de Artbstrat  y facilitará tus compras desde la página web.</p>
+        <p>Activa tu cuenta usando tu código de activación: </p>
+
+        <div></div>
+        <h1 id="confirmationCode">{{code}}</h1>
+        <div></div>
+
+        <p>¡Gracias por unirte a nosotros!</p>
+        <p class="signature">El equipo de Artbstrat</p>
+      </main>
+
+      <footer>
+        <img class ="logoFooter" src="https://res.cloudinary.com/da7unrk9q/image/upload/v1715110667/logo_y2nzfr.png" alt="logo Artbstrat"></a>
+        <div>
+          <p>Si necesitas asistencia técnica, ponte en contacto con <a href="">atención al cliente de Artbstrat</a></p>
+          <p>Para más información consulta nuestro instagram <a href="https://www.instagram.com/artbstrat/"><img class="instagram" src="https://res.cloudinary.com/da7unrk9q/image/upload/v1715274291/icon_instagram_opgzpa.png" alt="logo insta"></a></p>
+        </div>
+      </footer>
+    </div>  
+    <div class="white_conteiner"></div>
+  </body>
+</html>

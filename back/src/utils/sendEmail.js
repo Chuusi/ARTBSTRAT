@@ -1,6 +1,8 @@
 const dotenv = require("dotenv");
 dotenv.config();
 const nodemailer = require("nodemailer");
+const hbs = require("nodemailer-express-handlebars");
+const path = require("path");
 const { setTestSendMail } = require("../state/state.data");
 
 const sendEmail = (userEmail, name, confirmationCode) => {
@@ -18,12 +20,33 @@ const sendEmail = (userEmail, name, confirmationCode) => {
         },
     });
 
+
+    const handlebarOptions = {
+            viewEngine: {
+            extName: ".handlebars",
+            partialsDir: path.resolve('src/views'),
+            defaultLayout: false,
+            },
+            viewPath: path.resolve('src/views'),
+            extName: ".handlebars",
+        }
+    console.log(handlebarOptions);
+
+    transporter.use("compile", hbs(handlebarOptions));
+
+
     const mailOptions = {
         from: emailEnv,
         to: userEmail,
-        subject: `${name}`,
-        text:`${confirmationCode}`,
+        subject: "ARTBSTRAT - Código de confirmación",
+        template: "code",
+        context: {
+            user: name,
+            code: confirmationCode
+        }
     };
+
+    console.log(mailOptions);
 
     transporter.sendMail(mailOptions, function(error,info) {
         if(error){
@@ -31,6 +54,7 @@ const sendEmail = (userEmail, name, confirmationCode) => {
             setTestSendMail(false);
             return;
         }
+
         console.log("Mail enviado: " + info.response);
         setTestSendMail(true);
     });
