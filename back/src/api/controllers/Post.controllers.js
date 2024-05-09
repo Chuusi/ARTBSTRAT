@@ -36,7 +36,7 @@ const createPost = async (req, res, next) => {
 //?--------------------------------------- GET BY ID --------------------------------------------
 const getPostById = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const { id } = req.body;
 
         const postById = await Post.findById(id);
 
@@ -87,7 +87,7 @@ const updatePost = async (req, res, next) => {
 
     try {
         await Post.syncIndexes();
-        const { id } = req.params;
+        const { id } = req.body;
         const postById = await Post.findById(id);
 
         if(postById){
@@ -168,18 +168,15 @@ const updatePost = async (req, res, next) => {
 //?---------------------------------------- DELETE ----------------------------------------------
 const deletePost = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const { id } = req.body;
         const postToDelete = await Post.findById(id);
         const imageToDelete = postToDelete.image;
 
         //Si borramos el post de la DB, lo borramos tambien de la lista de FAVS de cada usuario que lo tenga agregado
         try {
-            const test = await User.updateMany(
-                { favPosts : id },
-                { $pull: {favPosts : id}}
-            );
-
-            console.log(test);
+            postToDelete.favUsers.forEach(async (userId) => {
+                await User.findByIdAndUpdate(userId, { $pull: {favPosts : id}})
+            });
 
         } catch (error) {
             return res.status(404).json({
