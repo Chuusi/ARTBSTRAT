@@ -16,6 +16,10 @@ const UserSchema = new mongoose.Schema(
             unique: true,
             maxLength: 20,
             minLength: 1,
+            validate: [
+                validator.isAlphanumeric,
+                "El nombre sólo debe contener letras y números"
+            ]
         },
         password: {
             type: String,
