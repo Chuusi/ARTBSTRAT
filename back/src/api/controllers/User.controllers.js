@@ -25,11 +25,13 @@ const registerUser = async (req, res, next) => {
         let confirmationCode = randomCode();
         
         const { email, name } = req.body;
+        
 
         const userExist = await User.findOne(
             {email: req.body.email},
             {name: req.body.name},
         );
+        const template = "code"; // --> para enviar el mail con el template "code"
 
         if(!userExist){
             
@@ -49,7 +51,7 @@ const registerUser = async (req, res, next) => {
                 //Hacemos el control del nodemailer
                 if(userSave) {
 
-                    sendEmail(email, name, confirmationCode);
+                    sendEmail(email, name, confirmationCode, template);
 
                     setTimeout(() => {
                         if (getTestSendMail()) {
@@ -65,7 +67,7 @@ const registerUser = async (req, res, next) => {
                                 error: "ERROR 404 en el if/else del registro, parte del envío del mail."
                             });
                         }
-                    }, 1500);
+                    }, 3000);
 
                 }
 
@@ -351,36 +353,28 @@ const forgottenPassword = async(req,res,next) => {
         const userExist = await User.findOne({email});
         
         if(userExist) {
-            const emailEnv = process.env.EMAIL;
-            const passwordEnv = process.env.PASSWORD;
-            const transporter = nodemailer.createTransport({
-                service: "gmail",
-                auth: {
-                    user: emailEnv,
-                    pass: passwordEnv,
-                },
-            });
             const token = generateToken(userExist, userExist.email);
-            const mailOptions = {
-                from: emailEnv,
-                to: userExist.email,
-                subject: "Cambio pass",
-                text: `http://localhost:8080/artbstrat/user/changeForgottenPassword/${token}`,
-            };
-            transporter.sendMail(mailOptions, async function (error, info) {
-                if (error) {
-                    return res.status(404).json({
-                        message:
-                            "❌ No se pudo mandar el email para el cambio de código de acceso ❌",
-                        error: error,
-                    });
+            const template = "password";
+
+            sendEmail(userExist.email, userExist.name, token, template);
+
+            setTimeout(() => {
+                if (getTestSendMail()) {
+                    setTestSendMail(false);
+                    return res.status(200).json({
+                        user: userExist.email,
+                        confirmationCode: "Link de cambio de contraseña enviado al mail",
+                    })
                 } else {
-                    console.log("Email enviado: " + info.response);
-                    return res
-                        .status(200)
-                        .json("El mail se envió correctamente.");
+                    setTestSendMail(false);
+                    return res.status(404).json({
+                        message:"❌ Error en el envío del link para el cambio de contraseña ❌",
+                        error: "ERROR 404 en el if/else del forgottenPassword, parte del envío del mail."
+                    });
                 }
-            });
+            }, 3000);
+
+            return
         } else {
             return res.status(404).json({
                 message: "❌ No existe un usuario con ese email ❌",
