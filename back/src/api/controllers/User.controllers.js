@@ -3,6 +3,7 @@ const randomCode = require("../../utils/randomCode");
 const {sendEmail} = require("../../utils/sendEmail");
 const User = require("../models/User.model");
 const Product = require("../models/Product.model")
+const Post = require("../models/Post.model")
 const {deleteImgCloudinary} = require("../../middleware/files.middleware")
 const bcrypt = require("bcrypt");
 const { generateToken, verifyToken } = require("../../utils/token");
@@ -701,6 +702,21 @@ const addFavPost = async(req,res,next) => {
                         favPosts: post,
                     },
                 });
+
+                //* Modificamos el post
+                try {
+                    await Post.findByIdAndUpdate(post, {
+                        $pull: {
+                            favUsers: userExist._id,
+                        },
+                    });
+                } catch (error) {
+                    return res.status(404).json({
+                        message:
+                            "❌ No se pudo quitar el user de la lista de favoritos ❌",
+                        error: error,
+                    });
+                }
             } catch (error) {
                 return res.status(404).json({
                     message:
@@ -715,6 +731,20 @@ const addFavPost = async(req,res,next) => {
                         favPosts: post,
                     },
                 });
+
+                try {
+                    await Post.findByIdAndUpdate(post, {
+                        $push: {
+                            favUsers: userExist._id,
+                        },
+                    });
+                } catch (error) {
+                    return res.status(404).json({
+                        message:
+                            "❌ No se pudo añadir el user a la lista de favoritos ❌",
+                        error: error,
+                    });
+                }
             } catch (error) {
                 return res.status(404).json({
                     message:
