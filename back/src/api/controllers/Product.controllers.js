@@ -16,7 +16,9 @@ const addProduct = async (req, res, next) => {
         const saveProduct = await newProduct.save();
 
         if(saveProduct){
-            return res.status(200).json(saveProduct)
+            return res.status(200).json({
+                message: "El producto se ha creado con éxito",
+                product: saveProduct})
         }else{
             return res.status(500).json({
                 message : "❌ No se ha podido guardar el nuevo producto en la DB ❌",
@@ -107,7 +109,7 @@ const updateProduct = async (req, res, next) => {
 
     try {
         await Product.syncIndexes();
-        const { id } = req.params;
+        const { id } = req.body;
         const productById = await Product.findById(id);
 
         if(productById){
@@ -195,18 +197,15 @@ const updateProduct = async (req, res, next) => {
 //?----------------------------------- DELETE PRODUCT ------------------------------------------ 
 const deleteProduct = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const { id } = req.body;
         const productToDelete = await Product.findById(id);
         const imageToDelete = productToDelete.image;
 
         //Si borramos el producto de la DB, lo borramos tambien de la lista de FAVS de cada usuario que lo tenga agregado
         try {
-            const test = await User.updateMany(
-                { favProducts : id },
-                { $pull: {favProducts : id}}
-            );
-
-            console.log(test);
+            productToDelete.favUsers.forEach(async (userId) => {
+                await User.findByIdAndUpdate(userId, { $pull: {favProducts : id}})
+            });
 
         } catch (error) {
             return res.status(404).json({
