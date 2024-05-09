@@ -5,7 +5,7 @@ const hbs = require("nodemailer-express-handlebars");
 const path = require("path");
 const { setTestSendMail } = require("../state/state.data");
 
-const sendEmail = (userEmail, name, confirmationCode) => {
+const sendEmail = (userEmail, name, context, template) => {
     
     setTestSendMail(false);
 
@@ -39,10 +39,10 @@ const sendEmail = (userEmail, name, confirmationCode) => {
         from: emailEnv,
         to: userEmail,
         subject: "ARTBSTRAT - Código de confirmación",
-        template: "code",
+        template: template,
         context: {
             user: name,
-            code: confirmationCode
+            code: context
         }
     };
 
