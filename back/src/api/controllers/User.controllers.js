@@ -471,59 +471,69 @@ const updateUser = async(req,res,next) => {
 
         req.file && (updateUser.image = catchImg);
 
-        updateUser._id = req.user._id;
-        updateUser.password = req.user.password;
-        updateUser.role = req.user.role;
-        updateUser.checkCode = req.user.checkCode;
-        updateUser.email = req.user.email;
-        updateUser.check = req.user.check;
-        updateUser.favPosts = req.user.favPosts;
-        updateUser.favProducts = req.user.favProducts;
-        updateUser.status = req.user.status;
-        updateUser.basket = req.user.basket;
-
-        try {
-            await User.findByIdAndUpdate(req.user._id, updateUser);
-            if(req.file) deleteImgCloudinary(req.user.image);
-
-            //testing
-            const testUpdateUser = await User.findById(req.user._id);
-            const updateKeys = Object.keys(req.body);
-            const testUpdate = [];
-
-            //* Recorre todas las keys que encontremos en el req.body
-            updateKeys.forEach((item) => {
-                //* Compara si el usuario (en principio ya updated) coincide con la información del body
-                if(testUpdateUser[item] === req.body[item]){
-                    //* Si la información del usuario updated no coincide con la anterior, almacena el item con el boolean true.
-                    if(testUpdateUser[item] != req.user[item]){
-                        testUpdate.push({[item]: true})
-                    } else {
-                        testUpdate.push({
-                            [item] : false,
-                        })
-                    }
-                } else {
-                    testUpdate.push({ [item]: false });
-                }
-            });
-
-            if(req.file){
-                testUpdateUser.image === catchImg
-                    ? testUpdate.push({image:true})
-                    : testUpdate.push({image:false})
-            }
-
-            return res.status(200).json({
-                message: "Petición de actualización de información exitosa",
-                testUpdate,
-            })
-        } catch (error) {
-            if (req.file) deleteImgCloudinary(catchImg);
+        if (
+            !validator.isAlphanumeric(req.body.name) ||
+            req.body.name.length > 20
+        ) {
             return res.status(404).json({
-                message:"❌ No se actualizó la información en la DB ❌",
-                error: error,
+                message: "❌ El nuevo nombre sólo puede contener letras y números y hasta 20 caracteres máximos ❌",
+                error: "ERROR 404 en el if/else del updateUser comprobando si el nombre es válido",
             });
+        } else {
+            updateUser._id = req.user._id;
+            updateUser.password = req.user.password;
+            updateUser.role = req.user.role;
+            updateUser.checkCode = req.user.checkCode;
+            updateUser.email = req.user.email;
+            updateUser.check = req.user.check;
+            updateUser.favPosts = req.user.favPosts;
+            updateUser.favProducts = req.user.favProducts;
+            updateUser.status = req.user.status;
+            updateUser.basket = req.user.basket;
+
+            try {
+                await User.findByIdAndUpdate(req.user._id, updateUser);
+                if (req.file) deleteImgCloudinary(req.user.image);
+
+                //testing
+                const testUpdateUser = await User.findById(req.user._id);
+                const updateKeys = Object.keys(req.body);
+                const testUpdate = [];
+
+                //* Recorre todas las keys que encontremos en el req.body
+                updateKeys.forEach((item) => {
+                    //* Compara si el usuario (en principio ya updated) coincide con la información del body
+                    if (testUpdateUser[item] === req.body[item]) {
+                        //* Si la información del usuario updated no coincide con la anterior, almacena el item con el boolean true.
+                        if (testUpdateUser[item] != req.user[item]) {
+                            testUpdate.push({ [item]: true });
+                        } else {
+                            testUpdate.push({
+                                [item]: false,
+                            });
+                        }
+                    } else {
+                        testUpdate.push({ [item]: false });
+                    }
+                });
+
+                if (req.file) {
+                    testUpdateUser.image === catchImg
+                        ? testUpdate.push({ image: true })
+                        : testUpdate.push({ image: false });
+                }
+
+                return res.status(200).json({
+                    message: "Petición de actualización de información exitosa",
+                    testUpdate,
+                });
+            } catch (error) {
+                if (req.file) deleteImgCloudinary(catchImg);
+                return res.status(404).json({
+                    message: "❌ No se actualizó la información en la DB ❌",
+                    error: error,
+                });
+            }
         }
 
     } catch (error) {
@@ -539,6 +549,25 @@ const updateUser = async(req,res,next) => {
 const deleteUser = async(req,res,next) => {
     try {
         const {_id,image} = req.user;
+        const userDB = await User.findById(_id);
+        try {
+
+            //Borrado de usuario en la lista de todos los productos que tenga
+            userDB.favProducts.forEach(async (item) => {
+                await Product.findByIdAndUpdate(item, {
+                    $pull: {
+                        favUsers: _id,
+                    },
+                });
+            })
+
+        } catch (error) {
+            //borrado de las listas
+            return res.status(404).json({
+                message: "❌ Listas de productos no vaciadas ❌",
+                error: error,
+            });
+        }
         await User.findByIdAndDelete(_id);
 
         if (await User.findById(_id)) {
