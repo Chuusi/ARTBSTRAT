@@ -12,7 +12,6 @@ const APIHeaders = {
 
 // Llamamos al servicio --> url del backend
 export const APIuser = axios.create({
-    //Este puerto lo sacamos del proyecto de backend del modulo 2
     baseURL: `http://localhost:8080/artbstrat`,
     headers: APIHeaders,
     timeout: 6000,
