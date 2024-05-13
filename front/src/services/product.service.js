@@ -12,8 +12,8 @@ export const getAllProducts = async (formData) => {
 
 
 //?-------------------------------- GET PRODUCT BY NAME ---------------------------------------------
-export const getProductByName = async (formData) => {
-    return APIuser.get("/product/byName", formData) //! --> como se pasan los parametros en la URL?? se añaden luego??
+export const getProductByName = async (formData, name) => {
+    return APIuser.get(`/product/byName/${name}`, formData) 
         .then((res) => res)
         .catch((error) => error);
 };
@@ -21,8 +21,8 @@ export const getProductByName = async (formData) => {
 
 
 //?--------------------------------- GET PRODUCT BY ID ----------------------------------------------
-export const getProductById = async (formData) => {
-    return APIuser.get("/product/byid", formData) //! --> como se pasan los parametros en la URL?? se añaden luego??
+export const getProductById = async (formData, id) => {
+    return APIuser.get(`/product/byid/${id}`, formData)
         .then((res) => res)
         .catch((error) => error);
 };
@@ -31,10 +31,10 @@ export const getProductById = async (formData) => {
 
 //?----------------------------------- CREATE PRODUCT -----------------------------------------------
 export const createProduct = async (formData) => {
-    return APIuser.get("/product/addProduct", formData, { 
+    return APIuser.post("/product/addProduct", formData, { 
         header: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${updateToken()}`, //! --> si usamos AuthAdmin tambien se puede llamar con el token??
+            Authorization: `Bearer ${updateToken()}`, 
             },
         }) 
         .then((res) => res)
@@ -45,10 +45,10 @@ export const createProduct = async (formData) => {
 
 //?----------------------------------- UPDATE PRODUCT -----------------------------------------------
 export const updateProduct = async (formData) => {
-    return APIuser.get("/product/update", formData, { 
+    return APIuser.patch("/product/update", formData, { 
         header: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${updateToken()}`, //! --> si usamos AuthAdmin tambien se puede llamar con el token??
+            Authorization: `Bearer ${updateToken()}`, 
             },
         }) 
         .then((res) => res)
@@ -59,7 +59,7 @@ export const updateProduct = async (formData) => {
 
 //?----------------------------------- DELETE PRODUCT -----------------------------------------------
 export const deleteProduct = async (formData) => {
-    return APIuser.get("/product/delete", formData, { 
+    return APIuser.delete("/product/delete", formData, { 
         header: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${updateToken()}`, //! --> si usamos AuthAdmin tambien se puede llamar con el token??
