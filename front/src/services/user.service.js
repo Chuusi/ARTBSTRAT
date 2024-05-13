@@ -14,7 +14,7 @@ export const registerUser = async (formData) => {
 //? ---------------------- LOGIN -------------------------
 
 export const loginUser = async (formData) => {
-    return APIuser.post("user/login", formData)
+    return APIuser.post("/user/login", formData)
         .then((res) => res)
         .catch((error) => error);
 };
