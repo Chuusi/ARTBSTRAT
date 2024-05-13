@@ -1,7 +1,30 @@
 import {createBrowserRouter} from "react-router-dom"
 import  App  from "../App"
-import { ProtectedCheckChildren } from "../components/ProtectedRoutes/ProtectedCheckChildren"
-import { Protected } from "../components/ProtectedRoutes/Protected"
+import { ProtectedCheckChildren, Protected, ProtectedAdmin } from "../components/ProtectedRoutes"
+import { 
+    AboutUs, 
+    AddPost, 
+    AddProduct, 
+    AdminUser,
+    Basket, 
+    ChangeForgottenPassword, 
+    ChangePassword,
+    CheckUser, 
+    DeleteUser, 
+    ForgottenPassword, 
+    Gallery, 
+    Home, 
+    Login, 
+    NotFound, 
+    Post,
+    Product,
+    Profile,
+    Register,
+    Shop,
+    TermsAndConditions,
+    UpdatePost,
+    UpdateProduct,
+    UpdateUser} from "../pages"
 
 export const router = createBrowserRouter([
     {
@@ -138,41 +161,26 @@ export const router = createBrowserRouter([
                 path:'/gallery',
                 element: (
                         <Gallery/>
-                ),
-                children: [
-                    {
-                        path:'/gallery',
-                        element: <Gallery/>
-                    },
-                    {
-                        path:'/gallery/post',
-                        element: <Post/>
-                    },
-                ]
+                ),      
+            },
+            {
+                path:'/post',
+                element: <Post/>
             },
             {
                 path:'/shop',
                 element: (
                         <Shop/>
                 ),
-                children: [
-                    {
-                        path:'/shop',
-                        element: <Shop/>
-                    },
-                    {
-                        path:'/shop/product',
-                        element: <Product/>
-                    },
-                ]
+            },
+            {
+                path:'/product',
+                element: <Product/>
             },
             {
                 path:'*',
                 element: <NotFound/>,
-            },
-            
-            
-            
+            },         
         ]
     }
 ])
