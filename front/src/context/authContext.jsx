@@ -48,7 +48,7 @@ export const AuthContextProvider = ({children}) => {
     }
 
     //* useMemo para que escuche user y allUser y almacene el resto y que quede inmutable
-    const value = useMemo(() => {
+    const value = useMemo(() => ({
         user,
         setUser,
         login,
@@ -56,7 +56,7 @@ export const AuthContextProvider = ({children}) => {
         allUser,
         setAllUser,
         bridgeData
-    }, [user, allUser]);
+    }), [user, allUser]);
 
     //* Devolvemos el componente del contexto
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

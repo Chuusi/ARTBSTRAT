@@ -25,6 +25,7 @@ import {
     UpdatePost,
     UpdateProduct,
     UpdateUser} from "../pages"
+import { UserFavProducts } from "../pages/UserFavProducts"
 
 export const router = createBrowserRouter([
     {
@@ -116,6 +117,14 @@ export const router = createBrowserRouter([
                         ),
                     },
                     {
+                        path:'/profile/userFavProducts',
+                        element: (
+                            <Protected>
+                                <UserFavProducts/>
+                            </Protected>
+                        ),
+                    },
+                    {
                         path:'/profile/addPost',
                         element: (
                             <ProtectedAdmin>
@@ -155,6 +164,7 @@ export const router = createBrowserRouter([
                             </ProtectedAdmin>
                         ),
                     },
+                    
                 ]
             },
             {

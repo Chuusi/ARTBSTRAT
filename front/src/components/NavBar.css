@@ -1,0 +1,15 @@
+.header-icono-navlink {
+    color: black
+}
+
+.header-icono-navlink:hover{
+    color: grey
+}
+
+.navbar-icon-container{
+    width: 50%;
+    margin-left: 50%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
