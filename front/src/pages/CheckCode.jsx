@@ -1,1 +1,0 @@
-import "./Checkcode.css"
