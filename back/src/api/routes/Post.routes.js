@@ -5,7 +5,7 @@ const { isAuthAdmin } = require("../../middleware/auth.middleware")
 const PostRoutes = require("express").Router();
 
 PostRoutes.post("/addPost", [isAuthAdmin], upload.single("image"), createPost);
-PostRoutes.get("/byid", getPostById);
+PostRoutes.get("/:id", getPostById);
 PostRoutes.get("/allPost", getAllPost);
 PostRoutes.patch("/update", [isAuthAdmin], upload.single("image"), updatePost);
 PostRoutes.delete("/delete", [isAuthAdmin], deletePost);

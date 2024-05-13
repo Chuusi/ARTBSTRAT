@@ -45,7 +45,7 @@ const createPost = async (req, res, next) => {
 //?--------------------------------------- GET BY ID --------------------------------------------
 const getPostById = async (req, res, next) => {
     try {
-        const { id } = req.body;
+        const { id } = req.params;
 
         const postById = await Post.findById(id);
 
