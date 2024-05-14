@@ -23,11 +23,11 @@ export const AuthContextProvider = ({children}) => {
 
     //* Función puente para evitar problemas de asincronía
     const bridgeData = (state) => {
-        const data = localStorage.getItem("data");
-        const dataJson = JSON.parse(data);
+        const dataJSON = localStorage.getItem("data");
+        const data = JSON.parse(dataJSON);
         switch (state) {
             case "ALLUSER":
-                setAllUser(dataJson);
+                setAllUser(data);
                 localStorage.removeItem("data");
                 break;
             default:

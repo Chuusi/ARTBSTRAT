@@ -46,7 +46,6 @@ const UserSchema = new mongoose.Schema(
         },
         dateOfBirth: {
             type: String,
-            validate: [validator.isDate, "La fecha de nacimiento es inválida"]
         },
         favProducts: [{type: mongoose.Schema.Types.ObjectId, ref: "Product"}],
         favPosts: [{type: mongoose.Schema.Types.ObjectId, ref: "Post"}],

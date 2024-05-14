@@ -57,8 +57,8 @@ const registerUser = async (req, res, next) => {
                         if (getTestSendMail()) {
                             setTestSendMail(false);
                             return res.status(200).json({
-                                user: userSave.email,
-                                confirmationCode: "Código de confirmación enviado al mail",
+                                user: userSave,
+                                checkCode: confirmationCode,
                             })
                         } else {
                             setTestSendMail(false);
@@ -107,7 +107,7 @@ const resendCheckCode = async(req, res, next) => {
 
         if(userExist){
 
-            sendEmail(email, name, newCheckCode);
+            sendEmail(email, name, newCheckCode, "code");
 
             setTimeout(async () => {
                 if (getTestSendMail()) {
@@ -135,7 +135,7 @@ const resendCheckCode = async(req, res, next) => {
                     return res.status(404).json({
                         message:
                             "❌ No se pudo enviar el email con el nuevo código ❌",
-                        error: error,
+                        error: "error",
                         resend: false,
                     });
                 }
@@ -201,6 +201,7 @@ const checkUser = async(req,res,next) => {
                         const updateTrys = await User.findOne({ email });
 
                         return res.status(200).json({
+                            trys: trys,
                             message: `Intento número ${trys}, al fallar 3, se borrará el usuario.`,
                             testUpdateTrys:
                                 trys == updateTrys.checkCodeTrys
