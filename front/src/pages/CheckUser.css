@@ -1,0 +1,5 @@
+#checkCode::-webkit-inner-spin-button,
+#checkCode::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}

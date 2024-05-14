@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom"
 
 export const NavBar = () => {
     
-    const {user} = useAuth();
+    const {user, logout} = useAuth();
 
     
     return (
@@ -34,6 +34,11 @@ export const NavBar = () => {
             {user != null && (
                 <NavLink className="header-icono-navlink" to="/profile/basket">
                     <span className="material-symbols-outlined header-icono">shopping_bag</span>
+                </NavLink>
+            )}
+            {user != null && (
+                <NavLink className="header-icono-navlink" onClick={() => logout()}>
+                    <span className="material-symbols-outlined header-icono">logout</span>
                 </NavLink>
             )}
         </div>
