@@ -1,11 +1,14 @@
 header {
-    
+    position: sticky;
+    top: 0;
+    z-index: 1;
     height: 7vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0.5em;
     box-shadow: 0 1px 20px rgba(0, 0, 0, 0.1);
+    background-color: white;
 }
 
 .header-ul-container{
