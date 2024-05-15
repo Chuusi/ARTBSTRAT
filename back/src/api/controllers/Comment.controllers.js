@@ -8,8 +8,9 @@ const Post = require("../models/Post.model")
 const createComment = async (req, res, next) => {
     try {
         const newComment = new Comment(req.body);
-        const { id } = req.user;
-        newComment.owner = id
+        const { id, name } = req.user;
+        newComment.owner = id;
+        newComment.ownerName = name;
 
         const saveComment = await newComment.save();
 
@@ -218,9 +219,33 @@ const getCommentById = async (req, res, next) => {
 
 
 
+//?----------------------------------- GET ALL COMMENT ----------------------------------------- 
+const getAllComment = async (req, res, next) => {
+    try {
+        const allComment = await Comment.find();
+
+        if (allComment.length > 0) {
+            return res.status(200).json(allComment)
+        }else{
+            return res.status(404).json({
+                message: "❌ No se ha encontrado ningún comentario en la DB ❌",
+                error: "ERROR 404: if/else del getAllComment"
+            });
+        };
+    } catch (error) {
+        return res.status(500).json({
+            message: "❌ No se ha podido realizar la busqueda de todos los comentarios ❌",
+            error: error,
+        });
+    };
+};
+
+
+
 module.exports = {
     createComment,
     updateComment,
     deleteComment,
-    getCommentById
+    getCommentById,
+    getAllComment,
 }

@@ -1,7 +1,15 @@
 import "./Home.css"
 import { NavLink } from "react-router-dom";
+import { getAllComment } from "../services/comment.service";
+
+const listComment = await getAllComment();
+console.log(listComment.data);
+
+let carruselPointer = 0;
 
 export const Home = () => {
+    
+    
     return (
         <div className="home-page">
             <div className="home-banner">
@@ -30,10 +38,36 @@ export const Home = () => {
             </div>
 
             <div className="home-aleatories-comments">
-                <h3>NUESTRA COMUNIDAD</h3>
-                <div className="home-user-comments">
-                    <p>Comentario random de un usuario diciendo lo bonito que le parece todo</p>
-                    <img src="" alt="imagen de usuario" />
+                <h3 className="home-comunity-h3">NUESTRA COMUNIDAD</h3>
+
+                {/**CARRUSEL DE COMENTARIOS*/}
+                    <div className="home-carrusel">
+                        <div id="contentItemsCarrusel" className="home-carrusel-content">
+                            {listComment.data.map((comment, index) => {
+                                return(
+                                <div key={index} className="home-carrusel-page" id={index}>
+                                    <div className="home-carrusel-comment">
+                                    <img className="home-logo-comment" src="https://res.cloudinary.com/da7unrk9q/image/upload/v1715797954/logo_wqxsk8.jpg" alt="logoArtbstrat" />
+                                        <div className="home-div-comment">
+                                            <h3 className="home-username">{comment.ownerName}</h3>
+                                            <p className="home-p-comment">{comment.content}</p>
+                                        </div>
+                                    </div>
+                                    <div className="home-carrusel-direction">
+                                        <button className ="home-carrusel-buttoms" onClick={() => carruselPointer+=1}><a href={`#${index-1}`}><span className="home-arrow material-symbols-outlined">keyboard_double_arrow_left</span></a></button>
+                                        <button className ="home-carrusel-buttoms" onClick={() => carruselPointer-=1}><a href={`#${index+1}`}><span className="home-arrow material-symbols-outlined">keyboard_double_arrow_right</span></a></button>
+                                    </div>
+                                </div>)
+                            })}
+                        </div>
+
+                        <div className="home-div-points">
+                            {listComment.data.map((comment, index) => 
+                                    <div>
+                                        <span id={index} className="home-points material-symbols-outlined">radio_button_{carruselPointer==index ? "checked" : "unchecked"}</span>
+                                    </div>
+                            )}
+                    </div>
                 </div>
             </div>
         </div>
