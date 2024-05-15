@@ -71,96 +71,123 @@ export const Register = () => {
     //? Elemento a devolver
     
     return (
-        <>
-            <div>
-                <h2>Registro</h2>
-                <form onSubmit={handleSubmit(formSubmit)}>
-                    <div className="register-input">
-                        <label htmlFor="name">Nombre de usuario*</label>
-                        
-                        <input 
-                            type="text"
-                            id="name"
-                            name="name"
-                            autoComplete="false"
-                            {...register("name", {required: true})}
-                        />
-                    </div>
+        
+            <div className="register-container">
+                <div className="register-form-container">
+                    <h2 className="register-title">Registro</h2>
+                    <h5 className="register-subtitle-1">Regístrate para estar al tanto de nuestras ofertas</h5>
+                    <h5 className="register-subtitle-2"> y poder participar en nuestra comunidad</h5>
+                    <form className="register-form" onSubmit={handleSubmit(formSubmit)}>
+                        <div className="register-input-container">
+                            <label className="register-input-title" htmlFor="name">Nombre de usuario*</label>
+                            
+                            <input 
+                                className="register-input"
+                                type="text"
+                                id="name"
+                                name="name"
+                                placeholder="Nombre de usuario"
+                                autoComplete="false"
+                                {...register("name", {required: true})}
+                            />
+                        </div>
 
-                    <div className="register-input">
-                        <label htmlFor="email">Correo*</label>
-                        
-                        <input 
-                            type="email"
-                            id="email"
-                            name="email"
-                            autoComplete="false"
-                            {...register("email", {required: true})}
-                        />
-                    </div>
+                        <div className="register-input-container">
+                            <label className="register-input-title" htmlFor="email">Correo*</label>
+                            
+                            <input 
+                                className="register-input"
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Correo"
+                                autoComplete="false"
+                                {...register("email", {required: true})}
+                            />
+                        </div>
 
-                    <div className="register-input">
-                        <label htmlFor="email">Contraseña*</label>
-                        
-                        <input 
-                            type="password"
-                            id="password"
-                            name="password"
-                            autoComplete="false"
-                            {...register("password", {required: true})}
-                        />
-                    </div>
+                        <div className="register-input-container">
+                            <label className="register-input-title" htmlFor="email">Contraseña*  <span 
+                                className="material-symbols-outlined eye-icon"
+                                onClick={
+                                    () => {
+                                        var x = document.getElementById("password");
+                                        if (x.type === "password") {
+                                            x.type = "text";
+                                        } else {
+                                            x.type = "password";
+                                        }
+                                    }}
+                            >visibility</span></label>
+                            
+                            <input 
+                                className="register-input"
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Contraseña"
+                                autoComplete="false"
+                                {...register("password", {required: true})}
+                                
+                            />
+                        </div>
 
-                    <div className="register-input">
-                        <label htmlFor="email">Dirección postal</label>
-                        
-                        <input 
-                            type="text"
-                            id="address"
-                            name="address"
-                            autoComplete="false"
-                            {...register("address", {required: false})}
-                        />
-                    </div>
+                        <div className="register-input-container">
+                            <label className="register-input-title" htmlFor="email">Dirección postal</label>
+                            
+                            <input 
+                                className="register-input"
+                                type="text"
+                                id="address"
+                                name="address"
+                                autoComplete="false"
+                                placeholder="Dirección postal"
+                                {...register("address", {required: false})}
+                            />
+                        </div>
 
-                    <div className="register-input">
-                        <label htmlFor="email">Fecha de nacimiento</label>
-                        
-                        <input 
-                            type="date"
-                            id="dateOfBirth"
-                            name="dateOfBirth"
-                            autoComplete="false"
-                            {...register("dateOfBirth", {required: false})}
-                        />
-                    </div>
+                        <div className="register-input-container">
+                            <label className="register-input-title" htmlFor="email">Fecha de nacimiento</label>
+                            
+                            <input 
+                                className="register-input register-input-date"
+                                type="date"
+                                id="dateOfBirth"
+                                name="dateOfBirth"
+                                autoComplete="false"
+                                {...register("dateOfBirth", {required: false})}
+                            />
+                        </div>
 
-                    <div className="register-input">
-                        <p>Foto de perfil</p>
-                        <Uploadfile/>
-                    </div>
+                        <div className="register-input-container">
+                            <p className="register-input-title profile-pic-register" >Foto de perfil</p>
+                            <Uploadfile/>
+                        </div>
 
-                    <div className="register-button-container">
-                        <button
-                            type="submit"
-                            disabled={send}
-                        >
-                            {send ? "Cargando..." : "Registrarse"}
-                        </button>
-                    </div>
+                        <div className="register-button-container">
+                            <button
+                                className="register-submit-button"
+                                type="submit"
+                                disabled={send}
+                            >
+                                {send ? "Cargando..." : "Registrarse"}
+                            </button>
+                        </div>
 
-                    <div className="register-terms-anchor">
-                        <small>
-                            Haciendo click en "Registrarse", aceptas nuestros{" "}
-                            <Link to="/termsAndConditions">Términos & condiciones</Link>
-                        </small>
-                    </div>
+                        <div className="register-terms-anchor">
+                            <small>
+                                Haciendo click en "Registrarse", aceptas nuestros{" "}
+                                <Link to="/termsAndConditions">Términos & condiciones</Link>
+                            </small>
+                        </div>
 
-                    <div className="register-form-footer">
-                        <p>¿Ya tienes una cuenta? <Link to="/login">Inicia sesión aquí</Link></p>
-                    </div>
-                </form>
+                        <div className="register-form-footer">
+                            <p>¿Ya tienes una cuenta? <Link to="/login">Inicia sesión aquí</Link></p>
+                        </div>
+                    </form>
+                </div>
+                
             </div>
-        </>
+        
     )
 }
