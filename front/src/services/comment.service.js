@@ -1,10 +1,18 @@
 import { updateToken } from "../utils";
-import { APIuser } from "./serviceApiUser.js";
+import { APIuser } from "./service.ApiUser.js";
 
 
 //?--------------------------------- GET COMMENT BY ID ----------------------------------------------
-export const getCommentById = async (formData, id) => {
+export const getCommentById = async (formData) => {
     return APIuser.get("/comment/byid", formData) 
+        .then((res) => res)
+        .catch((error) => error);
+};
+
+
+//?--------------------------------- GET ALL COMMENT  ----------------------------------------------
+export const getAllComment = async () => {
+    return APIuser.get("/comment/allComment") 
         .then((res) => res)
         .catch((error) => error);
 };

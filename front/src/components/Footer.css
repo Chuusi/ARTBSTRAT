@@ -12,8 +12,8 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 70px;
+    padding-bottom: 70px;
 }
 
 .footer-h3{
@@ -29,10 +29,14 @@
     border-top: solid 1px black;
 }
 
+.footer-div-insta{
+    height: 50px;
+}
+
 .footer-insta{
     border: solid 1px black;
     border-radius: 10%;
-    padding: 15px;
+    padding: 1vh;
     font-size: 35px;
     font-weight: bold;
     text-decoration: none;
@@ -64,8 +68,8 @@
 }
 
 .footer-signature-p{
-    padding-bottom: 30px;
-    padding-right: 30px;
+    margin-right: 2vw;
+
 }
 
 .footer-link{
