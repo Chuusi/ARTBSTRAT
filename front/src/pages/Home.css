@@ -1,9 +1,10 @@
 .home-banner{
-    width: 100vw;
+    width: 100%;
     position: relative;
     text-align: center;
     color: white;
 }
+
 .home-page{
     display: block;
 }
