@@ -121,43 +121,52 @@ export const CheckUser = () => {
 
     return (
         <>
-        <div className="checkUser-form-container">
-            <h2>Introduce el código que hemos enviado</h2>
-            <form onSubmit={handleSubmit(formSubmit)}>
-                <div className="checkUser-checkCode-input">
-                    <label htmlFor="checkCode">Código:</label>
-                    <input 
-                        type="number" 
-                        id="checkCode"
-                        name="checkCode"
-                        autoComplete="false"
-                        {...register("checkCode", {required: false})}
-                    />
-                </div>
+        <div className="checkuser-container login-container">
+            <div className="checkUser-form-container login-form-container">
+                <h2 className="login-title">Introduce el código que hemos enviado</h2>
+                <form className="check-form" onSubmit={handleSubmit(formSubmit)}>
+                    <div className="login-input-container">
+                        <label className="check-input-title" htmlFor="checkCode">Código</label>
+                        <input 
+                            className="check-input"
+                            type="number" 
+                            id="checkCode"
+                            name="checkCode"
+                            autoComplete="false"
+                            {...register("checkCode", {required: false})}
+                        />
+                    </div>
 
-                <div className="checkUser-submitButton">
-                    <button
-                        id="checkUser-submit"
-                        type="submit"
-                        disabled={send}
-                    >
-                        {send ? "Espera..." : "Verificar código"}
-                    </button>
-                </div>
+                    <div className="check-button-container">
+                        <div className="checkUser-submitButton">
+                            <button
+                                className="check-submit-button"
+                                id="checkUser-submit"
+                                type="submit"
+                                disabled={send}
+                            >
+                                {send ? "Espera..." : "Verificar código"}
+                            </button>
+                        </div>
 
-                <div className="checkUser-resendButton">
-                    <button
-                        id="checkUser-resend"
-                        disabled={send}
-                        onClick={() => handleReSend()}
-                    >
-                        {send ? "Espera..." : "Reenviar código"}
-                    </button>
-                </div>
+                        <div className="checkUser-resendButton">
+                            <button
+                                className="check-submit-button"
+                                id="checkUser-resend"
+                                disabled={send}
+                                onClick={() => handleReSend()}
+                            >
+                                {send ? "Espera..." : "Reenviar código"}
+                            </button>
+                        </div>
+                    </div>
+                    
 
-                <p>Atención! El usuario será borrado si se falla 3 veces la verificación de código</p>
-            </form>
+                    <p>Atención! El usuario será borrado si se falla 3 veces la verificación de código</p>
+                </form>
+            </div>
         </div>
+        
         </>
     )
 }
