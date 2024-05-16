@@ -3,7 +3,7 @@ export * from "./AddProduct"
 export * from "./AddPost";
 export * from "./AdminUser";
 export * from "./Basket";
-export * from "./ChangeForgottenPassword";
+export * from "./ChangeForgottenPassRoute";
 export * from "./ChangePassword";
 export * from "./CheckUser";
 export * from "./DeleteUser";
