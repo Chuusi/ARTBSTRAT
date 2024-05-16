@@ -42,7 +42,7 @@ const sendEmail = (userEmail, name, context, template) => {
         template: template,
         context: {
             user: name,
-            code: context
+            code: context,
         }
     };
 

@@ -356,7 +356,7 @@ const forgottenPassword = async(req,res,next) => {
         if(userExist) {
             const token = generateToken(userExist, userExist.email);
             const template = "password";
-
+            
             sendEmail(userExist.email, userExist.name, token, template);
 
             setTimeout(() => {
