@@ -1,4 +1,5 @@
 import { updateToken } from "../utils";
+import { tokenForgotten } from "../utils/paramToken";
 import { APIuser } from "./service.ApiUser";
 
 //? -------------------- REGISTER ------------------------
@@ -65,8 +66,8 @@ export const changePassword = async (formData) => {
 
 //? ---------- CHANGE FORGOTTEN PASSWORD -----------------
 
-export const changeForgottenPassword = async (formData) => {
-    return APIuser.patch(`/user/changeForgottenPassword/${updateToken()}`, formData)
+export const changeForgottenPassword = async (token, formData) => {
+    return APIuser.patch(`/user/changeForgottenPassword/${token}`, formData)
         .then((res) => res)
         .catch((error) => error);
 };

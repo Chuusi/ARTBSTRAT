@@ -7,7 +7,7 @@ import {
     AddProduct, 
     AdminUser,
     Basket, 
-    ChangeForgottenPassword, 
+    ChangeForgottenPassRoute, 
     ChangePassword,
     CheckUser, 
     DeleteUser, 
@@ -57,8 +57,8 @@ export const router = createBrowserRouter([
                 element: <TermsAndConditions/>,
             },
             {
-                path:'/changeForgottenPassword',
-                element: <ChangeForgottenPassword/>,
+                path:'/changeForgottenPassword/:token',
+                element: <ChangeForgottenPassRoute />,
             },
             {
                 path:'/checkUser',
