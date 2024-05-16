@@ -1,5 +1,5 @@
 import { updateToken } from "../utils";
-import { APIuser } from "./serviceApiUser.js";
+import { APIuser } from "./service.ApiUser.js";
 
 
 //?----------------------------------- GET ALL POST ---------------------------------------------
