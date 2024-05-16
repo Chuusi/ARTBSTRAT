@@ -1,0 +1,23 @@
+.shop-container-gallery{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-left: 6vw;
+    margin-right: 6vw;
+}
+
+h2{
+    font-size: calc(30px + 2.5vw);
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.shop-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
