@@ -48,7 +48,7 @@ export const Login = () => {
                 <h2 className="login-title">Iniciar sesión</h2>
                 <form className="login-form" onSubmit={handleSubmit(formSubmit)}>
                     <div className="login-input-container">
-                        <label className="login-input-title" htmlFor="custom-imput">
+                        <label className="login-input-title" htmlFor="email">
                             Correo
                         </label>
                         <input 
@@ -63,7 +63,7 @@ export const Login = () => {
                         
                     </div>
                     <div className="login-input-container">
-                        <label className="login-input-title" htmlFor="custom-imput">
+                        <label className="login-input-title" htmlFor="password">
                             Contraseña  <span 
                                 className="material-symbols-outlined login-eye-icon"
                                 onClick={
