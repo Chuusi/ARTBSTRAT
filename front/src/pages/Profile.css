@@ -1,0 +1,7 @@
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 380px);
+    width: 100%;
+}

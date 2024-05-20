@@ -26,6 +26,7 @@ import {
     UpdateProduct,
     UpdateUser} from "../pages"
 import { UserFavProducts } from "../pages/UserFavProducts"
+import { ProfileCard } from "../components"
 
 export const router = createBrowserRouter([
     {
@@ -80,7 +81,7 @@ export const router = createBrowserRouter([
                         path:'/profile',
                         element: (
                             <Protected>
-                                <Profile/>
+                                <ProfileCard/>
                             </Protected>
                         ),
                     },

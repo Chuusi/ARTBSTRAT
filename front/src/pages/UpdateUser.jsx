@@ -2,6 +2,6 @@ import "./UpdateUser.css"
 
 export const UpdateUser = () => {
     return (
-        <div>UpdateUser</div>
+        <div className="profile-subcontainer">UpdateUser</div>
     )
 }

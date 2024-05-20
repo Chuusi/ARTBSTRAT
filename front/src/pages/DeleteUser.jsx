@@ -2,6 +2,6 @@ import "./DeleteUser.css"
 
 export const DeleteUser = () => {
     return (
-        <div>DeleteUser</div>
+        <div className="profile-subcontainer">DeleteUser</div>
     )
 }
