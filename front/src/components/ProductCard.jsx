@@ -6,7 +6,7 @@ import { addFavProduct, getLogedUser } from "../services/user.service"
 import { useForm } from "react-hook-form";
 
 //Primero nos traemos la informacion del usuario actualmente logeado
-const currentUser = await getLogedUser()
+let currentUser = await getLogedUser()
 
 
 export const ProductCard = ({id, name, image, price, offerPrice}) => {
@@ -36,9 +36,11 @@ export const ProductCard = ({id, name, image, price, offerPrice}) => {
                         if(buttonFav == "heart_check"){
                             setButtonFav("heart_plus")
                             setLikeButtom("nolike")
+                            currentUser.data.favProducts = currentUser.data.favProducts.filter((el) => el!=id);
                         }else{
                             setButtonFav("heart_check")
                             setLikeButtom("like")
+                            currentUser.data.favProducts.push(id)
                         }
                     }}
                     type="submit"
