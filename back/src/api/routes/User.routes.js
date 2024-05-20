@@ -13,6 +13,7 @@ const {
     addBasket,
     adminUser,
     getUserByEmail,
+    getLogedUser,
 } = require("../controllers/User.controllers");
 const {upload} = require("../../middleware/files.middleware")
 const express = require("express");
@@ -24,6 +25,7 @@ UserRoutes.post("/login", login);
 UserRoutes.post("/forgottenPassword", forgottenPassword);
 
 UserRoutes.get("/getUserByEmail", getUserByEmail);
+UserRoutes.get("/getLogedUser", [isAuth], getLogedUser);
 
 UserRoutes.patch("/resendCheckCode", resendCheckCode);
 UserRoutes.patch("/checkUser", checkUser);

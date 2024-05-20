@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import { getAllComment } from "../services/comment.service";
 
 const listComment = await getAllComment();
-console.log(listComment.data);
 
 let carruselPointer = 0;
 
