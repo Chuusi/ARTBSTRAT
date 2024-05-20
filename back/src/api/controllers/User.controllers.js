@@ -592,7 +592,7 @@ const addFavProduct = async(req,res,next) => {
         const product = req.body.product;
         const userExist = await User.findById(id);
 
-        console.log(product);
+        
         if (userExist.favProducts.includes(product)) {
             //* Modificamos el user
             try {
@@ -918,6 +918,20 @@ const getUserByEmail = async(req, res, next) => {
 }
 
 
+//? ------------------------------ GET USER LOGED ---------------------------------------
+const getLogedUser = async(req, res, next) => {
+    try {
+        return res.status(200).json(req.user);
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "❌ Error en el try/catch general del getLogedUser ❌",
+            error: error,
+        });
+    }
+}
+
+
 module.exports = {
     registerUser,
     resendCheckCode,
@@ -932,5 +946,6 @@ module.exports = {
     addFavPost,
     addBasket,
     adminUser,
-    getUserByEmail
+    getUserByEmail,
+    getLogedUser
 }

@@ -36,6 +36,18 @@ export const getUserByEmail = async (formData) => {
         .catch((error) => error);
 }
 
+//? ---------------- GET LOGED USER ----------------------
+
+export const getLogedUser = async () => {
+    return APIuser.get("/user/getLogedUser", {
+        headers: {
+            Authorization: `Bearer ${updateToken()}`,
+        },
+    })
+        .then((res) => res)
+        .catch((error) => error);
+};
+
 //? --------------- RESEND CHECK CODE --------------------
 
 export const resendCheckCode = async(formData) => {
