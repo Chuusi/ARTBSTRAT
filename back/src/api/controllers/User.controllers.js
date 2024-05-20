@@ -438,7 +438,7 @@ const changeForgottenPassword = async(req,res,next) => {
             }
 
         } else {
-            console.log("Cotnraseña no segura");
+            console.log("Contraseña no segura");
             return res.status(404).json({
                 message: "❌ La nueva contraseña no es segura ❌",
                 error: "ERROR 404 en el if/else del changePassword contraseña no segura",
