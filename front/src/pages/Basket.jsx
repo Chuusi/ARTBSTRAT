@@ -2,6 +2,6 @@ import "./Basket.css"
 
 export const Basket = () => {
     return (
-        <div>Basket</div>
+        <div className="profile-subcontainer">Basket</div>
     )
 }

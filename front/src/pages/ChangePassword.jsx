@@ -2,6 +2,6 @@ import "./ChangePassword.css"
 
 export const ChangePassword = () => {
     return (
-        <div>ChangePassword</div>
+        <div className="profile-subcontainer">ChangePassword</div>
     )
 }
