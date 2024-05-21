@@ -1,6 +1,6 @@
 import Swal from "sweetalert2"
 
-export const useAddFavProductError = (res, setRes) => {
+export const useAddFavPostError = (res, setRes) => {
 
     //? ----> STATUS 200 : TODO OKEY
     if(res?.status == 200){
