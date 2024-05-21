@@ -4,6 +4,7 @@ import { useAuth } from "../context/authContext";
 import { useEffect, useState } from "react";
 import { addFavProduct, getLogedUser } from "../services/user.service"
 import { useForm } from "react-hook-form";
+import { useAddFavProductError } from "../hooks/useAddFavProductError";
 
 //Primero nos traemos la informacion del usuario actualmente logeado
 let currentUser = await getLogedUser()
@@ -29,7 +30,7 @@ export const ProductCard = ({id, name, image, price, offerPrice}) => {
     };
 
     useEffect(() => {
-        console.log(res);          
+        useAddFavProductError(res, setRes)
     }, [res]);
 
 
