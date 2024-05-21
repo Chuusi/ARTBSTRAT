@@ -31,7 +31,7 @@ UserRoutes.patch("/resendCheckCode", resendCheckCode);
 UserRoutes.patch("/checkUser", checkUser);
 UserRoutes.patch("/changePassword", [isAuth], changePassword);
 UserRoutes.patch("/changeForgottenPassword/:token", changeForgottenPassword);
-UserRoutes.patch("/updateUser", [isAuth], updateUser);
+UserRoutes.patch("/updateUser", [isAuth],upload.single("image"), updateUser);
 UserRoutes.patch("/addFavProduct", [isAuth], addFavProduct);
 UserRoutes.patch("/addFavPost", [isAuth], addFavPost);
 UserRoutes.patch("/addBasket", [isAuth], addBasket);

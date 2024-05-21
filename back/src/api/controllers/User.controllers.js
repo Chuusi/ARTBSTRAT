@@ -522,6 +522,7 @@ const updateUser = async(req,res,next) => {
                 return res.status(200).json({
                     message: "Petición de actualización de información exitosa",
                     testUpdate,
+                    testUpdateUser,
                 });
             } catch (error) {
                 if (req.file) deleteImgCloudinary(catchImg);
