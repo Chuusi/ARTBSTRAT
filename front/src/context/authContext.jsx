@@ -1,4 +1,5 @@
 import { createContext, useContext, useMemo, useState } from "react";
+import { getLogedUser } from "../services/user.service";
 
 const AuthContext = createContext();
 

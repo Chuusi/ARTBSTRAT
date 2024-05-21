@@ -1,0 +1,9 @@
+.update-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 40px;
+    padding: 10px;
+    padding-left: 30px;
+}

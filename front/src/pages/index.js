@@ -21,3 +21,4 @@ export * from "./TermsAndConditions";
 export * from "./UpdatePost";
 export * from "./UpdateProduct";
 export * from "./UpdateUser";
+export * from "./ProfileCardPage"

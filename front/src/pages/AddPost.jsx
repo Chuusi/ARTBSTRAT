@@ -2,6 +2,6 @@ import "./AddPost.css"
 
 export const AddPost = () => {
     return (
-        <div>AddPost</div>
+        <div className="profile-subcontainer">AddPost</div>
     )
 }

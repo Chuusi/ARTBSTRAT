@@ -90,6 +90,7 @@ export const updateUser = async (formData) => {
     return APIuser.patch("/user/updateUser", formData, {
         headers: {
             Authorization: `Bearer ${updateToken()}`,
+            "Content-Type ": "multipart/form-data",
         },
     })
         .then((res) => res)
@@ -103,6 +104,7 @@ export const addFavProduct = async (formData) => {
         headers: {
             Authorization: `Bearer ${updateToken()}`,
         },
+        
     })
         .then((res) => res)
         .catch((error) => error);
