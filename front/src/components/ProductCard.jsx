@@ -14,6 +14,7 @@ export const ProductCard = ({id, name, image, price, offerPrice}) => {
     const [send, setSend] = useState(false);
     const [res, setRes] = useState({});
     const { register, handleSubmit } = useForm();
+    const { user } = useAuth();
 
     //Estado para cambiar el icono de favorito a no favorito
     const [ buttonFav, setButtonFav ] = useState(currentUser?.data?.favProducts?.includes(id) ? "heart_check" : "heart_plus")
@@ -27,10 +28,15 @@ export const ProductCard = ({id, name, image, price, offerPrice}) => {
         setSend(false);
     };
 
+    useEffect(() => {
+        console.log(res);          
+    }, [res]);
+
 
     return(
         <form onSubmit={handleSubmit(formSubmit)} className="shop-product-card-container" to="/product">
             <div key={id} className="shop-product-card">
+            {user ? 
                 <button
                     onClick={()=>{
                         if(buttonFav == "heart_check"){
@@ -48,8 +54,9 @@ export const ProductCard = ({id, name, image, price, offerPrice}) => {
                     id={id}
                     value={id}
                     {...register("product")}
-                    className={`shop-product-favorite shop-fav-button material-symbols-outlined ${likeButtom}`}>{buttonFav}</button>
-
+                    className={`shop-product-favorite shop-fav-button material-symbols-outlined ${likeButtom}`}>{buttonFav}</button> 
+                : null}
+            
                 <Link to="/product" className="shop-Link"><img className="shop-product-img" src={image} alt={name}/></Link>
                 <p className="shop-gallery-h3">{name}</p>
                 <div className="shop-product-price">

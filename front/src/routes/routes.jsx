@@ -19,6 +19,7 @@ import {
     Post,
     Product,
     Profile,
+    ProfileCardPage,
     Register,
     Shop,
     TermsAndConditions,
@@ -81,7 +82,7 @@ export const router = createBrowserRouter([
                         path:'/profile',
                         element: (
                             <Protected>
-                                <ProfileCard/>
+                                <ProfileCardPage/>
                             </Protected>
                         ),
                     },

@@ -1,8 +1,29 @@
 import { Link, NavLink } from "react-router-dom"
 import "./NavProfile.css"
+import { useEffect, useState } from "react"
+import { getLogedUser } from "../services/user.service"
 
 export const NavProfile = () => {
-    let active = true;
+    
+    const [infoUser, setInfoUser] = useState({});
+    const [isAdmin, setIsAdmin] = useState(false)
+
+    const getIsAdmin = async() =>{
+        setInfoUser(await getLogedUser());
+    }
+
+
+    if(infoUser.data == undefined){
+        getIsAdmin();
+        
+    }
+
+    useEffect(() => {
+        if(infoUser?.data?.role === "admin"){
+            setIsAdmin(true)
+        }
+    },[infoUser])
+    
     return (
         <div className="nav-profile-container">
             <div className="nav-profile">
@@ -31,6 +52,36 @@ export const NavProfile = () => {
                         </span>Cambiar contraseña</p>
                     </NavLink>
                 </div>
+
+                {isAdmin && (
+                    <div className="nav-profile-updateUser nav-profile-link-container">
+                        <NavLink className="link-text" to="/profile/addPost">
+                            <p className="nav-profile-title"><span className="material-symbols-outlined nav-profile-icon">
+                            add_photo_alternate
+                            </span>Añadir nuevo post</p>
+                        </NavLink>
+                    </div>
+                )}
+
+                {isAdmin && (
+                    <div className="nav-profile-updateUser nav-profile-link-container">
+                        <NavLink className="link-text" to="/profile/addProduct">
+                            <p className="nav-profile-title"><span className="material-symbols-outlined nav-profile-icon">
+                            add_box
+                            </span>Añadir producto</p>
+                        </NavLink>
+                    </div>
+                )}
+
+                {isAdmin && (
+                    <div className="nav-profile-updateUser nav-profile-link-container">
+                        <NavLink className="link-text" to="/profile/adminUser">
+                            <p className="nav-profile-title"><span className="material-symbols-outlined nav-profile-icon">
+                            admin_panel_settings
+                            </span>Administrar users</p>
+                        </NavLink>
+                    </div>
+                )}               
 
                 <div className="nav-profile-updateUser nav-profile-link-container">
                     <NavLink className="link-text" to="/profile/deleteUser">
