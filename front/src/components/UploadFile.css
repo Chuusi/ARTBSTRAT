@@ -59,6 +59,7 @@ i.fa {
 
 #file-drag:hover {
     border-color: gray;
+    cursor: pointer;
 }
 
 .uploader.btn {
