@@ -60,6 +60,7 @@
 .footer-insta:hover{
     background-color: black;
     color: white;
+    font-weight: lighter;
 }
 
 .footer-signature{
