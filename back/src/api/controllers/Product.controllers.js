@@ -94,7 +94,7 @@ const getAllProducts = async (req, res, next) => {
 const getProductByName = async (req, res, next) => {
     try {
         const { name } = req.params;
-        const productByName = await Product.find({ name });
+        const productByName = await Product.findOne({ name });
 
         if (productByName){
             return res.status(200).json(productByName)

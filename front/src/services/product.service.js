@@ -12,8 +12,8 @@ export const getAllProducts = async (formData) => {
 
 
 //?-------------------------------- GET PRODUCT BY NAME ---------------------------------------------
-export const getProductByName = async (formData, name) => {
-    return APIuser.get(`/product/byName/${name}`, formData) 
+export const getProductByName = async (name) => {
+    return APIuser.get(`/product/byName/${name}`) 
         .then((res) => res)
         .catch((error) => error);
 };
