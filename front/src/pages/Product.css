@@ -73,9 +73,45 @@
     padding: 1vw 4vw 1vw 4vw;
     border-radius: 2rem;
     border: 1px solid black;
+    width: 100%;
 }
 
 .product-page-button:hover{
     background-color: black;
     color: white;
+}
+
+.product-page-title{
+    font-size: calc(20px + 1vw);
+}
+
+.product-prices{
+    display: flex;
+    align-items: center;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.product-offer{
+    color: red;
+    font-size: calc(40px + 1vw);
+}
+
+.product-normalPrice{
+    font-size: calc(40px + 1vw);
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.product-old-price{
+    font-size: calc(25px + 1vw);
+    text-decoration: line-through;
+    color: gray;
+}
+
+.product-divisor{
+    font-size: calc(25px + 1vw);
+    color: gray;
+    margin-left: 3%;
+    margin-right: 3%;
 }

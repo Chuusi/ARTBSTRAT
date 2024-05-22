@@ -38,10 +38,28 @@ export const Product = ({name}) => {
                 <img src={product?.data?.image} alt={name} />
                 <div className="product-info">
                     <h3 className="product-page-title">{name}</h3>
-                    <h2>{product?.data?.price} €</h2>
-                    <h2>{product?.data?.offerPrice}</h2>
-                    <h2>AGOTADO</h2>
-                    <button className="product-page-button">AGREGAR AL CARRITO</button>
+                    
+                    {product?.data?.offerPrice 
+                    ?   <div className="product-prices">
+                            <p className="product-old-price">€{product?.data?.price} </p>
+                            <p className="product-divisor">/</p>
+                            <p className="product-offer">€{product?.data?.offerPrice} </p>
+                            
+                        </div>
+                    :   <p className="product-normalPrice">€{product?.data?.price} </p>
+                    }
+                    
+                    {product?.data?.stock==0 
+                        ? <h2>AGOTADO</h2>
+                        : null
+                    }
+
+                    {product?.data?.stock==0 
+                        ? null
+                        : <button className="product-page-button">AGREGAR AL CARRITO</button>
+                    }
+                    
+                    
                 </div>
             </div>
 
