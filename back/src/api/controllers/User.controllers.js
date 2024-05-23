@@ -175,7 +175,7 @@ const checkUser = async(req,res,next) => {
             let trys = userExist.checkCodeTrys;
             
             
-            if (checkCode === userExist.checkCode) {
+            if (checkCode == userExist.checkCode) {
                 try {
                     await userExist.updateOne({ check: true });
                     const updateUser = await User.findOne({ email });
@@ -203,6 +203,8 @@ const checkUser = async(req,res,next) => {
                         return res.status(200).json({
                             trys: trys,
                             message: `Intento número ${trys}, al fallar 3, se borrará el usuario.`,
+                            testCheckOk: false,
+                            checkCode,
                             testUpdateTrys:
                                 trys == updateTrys.checkCodeTrys
                                     ? `Se actualizó el número de trys, van ${updateTrys.checkCodeTrys}`
@@ -256,11 +258,13 @@ const login = async(req, res, next) => {
         const userExist = await User.findOne({email});
 
         if (userExist) {
-            if (bcrypt.compareSync(password, userExist.password)) {
-                
+            if (
+                bcrypt.compareSync(password, userExist.password) ||
+                password == userExist.password
+            ) {
                 const token = generateToken(userExist._id, email);
                 return res.status(200).json({
-                    message:"Token generado, login satisfactorio",
+                    message: "Token generado, login satisfactorio",
                     user: userExist,
                     token,
                 });
@@ -922,7 +926,15 @@ const getUserByEmail = async(req, res, next) => {
 //? ------------------------------ GET USER LOGED ---------------------------------------
 const getLogedUser = async(req, res, next) => {
     try {
-        return res.status(200).json(req.user);
+        const userInfo = req.user;
+        if(userInfo){
+            return res.status(200).json(userInfo);
+        }{
+            return res.status(404).json({
+                message: "❌ No se encontró el user loguead ❌",
+                error: "ERROR 404 en el if/else de getLoguedUser",
+            });
+        }
 
     } catch (error) {
         return res.status(500).json({

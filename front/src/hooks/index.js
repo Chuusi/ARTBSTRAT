@@ -8,3 +8,4 @@ export * from './useRegisterError';
 export * from './useResendCheckCodeError';
 export * from './useUpdateUserError';
 export * from './useProductError'
+export * from './useDeleteUserError'
