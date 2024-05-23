@@ -9,8 +9,12 @@ export const useCheckUserError = (
 
     //? Respuesta 200
 
+    console.log("res del useCheckUSerError", res);
+
     if(res?.data?.testCheckOk?.toString() == "true"){
+
         if(localStorage.getItem("user")) {
+
             const currentUser = localStorage.getItem("user");
             const parseUser = JSON.parse(currentUser);
             const customUser = {
@@ -19,6 +23,7 @@ export const useCheckUserError = (
             };
 
             const userJSON = JSON.stringify(customUser);
+            console.log("useCheck",userJSON);
             login(userJSON);
         }
 

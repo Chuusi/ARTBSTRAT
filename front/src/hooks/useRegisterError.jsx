@@ -3,7 +3,6 @@ export const useRegisterError = (res, setRegisterOk, setRes) => {
     //? Respuesta 200
 
     if(res?.status == 200){
-        console.log("Registro satisfactorio.");
         const dataJSON = JSON.stringify(res);
         localStorage.setItem("data", dataJSON);
         setRegisterOk(() => true);

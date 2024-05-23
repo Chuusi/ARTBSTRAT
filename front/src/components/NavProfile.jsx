@@ -3,27 +3,18 @@ import "./NavProfile.css"
 import { useEffect, useState } from "react"
 import { getLogedUser } from "../services/user.service"
 
+const infoUser = await getLogedUser();
+
+
 export const NavProfile = () => {
     
-    const [infoUser, setInfoUser] = useState({});
-    const [isAdmin, setIsAdmin] = useState(false)
-
-    const getIsAdmin = async() =>{
-        setInfoUser(await getLogedUser());
+    let isAdmin = false;
+    if(infoUser?.data?.role === "admin"){
+        isAdmin = true;
+    } else{
+        isAdmin = false;
     }
 
-
-    if(infoUser.data == undefined){
-        getIsAdmin();
-        
-    }
-
-    useEffect(() => {
-        if(infoUser?.data?.role === "admin"){
-            setIsAdmin(true)
-        }
-    },[infoUser])
-    
     return (
         <div className="nav-profile-container">
             <div className="nav-profile">

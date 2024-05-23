@@ -136,8 +136,8 @@ export const addBasket = async (formData) => {
 
 //? ----------------- DELETE USER ------------------------
 
-export const deleteUser = async (formData) => {
-    return APIuser.delete("/user/deleteUser", formData, {
+export const deleteUser = async () => {
+    return APIuser.delete("/user/deleteUser", {
         headers: {
             Authorization: `Bearer ${updateToken()}`,
         },

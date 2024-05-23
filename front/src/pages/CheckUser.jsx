@@ -24,12 +24,13 @@ export const CheckUser = () => {
 
     const formSubmit = async(formData) => {
 
+        const tryCheck = formData?.checkCode;
         const userLocal = localStorage.getItem("user");
 
         if(userLocal == null){
             //? Viene del register
             const customFormData = {
-                checkCode: parseInt(allUser.data.checkCode),
+                checkCode:tryCheck,
                 email: allUser.data.user.email,
             }
 

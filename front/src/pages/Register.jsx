@@ -57,7 +57,7 @@ export const Register = () => {
     },[res]);
 
     useEffect(() => {
-        console.log("allUser almacenado");
+        console.log("allUser almacenado", allUser);
     },[allUser]);
 
 
