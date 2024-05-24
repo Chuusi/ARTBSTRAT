@@ -26,29 +26,37 @@ const currentUser =  await getLogedUser();
 /* favListCreator(); */
 
 
-
 export const UserFavProducts = () => {
-    const [res, setRes] = useState({});
-    const [favList, setFavList] = useState([])
-
+    const [res, setRes] = useState([]);
+    const [favList, setFavList] = useState([]);
 
 
     const favListCreator = async() => {
-        currentUser?.data?.favProducts.forEach(async product  => {
-            const customFormData = {
-                refer: product
-            }
-            console.log("promesa del back", await getProductByIdNoParam(customFormData));           
-            setRes(await getProductByIdNoParam(customFormData));
-        });
+        try {
+            const promises = currentUser?.data?.favProducts.map(async product  => {
+                const customFormData = {
+                    refer: product
+                }       
+                return getProductByIdNoParam(customFormData);
+            });
+
+            const results = await Promise.all(promises);
+            setRes(results);
+        } catch (error) {
+            console.log("Error del try/catch", error);
+        }
+        
     }
 
     useEffect(() => {
-        if(res && Object.keys(res).length > 0){
-            console.log("ENTRO EN EL USEEFFECT RES")
-            useGetProductByIdNoParamError(res, setRes, favList, setFavList);
-            console.log("favlist", favList);
-        }      
+        if(res && res.length > 0){
+            const updatedFavList = [];
+            res.forEach(result => {
+                useGetProductByIdNoParamError(result, setRes, setFavList, updatedFavList);
+            })
+            console.log("updated",updatedFavList);
+            setFavList([...updatedFavList]);
+        }
     },[res])
 
 
@@ -56,11 +64,14 @@ export const UserFavProducts = () => {
         favListCreator();
     },[])
     
+    console.log("favList", favList);      
+
     return (
         <div className="profile-subcontainer">
             <div className="profile-favoriteList">
                 <h3>PRODUCTOS FAVORITOS</h3>
-                {currentUser?.data?.favProducts.map((product) => 
+                {favList.map((product) => 
+                
                         <ProductCard 
                             key={product._id}
                             id={product._id}
