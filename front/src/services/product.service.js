@@ -27,6 +27,14 @@ export const getProductById = async (formData, id) => {
         .catch((error) => error);
 };
 
+//?--------------------------------- GET PRODUCT BY ID NO PARAM--------------------------------------
+export const getProductByIdNoParam = async (formData) => {
+    return APIuser.get("/product/getbyidnoparam", {
+        params: formData
+    })
+        .then((res) => res)
+        .catch((error) => error);
+};
 
 
 //?----------------------------------- CREATE PRODUCT -----------------------------------------------

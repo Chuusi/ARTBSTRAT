@@ -67,6 +67,30 @@ const getProductById = async (req, res, next) => {
     };
 };
 
+//?---------------------------------- GET PRODUCT BY ID NO PARAM---------------------------------
+const getProductByIdNoParam = async (req, res, next) => {
+    try {
+        const {refer}  = req.query;
+        console.log(refer);
+        const productById = await Product.findById(refer);
+
+        if(productById){
+            return res.status(200).json(productById)
+        }else{
+            return res.status(404).json({
+                message: "❌ No se ha encontrado un producto con esa ID ❌",
+                error: "ERROR 404: if/else del getProductByIdNoParam",
+            });
+        };
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "❌ No se ha podido realizar la busqueda de producto por ID noParam ❌",
+            error: error,
+        });
+    };
+};
+
 
 //?----------------------------------- GET ALL PRODUCT ----------------------------------------- 
 const getAllProducts = async (req, res, next) => {
@@ -274,6 +298,7 @@ const deleteProduct = async (req, res, next) => {
 module.exports = {
     addProduct,
     getProductById,
+    getProductByIdNoParam,
     getAllProducts,
     getProductByName,
     updateProduct,

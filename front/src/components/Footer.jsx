@@ -26,7 +26,7 @@ export const Footer = () => {
                         <h3 className="footer-h3">¿Necesitas ayuda?</h3>
                         <div className="footer-mail">
                             <p className="material-symbols-outlined">mail</p>
-                            <p>artbstrat.shop@gmail.com</p>
+                            <p><a href="mailto:artbstrat.shop@gmail.com">artbstrat.shop@gmail.com</a></p>
                         </div>
                     </div>
                 </div>
