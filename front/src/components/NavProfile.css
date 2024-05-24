@@ -10,7 +10,7 @@
 }
 
 .nav-profile p {
-    font-size: em;
+    font-size: 1em;
 }
 
 .nav-profile{
@@ -61,4 +61,10 @@
 
 .nav-profile-link-container .link-text-profile .active {
     background-color: rgb(168, 168, 168);
+}
+
+@media only screen and (max-width: 600px) {
+    .nav-profile-container{
+        display: none;
+    }
 }
