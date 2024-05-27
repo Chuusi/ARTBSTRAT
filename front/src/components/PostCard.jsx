@@ -58,7 +58,7 @@ export const PostCard = ({id, name, image}) => {
                     className={`gallery-product-favorite gallery-fav-button material-symbols-outlined ${likeButtom}`}>{buttonFav}</button> 
                 : null}
             
-                <Link to="/post" className="gallery-Link"><img className="gallery-product-img" src={image} alt={name}/></Link>
+                <Link to={`/post/${id}`} className="gallery-Link"><img className="gallery-post-img" src={image} alt={name}/></Link>
             </div>
         </form>
     )

@@ -4,7 +4,10 @@ import { APIuser } from "./service.ApiUser.js";
 
 //?--------------------------------- GET COMMENT BY ID ----------------------------------------------
 export const getCommentById = async (formData) => {
-    return APIuser.get("/comment/byid", formData) 
+    console.log("este es el formData", formData);
+    return APIuser.get("/comment/byid", {
+        params: formData
+    }) 
         .then((res) => res)
         .catch((error) => error);
 };
@@ -19,8 +22,8 @@ export const getAllComment = async () => {
 
 
 //?----------------------------------- CREATE COMMENT -----------------------------------------------
-export const createComment = async (formData) => {
-    return APIuser.post("/comment/createComment", formData, { 
+export const createComment = async (formData, idPost) => {
+    return APIuser.post(`/comment/createComment/${idPost}`, formData, { 
         header: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${updateToken()}`, 

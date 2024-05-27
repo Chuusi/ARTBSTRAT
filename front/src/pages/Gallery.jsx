@@ -5,7 +5,7 @@ import { PostCard } from "../components/PostCard";
 const postList = await getAllPost();
 
 export const Gallery = () => {
-    console.log(postList);
+
     return (
         <div className="gallery-page">
             <h2 className="gallery-h2">GALERÍA ARTBSTRAT</h2>

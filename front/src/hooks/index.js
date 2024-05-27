@@ -10,3 +10,5 @@ export * from './useUpdateUserError';
 export * from './useProductError'
 export * from './useDeleteUserError'
 export * from './useAddProductError'
+export * from './usePostError'
+export * from './useGetCommentError'

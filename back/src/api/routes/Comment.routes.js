@@ -4,7 +4,7 @@ const { isAuth, isAuthAdmin } = require("../../middleware/auth.middleware");
 
 const CommentRoutes = require("express").Router();
 
-CommentRoutes.post("/createComment", [isAuth],  createComment);
+CommentRoutes.post("/createComment/:idPost", [isAuth],  createComment);
 CommentRoutes.get("/byid", getCommentById);
 CommentRoutes.get("/allComment", getAllComment);
 CommentRoutes.patch("/update", [isAuth], updateComment);

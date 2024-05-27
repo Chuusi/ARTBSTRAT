@@ -16,8 +16,6 @@ import {
     Home, 
     Login, 
     NotFound, 
-    Post,
-    Product,
     Profile,
     ProfileCardPage,
     Register,
@@ -29,6 +27,7 @@ import {
 import { UserFavProducts } from "../pages/UserFavProducts"
 import { ProfileCard } from "../components"
 import { ProductRoute } from "../pages/ProductRoute"
+import { PostRoute } from "../pages"
 
 export const router = createBrowserRouter([
     {
@@ -177,8 +176,8 @@ export const router = createBrowserRouter([
                 ),      
             },
             {
-                path:'/post',
-                element: <Post/>
+                path:'/post/:id',
+                element: <PostRoute/>
             },
             {
                 path:'/shop',

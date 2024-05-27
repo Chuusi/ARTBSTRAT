@@ -1,0 +1,59 @@
+.post-page-container{
+    width: 100%;
+    min-height: calc(100vh - 380px);
+}
+
+.post-link{
+    display: flex;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.post-link-a{
+    color: grey;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding-right: 1%;
+}
+
+.post-link-a:hover{
+    color: rgb(187, 187, 187);
+    text-decoration: underline;
+}
+
+.post-link p {
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.post-page-card{
+    display: flex;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 2%;
+
+}
+
+.post-page-card img{
+    width: 65%;
+    height: auto;
+}
+
+.post-commentSection{
+    width: 35%;
+    margin-left: 5%;
+}
+
+.post-commentList{
+    height: 65%;
+    border-bottom: 1px solid black;
+}
+
+.post-likes{
+    height: 10%;
+    border-bottom: 1px solid black;
+}

@@ -9,6 +9,7 @@ const createComment = async (req, res, next) => {
     try {
         const newComment = new Comment(req.body);
         const { id, name } = req.user;
+        const { idPost } = req.params;
         newComment.owner = id;
         newComment.ownerName = name;
 
@@ -22,6 +23,17 @@ const createComment = async (req, res, next) => {
         } catch (error) {
             return res.status(404).json({
                 message: "❌ No se ha podido actualizar la lista de comentarios del usuario al borrar el comentario ❌",
+                error: error,
+            })
+        };
+
+        //Añadir el comentario al post correspondiente
+        try {
+            await Post.findByIdAndUpdate( idPost, {$push: {comments : newComment._id}});
+
+        } catch (error) {
+            return res.status(404).json({
+                message: "❌ No se ha podido actualizar la lista de comentarios del post ❌",
                 error: error,
             })
         };
@@ -51,6 +63,7 @@ const updateComment = async (req, res, next) => {
         const { id } = req.body;
         const userId = req.user.id;
         const commentById = await Comment.findById(id);
+
 
         if(commentById){
             if (userId == commentById.owner){
@@ -197,7 +210,7 @@ const deleteComment = async (req, res, next) => {
 //?---------------------------------------- GET BY ID ----------------------------------------------
 const getCommentById = async (req, res, next) => {
     try {
-        const { id } = req.body;
+        const { id } = req.query;
 
         const commentById = await Comment.findById(id);
 
