@@ -7,27 +7,31 @@ const User = require("../models/User.model");
 const addProduct = async (req, res, next) => {
     let catchImg = req.file?.path;
     const userRole = req.user.role;
-
     if (userRole == "admin"){
         try {
+            
             await Product.syncIndexes();
+
     
             const newProduct = new Product(req.body);
+
             newProduct.image = catchImg;
-    
             const saveProduct = await newProduct.save();
-    
             if(saveProduct){
                 return res.status(200).json({
                     message: "El producto se ha creado con éxito",
                     product: saveProduct})
             }else{
+                if (req.file) deleteImgCloudinary(catchImg);
+
                 return res.status(500).json({
                     message : "❌ No se ha podido guardar el nuevo producto en la DB ❌",
                     error: error,
                 })
             }
         } catch (error) {
+            if (req.file) deleteImgCloudinary(catchImg);
+
             return res.status(500).json({
                 message: "❌ No se ha podido llevar a cabo la creación de un nuevo producto en la DB ❌",
                 error: error
@@ -35,6 +39,8 @@ const addProduct = async (req, res, next) => {
         }
 
     }else{
+        if (req.file) deleteImgCloudinary(catchImg);
+
         return res.status(404).json({
             message: "❌ Solo un administrador puede crear nuevos productos en esta página ❌",
             error: "USUARIO NO AUTORIZADO"
@@ -71,7 +77,6 @@ const getProductById = async (req, res, next) => {
 const getProductByIdNoParam = async (req, res, next) => {
     try {
         const {refer}  = req.query;
-        console.log(refer);
         const productById = await Product.findById(refer);
 
         if(productById){
