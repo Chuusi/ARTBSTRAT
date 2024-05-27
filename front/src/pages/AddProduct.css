@@ -1,0 +1,39 @@
+.addProduct-form{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding: 10px;
+}
+
+.addProduct-subtitle{
+    text-align: center;
+    margin: -20px 0px 10px 0px;
+}
+
+.addProduct-upload-container{
+    margin: auto;
+    padding-bottom: 15%;
+}
+
+.addProduct-form-input-container > div{
+    margin: 10px 0px
+}
+
+.addProduct-button-container{
+    margin: 20px 0px 0px 0px;
+}
+
+.addProduct-description-input{
+    min-height: 150px;
+    width: 100%;
+    resize: none;
+}
+
+@media only screen and (max-width: 1441px) {
+    .addProduct-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}

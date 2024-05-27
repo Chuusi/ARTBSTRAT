@@ -39,12 +39,13 @@ export const getProductByIdNoParam = async (formData) => {
 
 //?----------------------------------- CREATE PRODUCT -----------------------------------------------
 export const createProduct = async (formData) => {
-    return APIuser.post("/product/addProduct", formData, { 
-        header: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${updateToken()}`, 
-            },
-        }) 
+    console.log(formData);
+    return APIuser.post("/product/addProduct", formData, {
+        headers: {
+            Authorzation: `Bearer ${updateToken()}`,
+            "Content-Type ": "multipart/form-data",
+        },
+    })
         .then((res) => res)
         .catch((error) => error);
 };

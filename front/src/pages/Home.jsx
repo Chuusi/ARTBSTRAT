@@ -1,14 +1,16 @@
 import "./Home.css"
 import { NavLink } from "react-router-dom";
 import { getAllComment } from "../services/comment.service";
+import { useEffect, useState } from "react";
 
 const listComment = await getAllComment();
 
-let carruselPointer = 0;
 
 export const Home = () => {
     
-    
+    const [carruselPointer, setCarruselPointer] = useState(0)
+
+
     return (
         <div className="home-page">
             <div className="home-banner">
@@ -53,8 +55,8 @@ export const Home = () => {
                                         </div>
                                     </div>
                                     <div className="home-carrusel-direction">
-                                        <button className ="home-carrusel-buttoms" onClick={() => carruselPointer+=1}><a href={`#${index-1}`}><span className="home-arrow material-symbols-outlined">keyboard_double_arrow_left</span></a></button>
-                                        <button className ="home-carrusel-buttoms" onClick={() => carruselPointer-=1}><a href={`#${index+1}`}><span className="home-arrow material-symbols-outlined">keyboard_double_arrow_right</span></a></button>
+                                        <button className ="home-carrusel-buttoms" onClick={() => setCarruselPointer(carruselPointer - 1)}><a href={`#${index-1}`}><span className="home-arrow material-symbols-outlined">keyboard_double_arrow_left</span></a></button>
+                                        <button className ="home-carrusel-buttoms" onClick={() => setCarruselPointer(carruselPointer + 1)}><a href={`#${index+1}`}><span className="home-arrow material-symbols-outlined">keyboard_double_arrow_right</span></a></button>
                                     </div>
                                 </div>)
                             })}

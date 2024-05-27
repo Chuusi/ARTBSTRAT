@@ -77,6 +77,8 @@ export const Register = () => {
                     <h2 className="register-title">Registro</h2>
                     <h5 className="register-subtitle-1">Regístrate para estar al tanto de nuestras ofertas</h5>
                     <h5 className="register-subtitle-2"> y poder participar en nuestra comunidad</h5>
+                    <h5 className="register-subtitle-2">Los campos con * son obligatorios</h5>
+
                     <form className="register-form" onSubmit={handleSubmit(formSubmit)}>
                         <div className="register-input-container">
                             <label className="register-input-title" htmlFor="name">Nombre de usuario*</label>
