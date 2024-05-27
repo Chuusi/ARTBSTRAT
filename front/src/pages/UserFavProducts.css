@@ -1,8 +1,44 @@
-.profile-subcontainer{
+.profile-subcontainer-favs{
     width: 80%;
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-left: 20%;
+    align-items: start;
     min-height: calc(100vh - 380px);
+}
+
+.profile-favoriteList{
+    width: 30%;
+    min-height: calc(100vh - 380px);
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    min-width: 400px;
+    padding: 40px;
+}
+
+.profile-favoriteList > h3 {
+    text-align: center;
+    margin: 10px;
+}
+
+.profile-favoriteList > .shop-product-card-container{   
+    margin: 20px;
+}
+
+.profile-favoriteList> .gallery-product-card-container {
+    margin: 20px;
+}
+
+.profile-favoritePostList{
+    border: 1px solid black;
+}
+
+@media only screen and (max-width: 1025px) {
+    .profile-subcontainer-favs {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 }

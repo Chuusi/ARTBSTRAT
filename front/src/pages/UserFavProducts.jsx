@@ -5,6 +5,8 @@ import { ProductCard } from "../components/ProductCard"
 import { PostCard } from "../components/PostCard"
 import { getProductByIdNoParam } from "../services/product.service"
 import { useGetProductByIdNoParamError } from "../hooks/useGetProductByIdNoParamError"
+import { getPostById } from "../services/post.service"
+import { useGetPostByIdError } from "../hooks/useGetPostByIdError"
 
 
 //? Almacenamos la info del user en un estado
@@ -29,8 +31,12 @@ const currentUser =  await getLogedUser();
 export const UserFavProducts = () => {
     const [res, setRes] = useState([]);
     const [favList, setFavList] = useState([]);
+    const [resPost, setResPost] = useState([]);
+    const [favPostList, setFavPostList] = useState([]);
 
 
+    //? Esta función se llama una vez al abrir la página, setea las respuestas para obtener los datos
+    //? tanto de los posts como de los products del back.
     const favListCreator = async() => {
         try {
             const promises = currentUser?.data?.favProducts.map(async product  => {
@@ -40,34 +46,54 @@ export const UserFavProducts = () => {
                 return getProductByIdNoParam(customFormData);
             });
 
+            const promisesPost = currentUser?.data?.favPosts.map(async post  => {
+                const customFormPostData = {
+                    refer: post
+                }       
+
+                return getPostById(customFormPostData, post);
+            });
             const results = await Promise.all(promises);
+            const resultsPost = await Promise.all(promisesPost);
             setRes(results);
+            setResPost(resultsPost);
         } catch (error) {
             console.log("Error del try/catch", error);
         }
         
     }
 
+    //? Toma las respuestas al hacer la lista y setea los estados de las listas de products y posts
     useEffect(() => {
         if(res && res.length > 0){
             const updatedFavList = [];
             res.forEach(result => {
                 useGetProductByIdNoParamError(result, setRes, setFavList, updatedFavList);
             })
-            console.log("updated",updatedFavList);
             setFavList([...updatedFavList]);
         }
     },[res])
 
+    useEffect(() => {
+        if(resPost && resPost.length > 0){
+            const updatedPostList = [];
+            resPost.forEach(resultPost => {
+                useGetPostByIdError(resultPost, setResPost, setFavPostList, updatedPostList);
+            })
+            setFavPostList([...updatedPostList]);
+        }
+    },[resPost])
 
+    //? Según se abre, se actualiza la lista de favoritos para poder imprimirla
     useEffect(() => {
         favListCreator();
     },[])
     
-    console.log("favList", favList);      
+    console.log("favList", favList);
+    console.log("favPostList",favPostList);
 
     return (
-        <div className="profile-subcontainer">
+        <div className="profile-subcontainer-favs">
             <div className="profile-favoriteList">
                 <h3>PRODUCTOS FAVORITOS</h3>
                 {favList.map((product) => 
@@ -84,11 +110,12 @@ export const UserFavProducts = () => {
             </div>
             <div className="profile-favoriteList">
                 <h3>POST FAVORITOS</h3>
-                {currentUser?.data?.favPosts.map((product) => 
+                {favPostList.map((post) => 
                         <PostCard
-                            key={product._id}
-                            id={product._id}
-                            image={product.image}
+                            key={post._id}
+                            id={post._id}
+                            name={post.name}
+                            image={post.image}
                         />
                 )}
             </div>

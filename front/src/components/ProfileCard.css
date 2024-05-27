@@ -2,6 +2,7 @@
     width: 60%;
     max-width: 60vw;
     min-height: calc(70vh - 380px);
+    margin: auto;
     background-color: rgb(233, 233, 233);
 }
 
