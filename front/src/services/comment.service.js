@@ -4,7 +4,6 @@ import { APIuser } from "./service.ApiUser.js";
 
 //?--------------------------------- GET COMMENT BY ID ----------------------------------------------
 export const getCommentById = async (formData) => {
-    console.log("este es el formData", formData);
     return APIuser.get("/comment/byid", {
         params: formData
     }) 
@@ -23,9 +22,9 @@ export const getAllComment = async () => {
 
 //?----------------------------------- CREATE COMMENT -----------------------------------------------
 export const createComment = async (formData, idPost) => {
+    console.log("createComment", formData, idPost);
     return APIuser.post(`/comment/createComment/${idPost}`, formData, { 
         header: {
-            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${updateToken()}`, 
             },
         }) 
@@ -39,7 +38,6 @@ export const createComment = async (formData, idPost) => {
 export const updateComment = async (formData) => {
     return APIuser.patch("/comment/update", formData, { 
         header: {
-            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${updateToken()}`, 
             },
         }) 
@@ -53,7 +51,6 @@ export const updateComment = async (formData) => {
 export const deleteComment = async (formData) => {
     return APIuser.delete("/comment/delete", formData, { 
         header: {
-            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${updateToken()}`,
             },
         }) 

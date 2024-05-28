@@ -7,14 +7,17 @@ const Post = require("../models/Post.model")
 //?-------------------------------------- CREATE COMMENT -------------------------------------------
 const createComment = async (req, res, next) => {
     try {
+        
+        await Comment.syncIndexes()
+
         const newComment = new Comment(req.body);
+        console.log(req.body);
         const { id, name } = req.user;
         const { idPost } = req.params;
         newComment.owner = id;
         newComment.ownerName = name;
 
         const saveComment = await newComment.save();
-
 
         //Añadir el comentario a la lista de comentarios del usuario
         try {
@@ -39,7 +42,9 @@ const createComment = async (req, res, next) => {
         };
 
         if(saveComment){
-            return res.status(200).json("El comentario ha sido creado con éxito")
+            return res.status(200).json({
+                message:"El comentario ha sido creado con éxito",
+                commentRes: newComment})
         }else{
             return res.status(404).json({
                 message: "❌ Se ha producido un error al crear el comentario ❌",
@@ -49,7 +54,7 @@ const createComment = async (req, res, next) => {
 
     } catch (error) {
         return res.status(500).json({
-            message: "❌ No se ha podido llevar a cabo la creación del nuevo comentarioe en la DB ❌",
+            message: "❌ No se ha podido llevar a cabo la creación del nuevo comentario en la DB ❌",
             error: error,
         })
     }

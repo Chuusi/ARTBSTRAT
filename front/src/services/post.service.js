@@ -12,7 +12,6 @@ export const getAllPost = async (formData) => {
 
 //?--------------------------------- GET POST BY ID ----------------------------------------------
 export const getPostById = async (formData, id) => {
-    console.log("Service post", id);
     return APIuser.get(`/post/byid/${id}`, formData) 
         .then((res) => res)
         .catch((error) => error);

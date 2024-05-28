@@ -57,3 +57,8 @@
     height: 10%;
     border-bottom: 1px solid black;
 }
+
+#newComment{
+    resize: none;
+    width: 100%;
+}

@@ -5,12 +5,17 @@ import { usePostError } from "../hooks/usePostError"
 import { Link } from "react-router-dom"
 import { getCommentById } from "../services/comment.service"
 import { useGetCommentError } from "../hooks/useGetCommentError"
+import { createComment } from "../services/comment.service"
+import { useForm } from "react-hook-form"
+import { useAddCommentError } from "../hooks/useAddCommentError"
 
 export const Post = ({id}) => {
     const [post, setPost]  = useState({});
     const [res, setRes] = useState({});
     const [resComments, setResComments] = useState([]);
+    const [resAddComment, setResAddComment] = useState({});
     const [commentList, setCommentList] = useState([]);
+    const { register, handleSubmit } = useForm();
 
     //Primero nos traemos toda la informacion de los post
     const getPostInfo = async() => {
@@ -35,6 +40,14 @@ export const Post = ({id}) => {
     }
 
 
+    //Handlesubmit para el boton de enviar nuevo comentario
+    const handleAddComment = async(formData) => {
+        if (formData && Object.keys(formData).length > 0){
+            setResAddComment(await createComment(formData, post?.data?._id));
+        }
+    }
+
+
 
     //Hacemos uso de useEffect para controlar los errores
     useEffect(() => {
@@ -48,11 +61,10 @@ export const Post = ({id}) => {
     }, [res]);
 
     useEffect(() => {
-        console.log("ESTE ES EL POST DEL IF", Object.keys(post).length);
         if(post && Object.keys(post).length > 0){
             getComments();
         }
-    }, [post])
+    }, [post]);
 
     useEffect(() => {
         if(resComments && resComments.length > 0){
@@ -61,11 +73,13 @@ export const Post = ({id}) => {
                 useGetCommentError(result, setResComments, setCommentList, commentListUpdated)
             })
             setCommentList([...commentListUpdated]);
-            console.log("Esta es la lista de comentarios", commentList);
         }
-    }, [resComments])
+    }, [resComments]);
 
-    console.log("lista de comentarios dfespues del use effect", commentList);
+    useEffect(() => {
+        useAddCommentError(resAddComment, setResAddComment, setCommentList, commentList)
+    }, [resAddComment]);
+
 
 
     return (
@@ -94,7 +108,16 @@ export const Post = ({id}) => {
 
                     <div className="post-likes"> ME GUSTAS </div>
 
-                    <div className="post-commentSubmit"> ENVIAR COMENTARIOS </div>
+                    <div className="post-commentSubmit"> 
+                        <form onSubmit={handleSubmit(handleAddComment)}>
+                            <textarea 
+                                name="newComment" 
+                                id="newComment" 
+                                placeholder="Escribe aquí tu comentario"
+                                {...register("content", {required : true})}></textarea>
+                            <button type="submit">ENVIAR COMENTARIO</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
