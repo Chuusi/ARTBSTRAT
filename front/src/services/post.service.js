@@ -21,7 +21,7 @@ export const getPostById = async (formData, id) => {
 //?----------------------------------- CREATE POST -----------------------------------------------
 export const createPost = async (formData) => {
     return APIuser.post("/post/addPost", formData, { 
-        header: {
+        headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${updateToken()}`, 
             },

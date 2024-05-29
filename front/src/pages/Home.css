@@ -127,10 +127,10 @@
 .home-carrusel-direction{
     height: 20%;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
     padding:20px;
 }
+
+
 
 .home-div-comment{
     width: 60%;
@@ -184,6 +184,15 @@
     color: inherit;
 }
 
+.left{
+    position: absolute;
+    left: 0;
+}
+
+.right{
+    position: absolute;
+    right: 0;
+}
 
 
 
