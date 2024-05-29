@@ -4,11 +4,23 @@ import { getAllComment } from "../services/comment.service";
 import { useEffect, useState } from "react";
 
 const listComment = await getAllComment();
+console.log(listComment.data);
 
 
 export const Home = () => {
     
-    const [carruselPointer, setCarruselPointer] = useState(0)
+    const [carruselPointer, setCarruselPointer] = useState(0);
+    const [selected, setSelected] = useState([]);
+
+    useEffect(() => {
+        const shuffled = listComment?.data?.sort(() => 0.5 - Math.random());
+        setSelected(shuffled.slice(0, 5));
+    },[listComment])
+
+
+    useEffect(() => {
+        console.log(carruselPointer);
+    },[carruselPointer])
 
 
     return (
@@ -44,7 +56,7 @@ export const Home = () => {
                 {/**CARRUSEL DE COMENTARIOS*/}
                     <div className="home-carrusel">
                         <div id="contentItemsCarrusel" className="home-carrusel-content">
-                            {listComment.data.map((comment, index) => {
+                            {selected.map((comment, index) => {
                                 return(
                                 <div key={index} className="home-carrusel-page" id={index}>
                                     <div className="home-carrusel-comment">
@@ -54,16 +66,24 @@ export const Home = () => {
                                             <p className="home-p-comment">{comment.content}</p>
                                         </div>
                                     </div>
-                                    <div className="home-carrusel-direction">
-                                        <button className ="home-carrusel-buttoms" onClick={() => setCarruselPointer(carruselPointer - 1)}><a href={`#${index-1}`}><span className="home-arrow material-symbols-outlined">keyboard_double_arrow_left</span></a></button>
-                                        <button className ="home-carrusel-buttoms" onClick={() => setCarruselPointer(carruselPointer + 1)}><a href={`#${index+1}`}><span className="home-arrow material-symbols-outlined">keyboard_double_arrow_right</span></a></button>
+                                    <div className="home-carrusel-direction" >
+                                        <button 
+                                            className ="home-carrusel-buttoms" 
+                                            onClick={() => setCarruselPointer(carruselPointer - 1)}
+                                            style={{display:carruselPointer == 0 ? "none" : "initial"}}
+                                        ><a href={`#${index-1}`}><span className="home-arrow material-symbols-outlined left" >keyboard_double_arrow_left</span></a></button>
+                                        <button 
+                                            className ="home-carrusel-buttoms" 
+                                            onClick={() => setCarruselPointer(carruselPointer + 1)}
+                                            style={{display:carruselPointer == 4 ? "none" : "initial"}}
+                                        ><a href={`#${index+1}`}><span className="home-arrow material-symbols-outlined right">keyboard_double_arrow_right</span></a></button>
                                     </div>
                                 </div>)
                             })}
                         </div>
 
                         <div className="home-div-points">
-                            {listComment.data.map((comment, index) => 
+                            {selected.map((comment, index) => 
                                     <div>
                                         <span id={index} className="home-points material-symbols-outlined">radio_button_{carruselPointer==index ? "checked" : "unchecked"}</span>
                                     </div>

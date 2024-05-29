@@ -157,3 +157,14 @@ export const adminUser = async (formData) => {
         .then((res) => res)
         .catch((error) => error);
 };
+
+export const getUsersByName = async (formData) => {
+    return APIuser.get("/user/getUsersByName", {
+        params: formData,
+        headers: {
+            Authorization: `Bearer ${updateToken()}`,
+        },
+    })
+        .then((res) => res)
+        .catch((error) => error);
+};

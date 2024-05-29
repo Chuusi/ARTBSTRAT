@@ -1,0 +1,11 @@
+.every-user-container{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 30px;
+}
+
+.admin-input-container{
+    display: flex;
+    justify-content: center;
+}

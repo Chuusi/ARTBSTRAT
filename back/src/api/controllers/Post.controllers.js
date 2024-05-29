@@ -5,8 +5,8 @@ const User = require("../models/User.model");
 
 //?-------------------------------------- CREATE POST -------------------------------------------
 const createPost = async (req, res, next) => {
-    let catchImage = req.file?.path;
-    const userRole = req.user.role;
+    let catchImage = req?.file?.path;
+    const userRole = req?.user?.role;
 
     if (userRole == "admin"){
         try {

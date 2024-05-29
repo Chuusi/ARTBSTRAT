@@ -922,6 +922,29 @@ const getUserByEmail = async(req, res, next) => {
     }
 }
 
+//? ------------------------------ GET USERS BY NAME---------------------------------------
+const getUsersByName = async (req, res, next) => {
+    try {
+        const { name } = req.query;
+        const regex = new RegExp(`^${name}`, 'i');
+        const usersByName = await User.find({ name:regex });
+
+        if (usersByName.length > 0) {
+            return res.status(200).json(usersByName);
+        } else {
+            return res.status(404).json({
+                message: "❌ No se encontraron users con ese nombre ❌",
+                error: "ERROR 404 en el if/else de getUsersByName",
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: "❌ Error en el try/catch general del getUsersByName ❌",
+            error: error,
+        });
+    }
+};
+
 
 //? ------------------------------ GET USER LOGED ---------------------------------------
 const getLogedUser = async(req, res, next) => {
@@ -960,5 +983,6 @@ module.exports = {
     addBasket,
     adminUser,
     getUserByEmail,
+    getUsersByName,
     getLogedUser
 }
