@@ -1,0 +1,78 @@
+.aboutUs-container{
+    width: 80%;
+    min-height: calc(100vh - 380px);
+    max-width: 1800px;
+    margin: auto;
+}
+
+.aboutUs-title{
+    text-align: center;
+}
+
+.aboutUs-history{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.aboutUs-history img{
+    border-radius: 50%;
+    width: 40%;
+    height: auto;
+    padding: 5%;
+}
+
+.aboutUs-history p {
+    width: 45%;
+    text-align: justify;
+    padding: 5%;
+}
+
+.aboutUs-team{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.aboutUs-team h3{
+    font-size: calc(20px + 2vw);
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.aboutUs-team-alberto {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.aboutUs-team-alberto img{
+    border-radius: 50%;
+    width: 40%;
+    height: auto;
+    padding: 5%;
+}
+
+.aboutUs-Alberto-text{
+    width: 45%;
+    padding: 5%;
+}
+
+.aboutUs-Alberto-text h4{
+    font-size: calc(8px + 2vw);
+    padding-bottom: 10px;
+}
+
+.aboutUs-Alberto-text p {
+    font-size: calc(5px + 1vw);
+}
+
+.aboutUs-ending {
+    text-align: center;
+    font-size: calc(10px + 2vw);
+    margin-bottom: 3%;
+}
