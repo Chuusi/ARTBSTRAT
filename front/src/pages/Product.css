@@ -1,6 +1,8 @@
 .product-page-container{
     width: 100%;
-    min-height: calc(100vh - 380px)
+    min-height: calc(100vh - 380px);
+    max-width: 1800px;
+    margin: auto;
 }
 
 .product-link{

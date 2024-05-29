@@ -1,6 +1,6 @@
 import "./Post.css"
 import { getPostById } from "../services/post.service"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef} from "react"
 import { usePostError } from "../hooks/usePostError"
 import { Link } from "react-router-dom"
 import { getCommentById } from "../services/comment.service"
@@ -8,6 +8,14 @@ import { useGetCommentError } from "../hooks/useGetCommentError"
 import { createComment } from "../services/comment.service"
 import { useForm } from "react-hook-form"
 import { useAddCommentError } from "../hooks/useAddCommentError"
+import { useAuth } from "../context"
+
+//Importacion de iconos y emojis
+import Picker from '@emoji-mart/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
+
 
 export const Post = ({id}) => {
     const [post, setPost]  = useState({});
@@ -15,7 +23,10 @@ export const Post = ({id}) => {
     const [resComments, setResComments] = useState([]);
     const [resAddComment, setResAddComment] = useState({});
     const [commentList, setCommentList] = useState([]);
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, setValue, watch } = useForm();
+    const {user, setUser} = useAuth();
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const buttonRef = useRef(); //Esto nos va a permitir capturar la posicion de un elemento
 
     //Primero nos traemos toda la informacion de los post
     const getPostInfo = async() => {
@@ -47,25 +58,39 @@ export const Post = ({id}) => {
         }
     }
 
+    //Añadimos el icono al comentario que esta escribiendo el usuario
+    const addEmoji = (emoji) => {
+        const currentComment = watch('content') || '';
+        setValue('content', currentComment + emoji.native);
+        setShowEmojiPicker(false);
+    };
+
+    //Configuramos el boton en forma de corazon para los likes
+    const [liked, setLiked] = useState(false);
+    const toggleLike = () => {setLiked(!liked)};
+        
 
 
-    //Hacemos uso de useEffect para controlar los errores
+    //Traemos la info del post al renderizar la pagina
     useEffect(() => {
         getPostInfo();
     }, [id]);
 
+    //Controlamos los errores de traer la info del post 
     useEffect(() => {
         if (res && Object.keys(res).length > 0){
             usePostError(res, setRes, setPost)
         }
     }, [res]);
 
+    //Traemos los comentarios asociados a este post
     useEffect(() => {
         if(post && Object.keys(post).length > 0){
             getComments();
         }
     }, [post]);
 
+    //Controlamos los errores de traer los comentarios
     useEffect(() => {
         if(resComments && resComments.length > 0){
             const commentListUpdated = [];
@@ -76,6 +101,7 @@ export const Post = ({id}) => {
         }
     }, [resComments]);
 
+    //Controlamos los errores de crear un nuevo comentario
     useEffect(() => {
         useAddCommentError(resAddComment, setResAddComment, setCommentList, commentList)
     }, [resAddComment]);
@@ -98,26 +124,58 @@ export const Post = ({id}) => {
                     <div className="post-commentList"> 
                         {commentList.map((comment) => {
                             return(
-                                <div>
-                                    <p>{comment.ownerName}</p>
+                                <div key={comment._id} className="post-comment">
+                                    <p className="post-comment-owner">{comment.ownerName}</p>
                                     <p>{comment.content}</p>
                                 </div>
                             )
                         })}
                     </div>
 
-                    <div className="post-likes"> ME GUSTAS </div>
-
-                    <div className="post-commentSubmit"> 
-                        <form onSubmit={handleSubmit(handleAddComment)}>
-                            <textarea 
-                                name="newComment" 
-                                id="newComment" 
-                                placeholder="Escribe aquí tu comentario"
-                                {...register("content", {required : true})}></textarea>
-                            <button type="submit">ENVIAR COMENTARIO</button>
-                        </form>
+                    <div className="post-likes">
+                        <button onClick={toggleLike} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+                            <FontAwesomeIcon className="post-heart-button" icon={liked ? solidHeart : regularHeart} style={{ color: 'black' }} />
+                        </button>
+                        <p>{post?.data?.likes} likes </p>
                     </div>
+                    
+                    
+                    {/**Si no hay un usuario logueado, no sale la ventana para escribir comentarios */
+                    user ?   
+                        <div className="post-commentSubmit"> 
+                            <form onSubmit={handleSubmit(handleAddComment)}>
+                                <textarea 
+                                    name="newComment" 
+                                    id="newComment" 
+                                    placeholder="Escribe aquí tu comentario"
+                                    {...register("content", {required : true})}></textarea>
+                                <div className="post-buttons">
+                                    <button 
+                                        className="post-emoji-button" 
+                                        type="button" 
+                                        ref={buttonRef} 
+                                        onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
+                                            <span class="material-symbols-outlined">mood</span>
+                                        </button>
+                                        {/**Mostramos el selector de iconos y lo añadimos al comentario */
+                                        showEmojiPicker && 
+                                        <div style={{ 
+                                            position: 'absolute', 
+                                            zIndex: 1, 
+                                            top: buttonRef.current.offsetTop - 450, 
+                                            left: buttonRef.current.offsetLeft -300, }}>
+                                            <Picker onEmojiSelect={addEmoji} />
+                                        </div>}
+
+                                    <button className="post-submit-button" type="submit">
+                                        <span className="material-symbols-outlined">send</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                    : null
+                    }
                 </div>
             </div>
         </div>
