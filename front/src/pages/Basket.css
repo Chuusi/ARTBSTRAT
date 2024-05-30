@@ -1,6 +1,6 @@
 .basket-container{
-    width: 100%;
-    border: 5px solid black;
+    width: 50%;
+    border: 1px solid black;
 }
 
 .basket-product{
@@ -8,9 +8,12 @@
 }
 
 .basket-productInfo{
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr 1.6fr 0.4fr;
+    grid-template-rows: 1fr;
+    justify-content:end;
     align-items: center;
+    padding: 10px;
     padding-top: 10px;
     border: 1px solid gray;
 }
@@ -20,12 +23,15 @@
 
 }
 
-.basket-productInfo p {
+.basket-productInfo Link p {
     width: 20%;
     margin-left: 5%;
+    
 }
+
 
 .basket-totalPrice{
     border: 1px solid black;
-    text-align: center;
+    text-align:end;
+    padding: 20px;
 }

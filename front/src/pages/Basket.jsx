@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { useGetLogedUserError } from "../hooks/useGetLogedUserError"
 import { getProductByIdNoParam } from "../services/product.service"
 import { useGetProductIdError } from "../hooks/useGetProductIdError"
+import { Link } from "react-router-dom"
 
 
 export const Basket = () => {
@@ -12,6 +13,7 @@ export const Basket = () => {
     const [ productsBasket, setProductsBasket] = useState([]); //Lista de promesas llamada a los produtos
     const [ productList, setProdcutList ] = useState([]); //Lista de productos
     const [ totalPrice, setTotalPrice ] = useState(0)
+    const [ precioFinal, setPrecioFinal ] = useState(0)
 
     //Nos traemos la info del usuario
     const currentUser = async() => {
@@ -60,10 +62,10 @@ export const Basket = () => {
         if(productsBasket && productsBasket.length > 0){
             const productListUpdated = [];
             productsBasket.forEach(result => {
-                useGetProductIdError(result, setProductsBasket, productListUpdated, setTotalPrice, totalPrice)
+                useGetProductIdError(result, setProductsBasket, productListUpdated, totalPrice, setTotalPrice)
             })
             setProdcutList([...productListUpdated]);
-            console.log("Esta es la lista de productos", productList);
+            setPrecioFinal(totalPrice)
         }
     }, [productsBasket]);
 
@@ -74,13 +76,13 @@ export const Basket = () => {
                 {productList.map((product, index) => (
                     <div className="basket-productInfo" key={index}>
                         <img src={product?.image} alt={product?.name} />
-                        <p>{product?.name}</p>
+                        <Link to={`/product/${product?.name}`}><p>{product?.name}</p></Link>
                         <h3>€ {product?.price}</h3>
                     </div>
                 ))}
 
                 <div className="basket-totalPrice">
-                    <h3>TOTAL: €{totalPrice}</h3>
+                    <h3>TOTAL: €{precioFinal}</h3>
                 </div>
             </div>
 

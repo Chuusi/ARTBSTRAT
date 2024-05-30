@@ -3,11 +3,14 @@ import { Link } from "react-router-dom"
 import { getProductByName } from "../services/product.service"
 import { useEffect, useState } from "react";
 import { useProductError } from "../hooks/useProductError"
+import { addBasket } from "../services/user.service";
+import { useAddBasketError } from "../hooks";
 
 
 export const Product = ({name}) => {
     const [product, setProduct] = useState({});
     const [ res, setRes] = useState({});
+    const [ resBasket, setResBasket ] = useState({})
 
     const getProductInfo = async() => {
         setRes(await getProductByName(name))
@@ -23,6 +26,17 @@ export const Product = ({name}) => {
         }
     }, [res]); 
 
+    const handleBasket = async() => {
+        const formData = {
+            product: product?.data?._id
+        }
+        setResBasket(await addBasket(formData))
+    }
+
+    useEffect(() => {
+        if(resBasket && Object.keys(resBasket).length > 0)
+        useAddBasketError(resBasket, setResBasket);
+    },[resBasket])
 
     return (
         <div className="product-page-container">
@@ -56,7 +70,7 @@ export const Product = ({name}) => {
 
                     {product?.data?.stock==0 
                         ? null
-                        : <button className="product-page-button">AGREGAR AL CARRITO</button>
+                        : <button className="product-page-button" onClick={handleBasket}>AGREGAR AL CARRITO</button>
                     }
                     
                     

@@ -47,7 +47,7 @@ export const AddPost = () => {
                     <h2 className="register-title">Añadir post</h2>
                     <h5 className="addProduct-subtitle">Los campos con * son obligatorios</h5>
 
-                    <form className="addProduct-form" onSubmit={handleSubmit(formSubmit)}>
+                    <form className="addPost-form" onSubmit={handleSubmit(formSubmit)}>
                         
                         
                         <div className="register-input-container addProduct-upload-container">

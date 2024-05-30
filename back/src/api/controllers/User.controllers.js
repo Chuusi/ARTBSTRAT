@@ -788,7 +788,7 @@ const addFavPost = async(req,res,next) => {
 const addBasket = async(req,res,next) => {
     try {
         const { id } = req.user;
-        const product = req.body.product;
+        const { product}  = req.body;
         const userExist = await User.findById(id);
 
         if (userExist.basket.includes(product)) {
