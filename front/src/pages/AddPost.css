@@ -5,3 +5,11 @@
     align-items: center;
     padding-top: 20px;
 }
+
+.addPost-form{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    padding: 10px;
+}

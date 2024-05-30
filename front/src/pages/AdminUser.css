@@ -1,3 +1,11 @@
+.admin-profile-subcontainer{
+    min-height: calc(100vh - 380px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 100px;
+}
+
 .every-user-container{
     display: flex;
     justify-content: space-between;
@@ -8,4 +16,39 @@
 .admin-input-container{
     display: flex;
     justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 20px;
+    position: relative;
+    top: 0;
+}
+
+.user-search-input{
+    padding: 5px;
+}
+
+.results-container{
+    overflow:auto;
+}
+
+.every-user-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 0.5fr;
+}
+
+.every-user-container > p {
+    margin: auto 0px;
+}
+
+#adminEmail{
+    display: none;
+}
+
+.adminUser-submit-button{
+    text-align: center;
+}
+
+.adminUser-submit-button-icon{
+    margin: auto;
+    padding: 0px;
 }
