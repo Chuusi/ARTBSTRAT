@@ -1,0 +1,31 @@
+.basket-container{
+    width: 100%;
+    border: 5px solid black;
+}
+
+.basket-product{
+    width: 100%;
+}
+
+.basket-productInfo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    border: 1px solid gray;
+}
+
+.basket-productInfo img {
+    width: 120px;
+
+}
+
+.basket-productInfo p {
+    width: 20%;
+    margin-left: 5%;
+}
+
+.basket-totalPrice{
+    border: 1px solid black;
+    text-align: center;
+}

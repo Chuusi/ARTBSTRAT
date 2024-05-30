@@ -22,7 +22,9 @@ export const getProductByName = async (name) => {
 
 //?--------------------------------- GET PRODUCT BY ID ----------------------------------------------
 export const getProductById = async (formData, id) => {
-    return APIuser.get(`/product/byid/${id}`, formData)
+    return APIuser.get(`/product/byid/${id}`, {
+        params: formData
+    })
         .then((res) => res)
         .catch((error) => error);
 };

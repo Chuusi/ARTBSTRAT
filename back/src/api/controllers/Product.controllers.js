@@ -52,6 +52,7 @@ const addProduct = async (req, res, next) => {
 //?---------------------------------- GET PRODUCT BY ID ----------------------------------------
 const getProductById = async (req, res, next) => {
     try {
+
         const { id } = req.params;
 
         const productById = await Product.findById(id);
@@ -76,6 +77,7 @@ const getProductById = async (req, res, next) => {
 //?---------------------------------- GET PRODUCT BY ID NO PARAM---------------------------------
 const getProductByIdNoParam = async (req, res, next) => {
     try {
+
         const {refer}  = req.query;
         const productById = await Product.findById(refer);
 
