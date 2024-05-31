@@ -1,10 +1,11 @@
 import "./Basket.css"
-import { getLogedUser } from "../services/user.service"
+import { deleteBasket, getLogedUser } from "../services/user.service"
 import { useState, useEffect } from "react"
 import { useGetLogedUserError } from "../hooks/useGetLogedUserError"
 import { getProductByIdNoParam } from "../services/product.service"
 import { useGetProductIdError } from "../hooks/useGetProductIdError"
 import { Link } from "react-router-dom"
+import { useDeleteBasketError } from "../hooks"
 
 
 export const Basket = () => {
@@ -14,6 +15,8 @@ export const Basket = () => {
     const [ productList, setProdcutList ] = useState([]); //Lista de productos
     const [ totalPrice, setTotalPrice ] = useState(0)
     const [ precioFinal, setPrecioFinal ] = useState(0)
+    const [resDelete, setResDelete] = useState({});
+    const [ deleting, setDeleting ] = useState(false);
 
     //Nos traemos la info del usuario
     const currentUser = async() => {
@@ -50,34 +53,71 @@ export const Basket = () => {
     },[res])
 
     useEffect(() =>{
-        console.log("cuantas veces entro?");
         if (basketUser.length > 0) {
             getProducts()
+        } else if(basketUser.length == 0){
+            setProdcutList([]);
         }
     }, [ basketUser ]);
 
     //Traemos productos del usuario
     useEffect(() => {
-        console.log("aqui llega la lista de procutBasket", productsBasket);
+
         if(productsBasket && productsBasket.length > 0){
+
             const productListUpdated = [];
+            let newTotalPrice = 0;
             productsBasket.forEach(result => {
-                useGetProductIdError(result, setProductsBasket, productListUpdated, totalPrice, setTotalPrice)
+                useGetProductIdError(result, setProductsBasket, productListUpdated)
+            })
+            productListUpdated.forEach(product => {
+                newTotalPrice += product.price;
             })
             setProdcutList([...productListUpdated]);
-            setPrecioFinal(totalPrice)
+            setPrecioFinal(newTotalPrice)
+
         }
+
     }, [productsBasket]);
 
+    const handleDeleteBasket = async(product) => {
+        try {
+            const customFormData = {
+                product: product,
+            }
+
+            setDeleting(true)
+            setResDelete(await deleteBasket(customFormData))
+            setDeleting(false)
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        if(resDelete && Object.keys(resDelete).length > 0){
+            useDeleteBasketError(resDelete, setResDelete, setBasketUser)
+        }
+    },[resDelete])
 
     return (
         <div className="basket-container">
+            {productList.length == 0 ? <div className="empty-basket">La cesta está vacía</div> : 
             <div className="basket-product">
                 {productList.map((product, index) => (
                     <div className="basket-productInfo" key={index}>
                         <img src={product?.image} alt={product?.name} />
                         <Link to={`/product/${product?.name}`}><p>{product?.name}</p></Link>
                         <h3>€ {product?.price}</h3>
+                        <button 
+                            onClick={() => handleDeleteBasket(product?._id)} 
+                            className="basket-delete-button">
+                                <span 
+                                    className="material-symbols-outlined basket-delete-button-icon">
+                                        delete_forever
+                                </span>
+                        </button>
                     </div>
                 ))}
 
@@ -85,7 +125,7 @@ export const Basket = () => {
                     <h3>TOTAL: €{precioFinal}</h3>
                 </div>
             </div>
-
+            }
 
         </div>
     )

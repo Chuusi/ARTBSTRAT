@@ -3,13 +3,18 @@
     border: 1px solid black;
 }
 
+.empty-basket{
+    text-align: center;
+    
+}
+
 .basket-product{
     width: 100%;
 }
 
 .basket-productInfo{
     display: grid;
-    grid-template-columns: 1fr 1.6fr 0.4fr;
+    grid-template-columns: 1fr 1.6fr 0.4fr 0.1fr;
     grid-template-rows: 1fr;
     justify-content:end;
     align-items: center;
@@ -29,6 +34,15 @@
     
 }
 
+.basket-delete-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.basket-delete-button-icon{
+    padding: 0px !important;
+}
 
 .basket-totalPrice{
     border: 1px solid black;

@@ -46,6 +46,7 @@
 
 .product-info{
     margin-left: 6%;
+    width: 35%;
 }
 .product-infoExtra{
     margin-left: 5%;
@@ -75,6 +76,7 @@
     border-radius: 2rem;
     border: 1px solid black;
     width: 100%;
+    cursor: pointer;
 }
 
 .product-page-button:hover{

@@ -5,13 +5,15 @@ import { useEffect, useState } from "react";
 import { useProductError } from "../hooks/useProductError"
 import { addBasket } from "../services/user.service";
 import { useAddBasketError } from "../hooks";
+import { useAuth } from "../context";
 
 
 export const Product = ({name}) => {
+    const { basket } = useAuth();
     const [product, setProduct] = useState({});
     const [ res, setRes] = useState({});
     const [ resBasket, setResBasket ] = useState({})
-
+    const [ adding, setAdding ] = useState(false)
     const getProductInfo = async() => {
         setRes(await getProductByName(name))
     }
@@ -30,7 +32,9 @@ export const Product = ({name}) => {
         const formData = {
             product: product?.data?._id
         }
+        setAdding(true)
         setResBasket(await addBasket(formData))
+        setTimeout(() => setAdding(false),1500)
     }
 
     useEffect(() => {
@@ -70,7 +74,13 @@ export const Product = ({name}) => {
 
                     {product?.data?.stock==0 
                         ? null
-                        : <button className="product-page-button" onClick={handleBasket}>AGREGAR AL CARRITO</button>
+                        : <button 
+                            className="product-page-button" 
+                            onClick={handleBasket}
+                            disabled={adding}>
+                            
+                                {adding ? "AGREGANDO..." : "AGREGAR AL CARRITO"}
+                            </button>
                     }
                     
                     
