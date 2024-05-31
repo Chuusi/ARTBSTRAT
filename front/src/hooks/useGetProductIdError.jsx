@@ -1,8 +1,5 @@
-export const useGetProductIdError = (result, setProductsBasket, productListUpdated,totalPrice, setTotalPrice) => {
+export const useGetProductIdError = (result, setProductsBasket, productListUpdated) => {
     if(result?.status == 200){
-        console.log("Se ha actualzido la cesta del usuario", result);
-        setTotalPrice(totalPrice => totalPrice + result?.data?.price)
-        console.log(totalPrice,"dentro del use");
         productListUpdated.push(result?.data)
 
     }

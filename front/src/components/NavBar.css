@@ -13,3 +13,29 @@
     justify-content: space-around;
     align-items: center;
 }
+
+.numberHide{
+    display: none;
+}
+
+.numberSee {
+    display: block;
+}
+
+.basket-number-container{
+    position: relative;
+    bottom: 13px;
+    right: -20px;
+    width: 18px;
+}
+
+#basketUnits-basketLogo{
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    font-size: 0.4em;
+    padding: 2px;
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+}

@@ -15,6 +15,7 @@ const {
     getUserByEmail,
     getLogedUser,
     getUsersByName,
+    removeBasket,
 } = require("../controllers/User.controllers");
 const {upload} = require("../../middleware/files.middleware")
 const express = require("express");
@@ -37,6 +38,7 @@ UserRoutes.patch("/updateUser", [isAuth],upload.single("image"), updateUser);
 UserRoutes.patch("/addFavProduct", [isAuth], addFavProduct);
 UserRoutes.patch("/addFavPost", [isAuth], addFavPost);
 UserRoutes.patch("/addBasket", [isAuth], addBasket);
+UserRoutes.patch("/removeBasket", [isAuth], removeBasket)
 
 UserRoutes.delete("/deleteUser", [isAuth], deleteUser);
 

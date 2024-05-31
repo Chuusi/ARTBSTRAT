@@ -43,6 +43,8 @@ export const AuthContextProvider = ({children}) => {
         setUser(parseUser);
     };
 
+    
+
     const logout = () => {
         localStorage.removeItem("user");
         setUser(null);
@@ -56,7 +58,7 @@ export const AuthContextProvider = ({children}) => {
         logout,
         allUser,
         setAllUser,
-        bridgeData
+        bridgeData,
     }), [user, allUser]);
 
     //* Devolvemos el componente del contexto

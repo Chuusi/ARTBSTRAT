@@ -158,9 +158,23 @@ export const adminUser = async (formData) => {
         .catch((error) => error);
 };
 
+//? -------------- GET USER BY NAME-----------------------
+
 export const getUsersByName = async (formData) => {
     return APIuser.get("/user/getUsersByName", {
         params: formData,
+        headers: {
+            Authorization: `Bearer ${updateToken()}`,
+        },
+    })
+        .then((res) => res)
+        .catch((error) => error);
+};
+
+//? --------------- DELETE BASKET -----------------------
+
+export const deleteBasket = async (formData) => {
+    return APIuser.patch("/user/removeBasket", formData, {
         headers: {
             Authorization: `Bearer ${updateToken()}`,
         },

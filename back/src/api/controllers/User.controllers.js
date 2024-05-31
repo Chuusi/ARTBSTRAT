@@ -784,28 +784,81 @@ const addFavPost = async(req,res,next) => {
     }
 }
 
+//? ------------------------ QUITAR PRODUCTO DEL CARRITO ----------------------------------
+const removeBasket = async(req,res,next) => {
+    try {
+        const {id} = req.user;
+        const {product} = req.body;
+        const userExist = await User.findById(id);
+
+        if(userExist?.basket?.includes(product)){
+            try {
+                const basket = userExist.basket;
+                const index = basket.indexOf(product);
+                if(index > -1){
+                    basket.splice(index, 1);
+                }
+                await User.findByIdAndUpdate(id, {
+                    basket: basket,
+                })
+            } catch (error) {
+                return res.status(404).json({
+                    message: "❌ No se pudo quitar el producto del carrito ❌",
+                    error: error,
+                })
+            }
+        } else{
+            return res.status(404).json({
+                message: "❌ No se encontró el producto en el carrito ❌",
+                error: "Error en el if/else del removeBasket"
+            });
+        }
+
+        //testing
+        try {
+            
+            const userUpdated = await User.findById(id);
+            if(userUpdated.basket == userExist.basket){
+                return res.status(404).json({
+                    message: "❌ No se actualizó correctamente la DB ❌",
+                    error: "Error en el if/else del testing del removeBasket"
+                });
+            } else {
+                return res.status(200).json({
+                    message: `${userExist.name}, se modificó tu carrito con éxito.`,
+                    product: product,
+                    basket: userUpdated.basket,
+                });
+            }
+        } catch (error) {
+            return res.status(404).json({
+                message: "❌ No se encontró un user con ese id en la DB ❌",
+                error: error,
+            });
+        }
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "❌ Error en el try/catch general del addBasket ❌",
+            error: error,
+        });
+    }
+}
+
 //? ------------------------- AÑADIR PRODUCTO AL CARRITO ----------------------------------
 const addBasket = async(req,res,next) => {
     try {
         const { id } = req.user;
-        const { product}  = req.body;
+        const { product }  = req.body;
         const userExist = await User.findById(id);
+        const productInfo = await Product.findById(product)
+        const productStok = productInfo?.stock;
 
-        if (userExist.basket.includes(product)) {
-            //* Modificamos el user
-            try {
-                await User.findByIdAndUpdate(id, {
-                    $pull: {
-                        basket: product,
-                    },
-                });
-            } catch (error) {
-                return res.status(404).json({
-                    message:
-                        "❌ No se pudo quitar el producto del carrito ❌",
-                    error: error,
-                });
-            }
+        if(productStok == 0){
+            return res.status(404).json({
+                message: "❌ No quedan existencias del producto en stock ❌",
+                error: "Error en el if/else comprobando si hay stock"
+            });
         } else {
             try {
                 await User.findByIdAndUpdate(id, {
@@ -815,12 +868,12 @@ const addBasket = async(req,res,next) => {
                 });
             } catch (error) {
                 return res.status(404).json({
-                    message:
-                        "❌ No se pudo añadir el producto al carrito ❌",
+                    message: "❌ No se pudo añadir el producto al carrito ❌",
                     error: error,
                 });
             }
         }
+        
 
         //testing
 
@@ -836,6 +889,7 @@ const addBasket = async(req,res,next) => {
                 return res.status(200).json({
                     message: `${userExist.name}, se modificó tu carrito con éxito.`,
                     basket: userUpdate.basket,
+                    product: product,
                 });
             }
         } catch (error) {
@@ -980,6 +1034,7 @@ module.exports = {
     deleteUser,
     addFavProduct,
     addFavPost,
+    removeBasket,
     addBasket,
     adminUser,
     getUserByEmail,
