@@ -67,10 +67,11 @@ export const Home = () => {
                                         </div>
                                     </div>
                                     <div className="home-carrusel-direction" >
+            
                                         <button 
                                             className ="home-carrusel-buttoms" 
-                                            onClick={() => setCarruselPointer(carruselPointer - 1)}
-                                            style={{display:carruselPointer == 0 ? "none" : "initial"}}
+                                            onClick={() => carruselPointer == 0 ? "" : setCarruselPointer(carruselPointer - 1)}
+                                            style={{opacity:carruselPointer == 0 ? "0%" : "100%"}}
                                         ><a href={`#${index-1}`}><span className="home-arrow material-symbols-outlined left" >keyboard_double_arrow_left</span></a></button>
                                         <button 
                                             className ="home-carrusel-buttoms" 

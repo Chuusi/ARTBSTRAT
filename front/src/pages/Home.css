@@ -128,6 +128,8 @@
     height: 20%;
     width: 100%;
     padding:20px;
+    display: flex;
+    justify-content: space-between;
 }
 
 
@@ -185,12 +187,10 @@
 }
 
 .left{
-    position: absolute;
     left: 0;
 }
 
 .right{
-    position: absolute;
     right: 0;
 }
 
