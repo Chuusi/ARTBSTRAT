@@ -179,7 +179,7 @@ export const Register = () => {
                         <div className="register-terms-anchor">
                             <small>
                                 Haciendo click en "Registrarse", aceptas nuestros{" "}
-                                <Link to="/termsAndConditions">Términos & condiciones</Link>
+                                <Link target="_blank" to="/termsAndConditions">Términos & condiciones</Link>
                             </small>
                         </div>
 

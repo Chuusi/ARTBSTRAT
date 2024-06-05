@@ -33,7 +33,7 @@ export const Footer = () => {
 
 
                 <div className="footer-div-social-media">
-                    <div className="footer-div-insta"><a href="https://www.instagram.com/artbstrat/" className="footer-insta fa fa-instagram"></a></div>
+                    <div className="footer-div-insta"><a target="_blank" href="https://www.instagram.com/artbstrat/" className="footer-insta fa fa-instagram"></a></div>
                 </div>
 
                 <div className="footer-signature"><p className="footer-signature-p"> 2024 © Artbstrat SL</p></div>
