@@ -6,13 +6,13 @@ dotenv.config();
 const isAuth = async(req,res,next) => {
 
     const token = req.headers.authorization?.replace("Bearer ", "");
-
-    if(!token){
+    
+    if(token == "undefined"){
         return next(new Error("No autorizado, no hay token"));
     };
 
     try {
-        const decoded = verifyToken(token, process.env.JWT_SECRET);
+        const decoded = verifyToken(token);
 
         req.user = await User.findById(decoded.id);
         next();
@@ -24,12 +24,12 @@ const isAuth = async(req,res,next) => {
 
 const isAuthAdmin = async(req,res,next) => {
     const token = req.headers.authorization?.replace("Bearer ", "");
-    if (!token) {
+    if (token == "undefined") {
         return next(new Error("No autorizado, no hay token"));
     }
 
     try {
-        const decoded = verifyToken(token, process.env.JWT_SECRET);
+        const decoded = verifyToken(token);
         req.user = await User.findById(decoded.id);
         
         if(req.user.role !== "admin"){

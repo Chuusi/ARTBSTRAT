@@ -89,8 +89,6 @@ export const UserFavProducts = () => {
         favListCreator();
     },[])
     
-    console.log("favList", favList);
-    console.log("favPostList",favPostList);
 
     return (
         <div className="profile-subcontainer-favs">

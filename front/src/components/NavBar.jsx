@@ -18,18 +18,15 @@ export const NavBar = () => {
 
     useEffect(() => {
         userInfo();
-    },[])
+    },[user])
 
     useEffect(() => {
         if(res && Object.keys(res).length > 0){
             useGetLogedUserError(res, setRes, setUserBasket)
-            console.log(userBasket.length);
+            setBasketUnits(userBasket.length)
         }    
     },[res]);
 
-    useEffect(() => {
-        setBasketUnits(userBasket.length)
-    },[userBasket]);
 
 
 

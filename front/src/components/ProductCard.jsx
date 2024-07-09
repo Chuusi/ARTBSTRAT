@@ -4,24 +4,38 @@ import { useAuth } from "../context/authContext";
 import { useEffect, useState } from "react";
 import { addFavProduct, getLogedUser } from "../services/user.service"
 import { useForm } from "react-hook-form";
-import { useAddFavProductError } from "../hooks/useAddFavProductError";
-
-//Primero nos traemos la informacion del usuario actualmente logeado
-let currentUser = await getLogedUser()
+import { useAddFavProductError, useGetLogedError } from "../hooks";
 
 
 export const ProductCard = ({id, name, image, price, offerPrice}) => {
 
     const [send, setSend] = useState(false);
     const [res, setRes] = useState({});
+    const [resUser, setResUser] = useState({});
     const { register, handleSubmit } = useForm();
     const { user } = useAuth();
 
     //Estado para cambiar el icono de favorito a no favorito
-    const [ buttonFav, setButtonFav ] = useState(currentUser?.data?.favProducts?.includes(id) ? "heart_check" : "heart_plus")
+    const [ buttonFav, setButtonFav ] = useState("heart_plus")
     //Estado para cambiar el color del boton de favorito 
-    const [ likeButtom, setLikeButtom ] = useState(currentUser?.data?.favProducts?.includes(id) ? "like" : "nolike")
+    const [ likeButtom, setLikeButtom ] = useState("nolike")
     
+
+    const infoUser = async() => {
+        setResUser(await getLogedUser())
+    }
+
+    useEffect(() => {
+        infoUser();
+    },[])
+
+    useEffect(() => {
+        if(resUser && Object.keys(resUser).length > 0){
+            useGetLogedError(resUser, setResUser);
+            setButtonFav(resUser?.favProducts?.includes(id) ? "heart_check" : "heart_plus")
+            setLikeButtom(resUser?.favProducts?.includes(id) ? "like" : "nolike")
+        }
+    },[resUser])
 
     const formSubmit = async(formData) => {
         setSend(true);
@@ -43,11 +57,11 @@ export const ProductCard = ({id, name, image, price, offerPrice}) => {
                         if(buttonFav == "heart_check"){
                             setButtonFav("heart_plus")
                             setLikeButtom("nolike")
-                            currentUser.data.favProducts = currentUser.data.favProducts.filter((el) => el!=id);
+                            resUser.favProducts = resUser.favProducts.filter((el) => el!=id);
                         }else{
                             setButtonFav("heart_check")
                             setLikeButtom("like")
-                            currentUser.data.favProducts.push(id)
+                            resUser.favProducts.push(id)
                         }
                     }}
                     type="submit"

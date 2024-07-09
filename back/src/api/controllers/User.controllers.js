@@ -262,7 +262,7 @@ const login = async(req, res, next) => {
                 bcrypt.compareSync(password, userExist.password) ||
                 password == userExist.password
             ) {
-                const token = generateToken(userExist._id, email);
+                const token = generateToken(userExist.id, email);
                 return res.status(200).json({
                     message: "Token generado, login satisfactorio",
                     user: userExist,
@@ -1006,7 +1006,7 @@ const getLogedUser = async(req, res, next) => {
         const userInfo = req.user;
         if(userInfo){
             return res.status(200).json(userInfo);
-        }{
+        } else {
             return res.status(404).json({
                 message: "❌ No se encontró el user loguead ❌",
                 error: "ERROR 404 en el if/else de getLoguedUser",

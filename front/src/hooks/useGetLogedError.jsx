@@ -1,8 +1,7 @@
-export const useGetLogedUserError = (res, setRes, setBasketUser) => {
+export const useGetLogedError = (res, setRes) => {
 
     if(res?.status == 200){
         setRes(res?.data);
-        setBasketUser(res?.data?.basket)
     }
 
     if(res?.response?.status == 500){

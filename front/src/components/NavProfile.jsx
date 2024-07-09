@@ -2,18 +2,36 @@ import { Link, NavLink } from "react-router-dom"
 import "./NavProfile.css"
 import { useEffect, useState } from "react"
 import { getLogedUser } from "../services/user.service"
-
-const infoUser = await getLogedUser();
+import { useGetLogedError } from "../hooks"
 
 
 export const NavProfile = () => {
     
-    let isAdmin = false;
+    const [res, setRes] = useState({});
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    const infoUser = async() => {
+        setRes(await getLogedUser())
+    }
+
+    //Nada más cargar la página carga el infoUser para después determinar si es admin
+    useEffect(() => {
+        infoUser();
+    },[]);
+
+    useEffect(() => {
+        if(res && Object.keys(res).length > 0){
+            useGetLogedError(res, setRes);
+            setIsAdmin(res?.role === "admin" ? true : false);
+        }
+    },[res])
+
+    /* let isAdmin = false;
     if(infoUser?.data?.role === "admin"){
         isAdmin = true;
     } else{
         isAdmin = false;
-    }
+    } */
 
     return (
         <div className="nav-profile-container">

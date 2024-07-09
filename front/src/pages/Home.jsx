@@ -3,9 +3,8 @@ import { NavLink } from "react-router-dom";
 import { getAllComment } from "../services/comment.service";
 import { useEffect, useState } from "react";
 
+//Traemos todos los comentarios
 const listComment = await getAllComment();
-console.log(listComment.data);
-
 
 export const Home = () => {
     
@@ -16,11 +15,6 @@ export const Home = () => {
         const shuffled = listComment?.data?.sort(() => 0.5 - Math.random());
         setSelected(shuffled.slice(0, 5));
     },[listComment])
-
-
-    useEffect(() => {
-        console.log(carruselPointer);
-    },[carruselPointer])
 
 
     return (
@@ -85,7 +79,7 @@ export const Home = () => {
 
                         <div className="home-div-points">
                             {selected.map((comment, index) => 
-                                    <div>
+                                    <div key={index} >
                                         <span id={index} className="home-points material-symbols-outlined">radio_button_{carruselPointer==index ? "checked" : "unchecked"}</span>
                                     </div>
                             )}

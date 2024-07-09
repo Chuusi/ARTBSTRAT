@@ -5,23 +5,37 @@ import { useEffect, useState } from "react";
 import { addFavPost, getLogedUser } from "../services/user.service"
 import { useForm } from "react-hook-form";
 import { useAddFavPostError } from "../hooks/useAddFavPostError"
-
-//Primero nos traemos la informacion del usuario actualmente logeado
-let currentUser = await getLogedUser()
+import { useGetLogedError } from "../hooks";
 
 
 export const PostCard = ({id, name, image}) => {
 
     const [send, setSend] = useState(false);
     const [res, setRes] = useState({});
+    const [resUser, setResUser] = useState({});
     const { register, handleSubmit } = useForm();
     const { user } = useAuth();
 
     //Estado para cambiar el icono de favorito a no favorito
-    const [ buttonFav, setButtonFav ] = useState(currentUser?.data?.favPosts?.includes(id) ? "heart_check" : "heart_plus")
+    const [ buttonFav, setButtonFav ] = useState("heart_plus")
     //Estado para cambiar el color del boton de favorito 
-    const [ likeButtom, setLikeButtom ] = useState(currentUser?.data?.favPosts?.includes(id) ? "like" : "nolike")
-    
+    const [ likeButtom, setLikeButtom ] = useState("nolike")
+
+    const infoUser = async() => {
+        setResUser(await getLogedUser())
+    }
+
+    useEffect(() => {
+        infoUser();
+    },[])
+
+    useEffect(() => {
+        if(resUser && Object.keys(resUser).length > 0){
+            useGetLogedError(resUser, setResUser);
+            setButtonFav(resUser?.favPosts?.includes(id) ? "heart_check" : "heart_plus")
+            setLikeButtom(resUser?.favPosts?.includes(id) ? "like" : "nolike")
+        }
+    },[resUser])
 
     const formSubmit = async(formData) => {
         setSend(true);
@@ -43,11 +57,11 @@ export const PostCard = ({id, name, image}) => {
                         if(buttonFav == "heart_check"){
                             setButtonFav("heart_plus")
                             setLikeButtom("nolike")
-                            currentUser.data.favPost = currentUser.data.favPosts.filter((el) => el!=id);
+                            resUser.favPost = resUser.favPosts.filter((el) => el!=id);
                         }else{
                             setButtonFav("heart_check")
                             setLikeButtom("like")
-                            currentUser.data.favPosts.push(id)
+                            resUser.favPosts.push(id)
                         }
                     }}
                     type="submit"
