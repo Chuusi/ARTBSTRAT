@@ -14,8 +14,9 @@
 
 .basket-productInfo{
     display: grid;
-    grid-template-columns: 1fr 1.6fr 0.4fr 0.1fr;
+    grid-template-columns: 1fr 1.6fr 0.4fr 0.4fr 0.1fr;
     grid-template-rows: 1fr;
+    gap: 5px;
     justify-content:end;
     align-items: center;
     padding: 10px;
@@ -28,11 +29,12 @@
 
 }
 
-.basket-productInfo Link p {
-    width: 20%;
-    margin-left: 5%;
-    
+.basket-productInfo > a > p {
+    width: 30%;
+    margin-left: 10%;
+    color: black;
 }
+
 
 .basket-delete-button{
     display: flex;
@@ -48,4 +50,10 @@
     border: 1px solid black;
     text-align:end;
     padding: 20px;
+}
+
+.product-old-price-basket{
+    text-decoration: line-through;
+    color: gray;
+    font-size: medium;
 }

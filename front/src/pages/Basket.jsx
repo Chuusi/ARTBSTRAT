@@ -6,6 +6,7 @@ import { getProductByIdNoParam } from "../services/product.service"
 import { useGetProductIdError } from "../hooks/useGetProductIdError"
 import { Link } from "react-router-dom"
 import { useDeleteBasketError } from "../hooks"
+import { alerta } from "../utils/alerts"
 
 
 export const Basket = () => {
@@ -42,7 +43,8 @@ export const Basket = () => {
         };
 
     useEffect(() => {
-            currentUser()
+        currentUser();
+        alerta("Probando en basket");
     },[])
 
     //Nos traemos la basket del usuario (lista de IDs de productos)
@@ -71,7 +73,7 @@ export const Basket = () => {
                 useGetProductIdError(result, setProductsBasket, productListUpdated)
             })
             productListUpdated.forEach(product => {
-                newTotalPrice += product.price;
+                newTotalPrice += product.offer ? product.offerPrice : product.price;
             })
             setProdcutList([...productListUpdated]);
             setPrecioFinal(newTotalPrice)
@@ -108,8 +110,10 @@ export const Basket = () => {
                 {productList.map((product, index) => (
                     <div className="basket-productInfo" key={index}>
                         <img src={product?.image} alt={product?.name} />
-                        <Link to={`/product/${product?.name}`}><p>{product?.name}</p></Link>
-                        <h3>€ {product?.price}</h3>
+                        <Link to={`/product/${product?.name}`}><p className="product-name-basket">{product?.name}</p></Link>
+                            
+                        {product?.offer ? <small className="product-old-price-basket">€{product?.price} </small> : <small></small>}
+                        <h3>€{product?.offer ? product?.offerPrice : product?.price}</h3>
                         <button 
                             onClick={() => handleDeleteBasket(product?._id)} 
                             className="basket-delete-button">

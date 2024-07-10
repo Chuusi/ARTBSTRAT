@@ -12,8 +12,7 @@ export const Home = () => {
     const [selected, setSelected] = useState([]);
 
     useEffect(() => {
-        const shuffled = listComment?.data?.sort(() => 0.5 - Math.random());
-        setSelected(shuffled.slice(0, 5));
+        setSelected(listComment);
     },[listComment])
 
 
@@ -50,14 +49,14 @@ export const Home = () => {
                 {/**CARRUSEL DE COMENTARIOS*/}
                     <div className="home-carrusel">
                         <div id="contentItemsCarrusel" className="home-carrusel-content">
-                            {selected.map((comment, index) => {
+                            {selected?.data?.results.map((element, index) => {
                                 return(
                                 <div key={index} className="home-carrusel-page" id={index}>
                                     <div className="home-carrusel-comment">
-                                    <img className="home-logo-comment" src="https://res.cloudinary.com/da7unrk9q/image/upload/v1715797954/logo_wqxsk8.jpg" alt="logoArtbstrat" />
+                                    <img className="home-logo-comment" src={element?.image} alt="https://res.cloudinary.com/da7unrk9q/image/upload/v1715797954/logo_wqxsk8.jpg" />
                                         <div className="home-div-comment">
-                                            <h3 className="home-username">{comment.ownerName}</h3>
-                                            <p className="home-p-comment">{comment.content}</p>
+                                            <h3 className="home-username">{element?.comment.ownerName}</h3>
+                                            <p className="home-p-comment">{element?.comment.content}</p>
                                         </div>
                                     </div>
                                     <div className="home-carrusel-direction" >
@@ -78,7 +77,7 @@ export const Home = () => {
                         </div>
 
                         <div className="home-div-points">
-                            {selected.map((comment, index) => 
+                            {selected?.data?.results.map((comment, index) => 
                                     <div key={index} >
                                         <span id={index} className="home-points material-symbols-outlined">radio_button_{carruselPointer==index ? "checked" : "unchecked"}</span>
                                     </div>
@@ -89,3 +88,5 @@ export const Home = () => {
         </div>
     )
 }
+
+//https://res.cloudinary.com/da7unrk9q/image/upload/v1715797954/logo_wqxsk8.jpg

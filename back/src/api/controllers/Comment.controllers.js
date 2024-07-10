@@ -1,6 +1,7 @@
 const Comment = require("../models/Comment.model");
 const User = require("../models/User.model");
-const Post = require("../models/Post.model")
+const Post = require("../models/Post.model");
+const { resolve } = require("path");
 
 
 
@@ -241,9 +242,25 @@ const getCommentById = async (req, res, next) => {
 const getAllComment = async (req, res, next) => {
     try {
         const allComment = await Comment.find();
-
+        const results = [];
         if (allComment.length > 0) {
-            return res.status(200).json(allComment)
+            try {
+                const shuffled = allComment?.sort(() => 0.5 - Math.random()).slice(0, 5);
+                const promises = shuffled.map(async(element) => {
+                    const userComment = await User.findById(element.owner)
+                    results.push({ image : userComment.image, comment: element});
+                })
+                //Cuando se mapea y hay una promesa dentro, si almacenamos valores
+                //hay que esperar a que todas las promesas se resuelvan
+                await Promise.all(promises)
+                return res.status(200).json({results});
+            } catch (error) {
+                return res.status(404).json({
+                    message:
+                        "❌ Fallo al seleccionar comentarios y traer fotos ❌",
+                    error: error,
+                });
+            }
         }else{
             return res.status(404).json({
                 message: "❌ No se ha encontrado ningún comentario en la DB ❌",
