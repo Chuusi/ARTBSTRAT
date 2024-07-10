@@ -1,0 +1,19 @@
+.tpb-sa-sucess{
+    background: rgb(149, 186, 254);
+    background: linear-gradient(270deg, rgba(149, 186, 254, 1) 0%, rgba(205, 255, 218, 1) 100%) !important;
+}
+
+.title-sa{
+    text-align: center !important;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+}
+
+.tpb-sa-error{
+    background: rgb(255, 101, 101);
+    background: linear-gradient(270deg, rgba(255, 101, 101, 1) 0%, rgba(255, 205, 205, 1) 100%);
+}
+
+.popup-sa{
+    margin-top: 85px;
+}

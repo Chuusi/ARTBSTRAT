@@ -1,3 +1,5 @@
+import { alertaSuccess, alertaError } from "../utils";
+
 export const useLoginError = (res,setRes,login,setLoginOk) => {
     
 
@@ -15,21 +17,22 @@ export const useLoginError = (res,setRes,login,setLoginOk) => {
         const stringUser = JSON.stringify(dataCustom);
         login(stringUser);
         setLoginOk(() => true);
+        alertaSuccess("Sesión iniciada con éxito",1500)
     }
     
     if(res?.response?.data.message.includes("Contraseña incorrecta")){
         setRes(() => ({}));
-        console.log("Contraseña incorrecta");
+        alertaError("Contraseña incorrecta", 2000)
     }
 
     if(res?.response?.data.message.includes("No existe un usuario")){
         setRes(() => ({}));
-        console.log("Usuario inexistente");
+        alertaError("Usuario no registrado", 2000)
     }
 
     if(res?.response?.status == 500) {
         setRes(() => ({}));
-        console.log("Error del servidor");
+        alertaError("Error del servidor", 2000)
     }
 
     return (

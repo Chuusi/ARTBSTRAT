@@ -6,7 +6,7 @@ import { getProductByIdNoParam } from "../services/product.service"
 import { useGetProductIdError } from "../hooks/useGetProductIdError"
 import { Link } from "react-router-dom"
 import { useDeleteBasketError } from "../hooks"
-import { alerta } from "../utils/alerts"
+import { alertaSuccess, alertaError } from "../utils"
 
 
 export const Basket = () => {
@@ -44,7 +44,7 @@ export const Basket = () => {
 
     useEffect(() => {
         currentUser();
-        alerta("Probando en basket");
+        alertaError("Probando en basket",1500);
     },[])
 
     //Nos traemos la basket del usuario (lista de IDs de productos)

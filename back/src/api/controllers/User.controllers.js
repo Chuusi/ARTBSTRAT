@@ -214,7 +214,7 @@ const checkUser = async(req,res,next) => {
                         //No se sumó el número de trys
                         return res.status(404).json({
                             message:
-                                "❌ No se pudo actualizar la información en la DB❌ ",
+                                "❌ No se pudo actualizar la información en la DB ❌",
                             error: error,
                         });
                     }

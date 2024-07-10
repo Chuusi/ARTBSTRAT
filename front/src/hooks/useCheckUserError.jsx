@@ -1,3 +1,5 @@
+import { alertaSuccess, alertaError } from "../utils";
+
 export const useCheckUserError = (
     res,
     setRes,
@@ -8,8 +10,6 @@ export const useCheckUserError = (
 ) => {
 
     //? Respuesta 200
-
-    console.log("res del useCheckUSerError", res);
 
     if(res?.data?.testCheckOk?.toString() == "true"){
 
@@ -29,7 +29,7 @@ export const useCheckUserError = (
 
         setOkCheck(() => true);
         setRes(() => {});
-        console.log("Check con éxito");
+        alertaSuccess("Código correcto", 1500);
     };
 
 
@@ -38,17 +38,27 @@ export const useCheckUserError = (
     if(res?.data?.testCheckOk?.toString() == "false"){
         setRes(() => {});
         console.log("No se actualizó el check en la base de datos");
+        alertaError("Código correcto, pero hubo un error, reinténtalo", 3000)
+    }
+
+    
+    //? No se actualizó el número de trys
+
+    if(res?.response?.data.message.includes("No se pudo actualizar la información en la DB")){
+        setRes(() => {});
+        alertaError("Hubo en fallo en la verificación de código", 3000)
     }
 
 
     //? Aviso de 2 trys, a los 3 se borrará el usuario
 
     if(res?.data?.trys == 2){
-        console.log("2 intentos fallidos, al 3º se borrará el usuario");
+        alertaError("2 intentos fallidos, al 3º se borrará el usuario", 3000)
     };
 
     if(res?.data?.message?.includes("Intento número 3 fallido, eliminando usuario de la DB")){
-        console.log("Usuario borrado de la DB al fallar 3 veces");
+        alertaError("Se borró la cuenta al fallar 3 veces el código", 3000)
+
         setOkDeleteUser(() => true)
     };
 
@@ -56,14 +66,24 @@ export const useCheckUserError = (
     //? Código fallado
 
     if(res?.data?.message.includes("al fallar 3, se borrará el usuario")){
-        console.log("Código incorrecto");
+        alertaError("Código incorrecto, si se falla 3 veces, se borrará la cuenta", 3000)
+
     }
+
+
+    //? 404 No se borró el usuario tras 3 fallose
+
+    if(res?.response?.data.message.includes("No se pudo borrar al usuario de la DB tras fallar 3 veces el check code")){
+        setRes(() => {});
+        alertaError("Se falló 3 veces, pero ha habido un error al borrar la cuenta", 3000)
+    }
+
 
     //? Respuesta 404: user not found 
 
     if(res?.response?.status == 404) {
         setUserNotFound(() => true);
         setRes(() => {});
-        console.log("No se encontró un usuario con ese mail");
+        alertaError("No se encontró un usuario con ese mail", 3000);
     }
 }
