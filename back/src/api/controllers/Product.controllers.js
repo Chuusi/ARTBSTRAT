@@ -7,45 +7,55 @@ const User = require("../models/User.model");
 const addProduct = async (req, res, next) => {
     let catchImg = req.file?.path;
     const userRole = req.user.role;
-    if (userRole == "admin"){
-        try {
-            
-            await Product.syncIndexes();
 
-    
-            const newProduct = new Product(req.body);
+    try {
+        if (userRole == "admin") {
+            try {
+                await Product.syncIndexes();
 
-            newProduct.image = catchImg;
-            const saveProduct = await newProduct.save();
-            if(saveProduct){
-                return res.status(200).json({
-                    message: "El producto se ha creado con éxito",
-                    product: saveProduct})
-            }else{
+                const newProduct = new Product(req.body);
+
+                newProduct.image = catchImg;
+                const saveProduct = await newProduct.save();
+                if (saveProduct) {
+                    return res.status(200).json({
+                        message: "El producto se ha creado con éxito",
+                        product: saveProduct,
+                    });
+                } else {
+                    if (req.file) deleteImgCloudinary(catchImg);
+
+                    return res.status(500).json({
+                        message:
+                            "❌ No se ha podido guardar el nuevo producto en la DB ❌",
+                        error: error,
+                    });
+                }
+            } catch (error) {
                 if (req.file) deleteImgCloudinary(catchImg);
 
                 return res.status(500).json({
-                    message : "❌ No se ha podido guardar el nuevo producto en la DB ❌",
+                    message:
+                        "❌ No se ha podido llevar a cabo la creación de un nuevo producto en la DB ❌",
                     error: error,
-                })
+                });
             }
-        } catch (error) {
+        } else {
             if (req.file) deleteImgCloudinary(catchImg);
 
-            return res.status(500).json({
-                message: "❌ No se ha podido llevar a cabo la creación de un nuevo producto en la DB ❌",
-                error: error
-            })
+            return res.status(404).json({
+                message:
+                    "❌ Solo un administrador puede crear nuevos productos en esta página ❌",
+                error: "USUARIO NO AUTORIZADO",
+            });
         }
-
-    }else{
-        if (req.file) deleteImgCloudinary(catchImg);
-
-        return res.status(404).json({
-            message: "❌ Solo un administrador puede crear nuevos productos en esta página ❌",
-            error: "USUARIO NO AUTORIZADO"
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error interno del servidor",
+            error: error,
         })
     }
+    
 };
 
 

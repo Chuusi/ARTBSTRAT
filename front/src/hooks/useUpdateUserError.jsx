@@ -1,4 +1,4 @@
-import { updateToken } from "../utils";
+import { alertaError, alertaSuccess, updateToken } from "../utils";
 
 export const useUpdateUserError = (res, setRes, login, setUpdateOk) => {
     let contador;
@@ -49,7 +49,7 @@ export const useUpdateUserError = (res, setRes, login, setUpdateOk) => {
     //Si el total de items es igual a contador, nada ha cambiado
     if(res?.status == 200 && contador == totalItems){
         setRes(() => ({}));
-        console.log("Datos iguales a los almacenados");
+        alertaError("Los datos son iguales a los anteriores", 2000)
     }
 
     if(res?.status == 200) {
@@ -66,20 +66,27 @@ export const useUpdateUserError = (res, setRes, login, setUpdateOk) => {
         }
         const stringUser = JSON.stringify(customData);
         login(stringUser);
-        
         setUpdateOk(() => true);
-
-        console.log(`Datos actualizados: ${check}`);
+        alertaSuccess(`Datos actualizados: ${check}`,3000)
     }
 
-    if(res?.response?.status == 404){
+
+    //? 404 formato de nombre incorrecto
+
+    if(res?.response?.data.message.includes("El nuevo nombre sólo puede contener letras y números y hasta 20 caracteres máximos")){
+        setRes(() => {});
+        alertaError("El nuevo nombre sólo puede contener letras y números y hasta 20 caracteres máximos", 4000);
+    }
+
+
+    if(res?.response?.data?.message.includes("No se actualizó la información en la DB")){
         setRes(() => ({}));
-        console.log("No se pudo actualizar los datos en la DB");
+        alertaError("No se pudo actualizar la información, inténtalo de nuevo", 3000);
     }
 
     if(res?.response?.status == 500){
         setRes(() => ({}));
-        console.log("Error interno del servidor");
+        alertaError("Error en el servidor, inténtalo más tarde", 3000);
     }
 
 

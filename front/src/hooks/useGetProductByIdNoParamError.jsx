@@ -5,6 +5,6 @@ export const useGetProductByIdNoParamError = (result, setRes, setFavList, update
         updatedFavList.push(result.data);
     }
     else{
-        console.log("No sabemos hacer eso");
+        console.log("Error en la obtención de producto byID", result);
     }
 }

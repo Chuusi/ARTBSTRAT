@@ -1,24 +1,29 @@
+import { alertaSuccess, alertaError } from "../utils";
+
 export const useDeleteUserError = (res,setRes,setDeleting, setUser) => {
     if(res?.status == 200){
         setUser(() => null);
         localStorage.removeItem("user");
         setRes(() => ({}))
         setDeleting(() => true)
-        console.log("Usuario borrado correctamente");
+        alertaSuccess("Usuarrio borrado correctamente", 2000);
     }
 
-    /* if(res?.response?.data?.message.includes("Listas de productos no vaciadas")){
+
+    //? 404 no se quitó al usuario de las listas de productos
+
+    if(res?.response?.data?.message.includes("Listas de productos no vaciadas")){
         setRes(() => ({}));
-        console.log("Listas de productos no vaciadas");
+        alertaError("Hubo un error, inténtalo de nuevo", 2000);
     }
 
     if(res?.response?.data?.message.includes("Usuario no borrado de la DB")){
         setRes(() => ({}));
-        console.log("Usuario no borrado de la DB");
+        alertaError("Usuario no borrado, inténtalo de nuevo", 2000);
     }
 
-    if(res?.response?.data?.message.includes("Error en el try/catch general del deleteUser")){
+    if(res?.response?.status == 500){
         setRes(() => ({}));
-        console.log("Error en el try/catch general del deleteUser");
-    } */
+        alertaError("Error en el servidor, inténtalo más tarde", 2500);
+    }
 }

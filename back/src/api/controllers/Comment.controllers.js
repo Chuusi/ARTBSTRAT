@@ -26,7 +26,7 @@ const createComment = async (req, res, next) => {
 
         } catch (error) {
             return res.status(404).json({
-                message: "❌ No se ha podido actualizar la lista de comentarios del usuario al borrar el comentario ❌",
+                message: "❌ No se ha podido actualizar la lista de comentarios del usuario al crear el comentario ❌",
                 error: error,
             })
         };

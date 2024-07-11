@@ -34,8 +34,4 @@ export const useLoginError = (res,setRes,login,setLoginOk) => {
         setRes(() => ({}));
         alertaError("Error del servidor", 2000)
     }
-
-    return (
-        <div>useLoginError</div>
-    )
 }

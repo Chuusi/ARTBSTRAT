@@ -23,7 +23,6 @@ export const useCheckUserError = (
             };
 
             const userJSON = JSON.stringify(customUser);
-            console.log("useCheck",userJSON);
             login(userJSON);
         }
 
@@ -37,7 +36,6 @@ export const useCheckUserError = (
     
     if(res?.data?.testCheckOk?.toString() == "false"){
         setRes(() => {});
-        console.log("No se actualizó el check en la base de datos");
         alertaError("Código correcto, pero hubo un error, reinténtalo", 3000)
     }
 
@@ -58,7 +56,6 @@ export const useCheckUserError = (
 
     if(res?.data?.message?.includes("Intento número 3 fallido, eliminando usuario de la DB")){
         alertaError("Se borró la cuenta al fallar 3 veces el código", 3000)
-
         setOkDeleteUser(() => true)
     };
 
@@ -67,7 +64,6 @@ export const useCheckUserError = (
 
     if(res?.data?.message.includes("al fallar 3, se borrará el usuario")){
         alertaError("Código incorrecto, si se falla 3 veces, se borrará la cuenta", 3000)
-
     }
 
 
