@@ -45,7 +45,7 @@ export const useUpdateUserError = (res, setRes, login, setUpdateOk) => {
             }
         })
     }
-
+    console.log(res);
     //Si el total de items es igual a contador, nada ha cambiado
     if(res?.status == 200 && contador == totalItems){
         setRes(() => ({}));
@@ -73,7 +73,7 @@ export const useUpdateUserError = (res, setRes, login, setUpdateOk) => {
 
     //? 404 formato de nombre incorrecto
 
-    if(res?.response?.data.message.includes("El nuevo nombre sólo puede contener letras y números y hasta 20 caracteres máximos")){
+    if(res?.response?.data?.message?.includes("El nuevo nombre sólo puede contener letras y números y hasta 20 caracteres máximos")){
         setRes(() => {});
         alertaError("El nuevo nombre sólo puede contener letras y números y hasta 20 caracteres máximos", 4000);
     }
@@ -89,6 +89,10 @@ export const useUpdateUserError = (res, setRes, login, setUpdateOk) => {
         alertaError("Error en el servidor, inténtalo más tarde", 3000);
     }
 
+    if(res?.message?.includes("timeout of 6000ms exceeded")){
+        setRes(() => {})
+        alertaError("La conexión es lenta, inténtalo más tarde", 2500)
+    }
 
     //Algo ha cambiado en los items, pero no se actualizó bien la información y dió respuesta 200
     //A verificar el condicional

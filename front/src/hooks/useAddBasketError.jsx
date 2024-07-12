@@ -1,7 +1,7 @@
 import { alertaSuccess, alertaError } from "../utils";
 
 export const useAddBasketError = (resBasket, setResBasket) => {
-    if(resBasket.status == 200){
+    if(resBasket?.status == 200){
         document.getElementById("basketUnits-basketLogo").innerHTML= resBasket?.data?.basket.length == 0 ? "" : resBasket?.data?.basket.length;
         document.getElementById("basketUnits-basketLogo").style.display= resBasket?.data?.basket.length == 0 ? "none" : "block";
         setResBasket(() => ({}))
@@ -38,8 +38,8 @@ export const useAddBasketError = (resBasket, setResBasket) => {
         setResBasket(() => {})
     }
 
-    else{
+    /* else{
         alertaError("Error inesperado", 2000);
         setResBasket(() => {})
-    }
+    } */
 }

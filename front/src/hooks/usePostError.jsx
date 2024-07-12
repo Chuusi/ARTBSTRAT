@@ -1,5 +1,5 @@
 export const usePostError = (res, setRes, setPost) => {
-
+    console.log(res);
     if(res?.status == 200){
         setPost(res);
         setRes({});

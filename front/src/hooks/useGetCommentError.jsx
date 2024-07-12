@@ -3,7 +3,7 @@ export const useGetCommentError = (result, setResComments, setCommentList, comme
     if(result?.status == 200){
         commentListUpdated.push(result.data);
     }
-    else{
+    /* else{
         console.log("Se ha producido un error al traer los comentarios de este post", result);
-    }
+    } */
 }

@@ -23,6 +23,7 @@ export const Post = ({id}) => {
     const [resComments, setResComments] = useState([]);
     const [resAddComment, setResAddComment] = useState({});
     const [commentList, setCommentList] = useState([]);
+    const [likes, setLikes] = useState(0);
     const { register, handleSubmit, setValue, watch } = useForm();
     const {user, setUser} = useAuth();
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -36,7 +37,9 @@ export const Post = ({id}) => {
 
     //Ahora que tenemos el post almacenado en la variable "post", recorremos la lista de comentarios para traernos los comentarios de la DB
     const getComments = async() => {
+        console.log("POST",post);
         try {
+            setLikes(post?.data?.likes);
             const promises = post?.data?.comments.map(async(comment) => { 
                 const customFormData = {
                     id : comment
@@ -67,7 +70,9 @@ export const Post = ({id}) => {
 
     //Configuramos el boton en forma de corazon para los likes
     const [liked, setLiked] = useState(false);
-    const toggleLike = () => {setLiked(!liked)};
+    const toggleLike = () => {
+        setLiked(!liked)
+    };
         
 
 
@@ -136,7 +141,7 @@ export const Post = ({id}) => {
                         <button onClick={toggleLike} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
                             <FontAwesomeIcon className="post-heart-button" icon={liked ? solidHeart : regularHeart} style={{ color: 'black' }} />
                         </button>
-                        <p>{post?.data?.likes} likes </p>
+                        <p>{likes} likes </p>
                     </div>
                     
                     
@@ -155,7 +160,7 @@ export const Post = ({id}) => {
                                         type="button" 
                                         ref={buttonRef} 
                                         onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
-                                            <span class="material-symbols-outlined">mood</span>
+                                            <span className="material-symbols-outlined">mood</span>
                                         </button>
                                         {/**Mostramos el selector de iconos y lo añadimos al comentario */
                                         showEmojiPicker && 
