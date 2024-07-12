@@ -24,11 +24,13 @@ export const UpdateUser = () => {
     }
 
 
-    if(infoUser.data == undefined){
+    /* if(infoUser.data == undefined){
         getAllInfoUser();
-    }
+    } */
 
-
+    useEffect(() => {
+        getAllInfoUser();
+    },[])
 
     //? Formulario y llamada a la función del back
     const formSubmit = async(formData) => {
@@ -109,7 +111,7 @@ export const UpdateUser = () => {
                     </div>
 
                     <div className="register-input-container">
-                        <label className="register-input-title" htmlFor="email">Fecha de nacimiento</label>        
+                        <label className="register-input-title" htmlFor="dateOfBirth">Fecha de nacimiento</label>        
                         <input 
                             className="register-input register-input-date"
                             type="date"

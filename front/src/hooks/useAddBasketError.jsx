@@ -11,7 +11,7 @@ export const useAddBasketError = (resBasket, setResBasket) => {
     
     //? 404 no quedan en stock
 
-    if(res?.response?.data.message.includes("No quedan existencias del producto en stock")){
+    if(resBasket?.response?.data?.message.includes("No quedan existencias del producto en stock")){
         alertaError("No quedan productos en stock", 2000);
         setResBasket(() => {});
     }
@@ -19,8 +19,8 @@ export const useAddBasketError = (resBasket, setResBasket) => {
     
     //? 404 fallo al añadir en DB
 
-    if(res?.response?.data.message.includes("No se pudo añadir el producto al carrito")
-    || res?.response?.data.message.includes("El carrito no se actualizó correctamente")){
+    if(resBasket?.response?.data.message.includes("No se pudo añadir el producto al carrito")
+    || resBasket?.response?.data.message.includes("El carrito no se actualizó correctamente")){
         alertaError("Error al añadir en el carrito, inténtalo más tarde", 2000);
         setResBasket(() => {});
     }
@@ -28,12 +28,12 @@ export const useAddBasketError = (resBasket, setResBasket) => {
 
     //? 404 testing buscando user
 
-    if(res?.response?.data.message.includes("No se encontró el user por id en el testeo")){
+    if(resBasket?.response?.data.message.includes("No se encontró el user por id en el testeo")){
         alertaError("Error al añadir en el carrito, inténtalo más tarde o inicia sesión", 2000);
         setResBasket(() => {});
     }
 
-    if(res?.response?.status == 500){
+    if(resBasket?.response?.status == 500){
         alertaError("Ha habido un fallo en el servidor, inténtalo más tarde", 2000);
         setResBasket(() => {})
     }

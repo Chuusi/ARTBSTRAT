@@ -44,7 +44,6 @@ export const Basket = () => {
 
     useEffect(() => {
         currentUser();
-        alertaError("Probando en basket",1500);
     },[])
 
     //Nos traemos la basket del usuario (lista de IDs de productos)

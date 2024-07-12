@@ -13,7 +13,7 @@ export const useDeleteBasketError = (resDelete, setResDelete, setBasketUser) => 
 
     //? 404 No se puedo quitar
 
-    if(res?.response?.data?.message.includes("No se pudo quitar el producto del carrito")){
+    if(resDelete?.response?.data?.message.includes("No se pudo quitar el producto del carrito")){
         setResDelete(() => {});
         alertaError("No se pudo quitar, inténtalo de nuevo", 2500);
     }
@@ -21,7 +21,7 @@ export const useDeleteBasketError = (resDelete, setResDelete, setBasketUser) => 
 
     //? 404 no se encontró el producto
 
-    if(res?.response?.data?.message.includes("No se encontró el producto en el carrito")){
+    if(resDelete?.response?.data?.message.includes("No se encontró el producto en el carrito")){
         setResDelete(() => {});
         alertaError("Error, si persiste, reinicia sesión", 2500)
     }
@@ -29,15 +29,15 @@ export const useDeleteBasketError = (resDelete, setResDelete, setBasketUser) => 
 
     //? 404 error de testing
 
-    if(res?.response?.data?.message.includes("No se actualizó correctamente la DB")
-    || res?.response?.data?.message.includes("No se encontró un user con ese id en la DB")
+    if(resDelete?.response?.data?.message.includes("No se actualizó correctamente la DB")
+    || resDelete?.response?.data?.message.includes("No se encontró un user con ese id en la DB")
     ){
         setResDelete(() => {});
         alertaError("Ha habido un error, inténtalo más tarde", 2500);
     }
 
     
-    if(res?.response?.status == 500){
+    if(resDelete?.response?.status == 500){
         setResDelete(() => {});
         alertaError("Error en el servidor, inténtalo más tarde", 2500);
     }

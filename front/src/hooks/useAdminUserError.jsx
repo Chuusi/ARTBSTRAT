@@ -1,7 +1,8 @@
 import { alertaSuccess, alertaError } from "../utils";
 
 export const useAdminUserError = (resAdmin, setResAdmin) => {
-    if(resAdmin.status == 200 && resAdmin?.data?.mesasge.includes("Se ha cambiado la información del usuario")){
+    console.log(resAdmin);
+    if(resAdmin?.status == 200 && resAdmin?.data?.message.includes("Se ha cambiado la información del usuario")){
         setResAdmin(() => ({}));
         alertaSuccess("Se ha modificado el usuario", 2000);
     }

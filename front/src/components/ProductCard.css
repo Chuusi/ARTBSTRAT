@@ -48,8 +48,12 @@
 }
 
 .like{
-    color: red;
+    background: -webkit-linear-gradient(270deg, rgb(72, 136, 255) 0%, rgb(67, 255, 117) 100%);
+    background-clip: border-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
+
 .like:hover{
     color: rgb(249, 138, 138)
 }
