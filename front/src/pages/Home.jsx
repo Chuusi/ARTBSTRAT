@@ -95,8 +95,6 @@ export const Home = () => {
                     activeIndex={index}
                     prevIcon={<CustomPrevButton index={index}></CustomPrevButton>}
                     nextIcon={<CustomNextButton index={index}></CustomNextButton>}
-                    autoPlay
-                    autoPlaySpeed={1}
                 >
                     {selected?.data?.results.map((element, i) => (
                         <Carousel.Item
