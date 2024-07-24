@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.css'; 
 import Carousel from 'react-bootstrap/Carousel'; 
 
+
 //Traemos todos los comentarios
 const listComment = await getAllComment();
 
@@ -12,6 +13,7 @@ export const Home = () => {
     
     const [selected, setSelected] = useState([]);
     const [index, setIndex] = useState(0)
+    
 
     useEffect(() => {
         setSelected(listComment);
@@ -55,9 +57,8 @@ export const Home = () => {
     return (
         <div className="home-page">
             <div className="home-banner">
-                <video className="home-banner-video" src="/bannerBeach.mp4" autoPlay loop muted/>
+                <img className="home-banner-img" src="https://res.cloudinary.com/da7unrk9q/image/upload/v1721812241/Artbstrat_home_wqhckc.jpg"/>
                 <h1 className="home-banner-logo">ARTBSTRAT</h1>
-                {/*<img className="home-banner-logo" src="https://res.cloudinary.com/da7unrk9q/image/upload/v1715626802/artbstrat-removebg-preview_g67rwb.png" alt="logoArtbstrat" />*/}
             </div>
 
             <div className="home-buttoms">
