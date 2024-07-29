@@ -71,8 +71,9 @@ export const ProductCard = ({id, name, image, price, offerPrice}) => {
                     {...register("product")}
                     className={`shop-product-favorite shop-fav-button material-symbols-outlined ${likeButtom}`}>{buttonFav}</button> 
                 : null}
-            
-                <Link to={`/product/${name}`} className="shop-Link"><img className="shop-product-img" src={image} alt={name}/></Link>
+                <div className="img-container-shop">
+                    <Link to={`/product/${name}`} className="shop-Link"><img className="shop-product-img" src={image} alt={name}/></Link>
+                </div>
                 <p className="shop-gallery-h3">{name}</p>
                 <div className="shop-product-price">
                     <h3 className="shop-gallery-h3" style={{textDecoration: offerPrice ? "line-through" : "none"}}>{price} €</h3>

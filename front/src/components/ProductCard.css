@@ -11,29 +11,53 @@
 
 .shop-product-card{
     width: 100%;
-    height: 100%;
+    height: 90%;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .shop-product-img{
     width: 100%;
-    height: 90%;
+    height: 100%;
     object-fit: cover;
+    transition: .2s ease-in-out;
 }
 
+.img-container-shop{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.shop-product-img:hover{
+    transition: .2s ease-in-out;
+    transform: scale(1.1);
+}
 
 .shop-product-price{
+    margin-top: -16px;
     display: flex;
+    align-items: center;
 }
 
 .shop-product-favorite{
     position: absolute;
-    bottom: 0px;
+    bottom: 16px;
     right: 0px;
     font-size: 40px;
     color: black;
     cursor: pointer;
+    transition: .2s;
 }
+
+.shop-product-favorite:hover{
+    scale: 1.1;
+    transition: .2s;
+    opacity: .8;
+}
+
 
 .shop-fav-button{
     padding: 0;
@@ -65,9 +89,6 @@
     color: gray
 }
 
-.ship-Link{
-    pointer-events: none;
-}
 
 
 

@@ -10,16 +10,17 @@ export const Gallery = () => {
         <div className="gallery-page">
             <h2 className="gallery-h2">GALERÍA ARTBSTRAT</h2>
             
-            <div className="gallery-container-gallery">
+            <ul className="gallery-container-gallery">
             {postList.data.map((post) => 
-                    <PostCard
-                    key={post._id}
-                    id={post._id}
-                    image={post.image}
-                    />
+                    <li key={post._id}>
+                        <PostCard
+                        id={post._id}
+                        image={post.image}
+                        />
+                    </li>
                 )}
 
-            </div>
+            </ul>
         </div>
     )
 }

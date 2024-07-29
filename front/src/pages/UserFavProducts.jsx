@@ -7,11 +7,12 @@ import { getProductByIdNoParam } from "../services/product.service"
 import { useGetProductByIdNoParamError } from "../hooks/useGetProductByIdNoParamError"
 import { getPostById } from "../services/post.service"
 import { useGetPostByIdError } from "../hooks/useGetPostByIdError"
+import { useGetLogedError } from "../hooks"
 
 
 //? Almacenamos la info del user en un estado
 //! ------> PREGUNTAR A BEA SI ES CORRECTO HACER LA LLAMADA DESDE FUERA DE LA FUNCION
-const currentUser =  await getLogedUser();
+//const currentUser =  await getLogedUser();
 
 
 /* const favListCreator = async() => {
@@ -33,20 +34,20 @@ export const UserFavProducts = () => {
     const [favList, setFavList] = useState([]);
     const [resPost, setResPost] = useState([]);
     const [favPostList, setFavPostList] = useState([]);
-
+    const [currentUser, setCurrentUser] = useState([]);
 
     //? Esta función se llama una vez al abrir la página, setea las respuestas para obtener los datos
     //? tanto de los posts como de los products del back.
     const favListCreator = async() => {
         try {
-            const promises = currentUser?.data?.favProducts.map(async product  => {
+            const promises = currentUser?.data?.favProducts?.map(async product  => {
                 const customFormData = {
                     refer: product
                 }       
                 return getProductByIdNoParam(customFormData);
             });
 
-            const promisesPost = currentUser?.data?.favPosts.map(async post  => {
+            const promisesPost = currentUser?.data?.favPosts?.map(async post  => {
                 const customFormPostData = {
                     refer: post
                 }       
@@ -63,11 +64,13 @@ export const UserFavProducts = () => {
         
     }
 
+
     //? Toma las respuestas al hacer la lista y setea los estados de las listas de products y posts
     useEffect(() => {
         if(res && res.length > 0){
             const updatedFavList = [];
             res.forEach(result => {
+                if(result?.response) return
                 useGetProductByIdNoParamError(result, setRes, setFavList, updatedFavList);
             })
             setFavList([...updatedFavList]);
@@ -78,6 +81,7 @@ export const UserFavProducts = () => {
         if(resPost && resPost.length > 0){
             const updatedPostList = [];
             resPost.forEach(resultPost => {
+                if(resultPost?.response) return
                 useGetPostByIdError(resultPost, setResPost, setFavPostList, updatedPostList);
             })
             setFavPostList([...updatedPostList]);
@@ -86,9 +90,17 @@ export const UserFavProducts = () => {
 
     //? Según se abre, se actualiza la lista de favoritos para poder imprimirla
     useEffect(() => {
-        favListCreator();
+        const getLoged = async() => {
+            setCurrentUser(await getLogedUser());
+        }
+        getLoged();
     },[])
     
+    useEffect(() => {
+        if(Object.keys(currentUser).length > 0){
+            favListCreator();
+        }
+    },[currentUser])
 
     return (
         <div className="profile-subcontainer-favs">

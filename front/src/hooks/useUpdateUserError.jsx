@@ -45,7 +45,6 @@ export const useUpdateUserError = (res, setRes, login, setUpdateOk) => {
             }
         })
     }
-    console.log(res);
     //Si el total de items es igual a contador, nada ha cambiado
     if(res?.status == 200 && contador == totalItems){
         setRes(() => ({}));
