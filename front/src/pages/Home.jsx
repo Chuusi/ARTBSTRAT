@@ -4,6 +4,7 @@ import { getAllComment } from "../services/comment.service";
 import { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.css'; 
 import Carousel from 'react-bootstrap/Carousel'; 
+import { BannerTitle } from "../components/BannerTitle";
 
 
 //Traemos todos los comentarios
@@ -55,9 +56,9 @@ export const Home = () => {
     }
 
     //Para la animación de desaparición del banner
-    /* window.addEventListener('scroll', () => {
+    window.addEventListener('scroll', () => {
     document.body.style.setProperty('--scroll',window.scrollY / (document.body.offsetHeight - window.innerHeight));
-    }, false); */
+    }, false);
 
 
     return (
@@ -69,6 +70,7 @@ export const Home = () => {
                 </div>
             </div>
 
+            <BannerTitle/>
             <div className="home-buttoms">
                 <div className="home-buttom-shop">
                     <div className="home-div-img">

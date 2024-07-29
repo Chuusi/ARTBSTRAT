@@ -3,7 +3,7 @@
     height: calc(100vh - 90px);
     position: relative;
     text-align: center;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .home-page{
@@ -27,29 +27,48 @@
 
 .home-banner h1{
     position: absolute;
+    /* background: rgb(255,255,255);
+    background: linear-gradient(0deg, rgba(255,255,255,0) 20%, rgba(255,255,255,1) 50%); */
+    text-shadow: 10px 0px 10px white, -10px 0px 10px white, 0px 10px 10px white, 0px -10px 10px white;
     width: 100%;
-    background: rgb(255,255,255);
-    background: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 60%);
+    height: 50vw;
     font-size: 14rem;
+    padding-top: 400px;
     color: black;
     font-family: "Inter", sans-serif;
     font-weight: 800;
+    animation: hideTitle 1s linear;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+    animation-play-state: paused;
+    animation-fill-mode: forwards;
+    animation-delay: calc(var(--scroll) * -3s);
 }
 
-
+@keyframes hideTitle {
+    50% {
+        font-size: 2em;
+        opacity: .4;
+        margin-top: -200px;
+    }
+    100% {
+            font-size: 0em;
+            opacity: 0;
+            margin-top: -400px;
+        }
+}
 
 .home-buttoms{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 3vw 8vw 3vw 8vw;
+    padding: 3vw 3vw 3vw 3vw;
 }
 
 .home-div-img{
     width:40vw;
-    min-height: 50vh;
     max-height: calc(100vh - 90px);
-    aspect-ratio: 1/1.5;
+    aspect-ratio: 1/1;
     overflow:hidden;
     align-items: center;
     align-content: center;
@@ -78,7 +97,6 @@
     pointer-events: none;
     color: black;
 }
-
 
 
 
@@ -297,19 +315,21 @@
 }
 
 @media only screen and (max-width: 769px) and (min-width: 427px){
-    .home-banner h1 {
+    .home-banner h1, #container-text-special{
         font-size: 4em;
     }
 }
 
 @media only screen and (max-width: 426px){
-    .home-banner h1 {
+    .home-banner h1,
+        #container-text-special{
         font-size: 3em;
     }
 }
 
 @media only screen and (max-width: 1441px) and (min-width: 770px){
-    .home-banner h1 {
+    .home-banner h1,
+        #container-text-special{
         font-size: 9em;
     }
 }
