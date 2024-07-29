@@ -54,11 +54,19 @@ export const Home = () => {
         )
     }
 
+    //Para la animación de desaparición del banner
+    /* window.addEventListener('scroll', () => {
+    document.body.style.setProperty('--scroll',window.scrollY / (document.body.offsetHeight - window.innerHeight));
+    }, false); */
+
+
     return (
         <div className="home-page">
             <div className="home-banner">
                 <img className="home-banner-img" src="https://res.cloudinary.com/da7unrk9q/image/upload/v1721812241/Artbstrat_home_wqhckc.jpg"/>
-                <h1 className="home-banner-logo">ARTBSTRAT</h1>
+                <div className="home-logo-container">
+                    <h1 className="home-banner-logo">ARTBSTRAT</h1>
+                </div>
             </div>
 
             <div className="home-buttoms">
