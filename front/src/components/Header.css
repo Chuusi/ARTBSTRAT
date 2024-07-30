@@ -32,6 +32,13 @@ header {
     width: 40%;
     max-width: 80px;
     min-width: 40px;
+    transition: .2s;
+}
+
+#logo-subtitle{
+    font-weight: 900;
+    transition: .2s;
+    margin-bottom: -6px;
 }
 
 .header-icons-container{

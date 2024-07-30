@@ -76,9 +76,9 @@ export const BannerTitle = () => {
                     textIndex++;
                 }
                 doMorph();
-            } /* else if (textIndex == texts.length + 1) {
+            } else if (textIndex == texts.length + 1) {
                 cooldown = 0;
-            }  */else {
+            } else {
                 doCooldown();
             }
         }

@@ -22,7 +22,14 @@
 
 .home-logo-container{
     position: relative;
-    top: calc(90px - 100vh);
+    top: calc(90px - 70vh);
+    background-color: rgba(255, 255, 255, 0.863);
+    animation: hideTitle 1s linear;
+        animation-iteration-count: 1;
+        animation-direction: alternate;
+        animation-play-state: paused;
+        animation-fill-mode: forwards;
+        animation-delay: calc(var(--scroll) * -8s);
 }
 
 .home-banner h1{
@@ -46,15 +53,19 @@
 }
 
 @keyframes hideTitle {
+    1%{
+        background-color: rgba(255, 255, 255, 0.836);
+    }
     50% {
-        font-size: 2em;
-        opacity: .4;
+        background-color: transparent;
+        opacity: .7;
         margin-top: -200px;
     }
     100% {
-            font-size: 0em;
-            opacity: 0;
-            margin-top: -400px;
+        background-color: transparent;
+        font-size: 0em;
+        opacity: 0;
+        margin-top: -400px;
         }
 }
 

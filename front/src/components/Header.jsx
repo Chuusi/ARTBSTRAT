@@ -1,11 +1,25 @@
 import { NavLink } from "react-router-dom"
-import { useAuth } from "../context"
 import "./Header.css"
 import { NavBar } from "./NavBar"
 
 export const Header = () => {
     
-    //const {user,logout} = useAuth();
+
+    window.onscroll = () => {
+        let scrollValue = document.body.style.getPropertyValue("--scroll");
+        const logoSub = document.getElementById("logo-subtitle")
+        const logo = document.getElementById("header-logo")
+        if(scrollValue > .1){
+            logoSub.textContent = "ARBSTRAT"
+            logo.style.width = "20%";
+            logo.style.maxWidth= "60px"
+        } else{
+            logoSub.textContent = ""
+            logo.style.width = "40%";
+            logo.style.maxWidth= "80px"
+        }
+    }
+    
     
     return (
         <>
@@ -27,7 +41,8 @@ export const Header = () => {
                 </ul>
             </div>
             <div className="header-logo-container">
-                <img className="header-logo" src="/logo_artbs.png" alt="logo_artbstrat" />
+                <img id="header-logo" className="header-logo" src="/logo_artbs.png" alt="logo_artbstrat" />
+                <p id="logo-subtitle"></p>
             </div>
             <div className="header-icons-container">
                 <NavBar/>

@@ -66,11 +66,11 @@ export const Home = () => {
             <div className="home-banner">
                 <img className="home-banner-img" src="https://res.cloudinary.com/da7unrk9q/image/upload/v1721812241/Artbstrat_home_wqhckc.jpg"/>
                 <div className="home-logo-container">
-                    <h1 className="home-banner-logo">ARTBSTRAT</h1>
+                    {/* <h1 className="home-banner-logo">ARTBSTRAT</h1> */}
+                    <BannerTitle/>  
                 </div>
             </div>
 
-            <BannerTitle/>
             <div className="home-buttoms">
                 <div className="home-buttom-shop">
                     <div className="home-div-img">
