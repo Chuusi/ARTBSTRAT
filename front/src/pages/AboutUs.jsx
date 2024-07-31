@@ -3,7 +3,7 @@ import "./AboutUs.css"
 export const AboutUs = () => {
     return (
         <div className="aboutUs-container">
-            <h2 className="aboutUs-title">CONOCE MÁS SOMBRE NOSOTROS</h2>
+            <h2 className="aboutUs-title">CONOCE MÁS SOBRE NOSOTROS</h2>
             <div className="aboutUs-history">
 
                 <img src="https://res.cloudinary.com/da7unrk9q/image/upload/v1715797954/logo_wqxsk8.jpg" alt="artbstrat" />

@@ -57,7 +57,7 @@ export const ChangeForgottenPassword = ({token}) => {
                             id="newPassword"
                             name="newPassword"
                             autoComplete="false"
-                            placeholder="Nueva contraseña"
+                            placeholder="e.g. MJPass123"
                             {...register("newPassword", {required:true})}
                         />
                     </div>
@@ -82,7 +82,7 @@ export const ChangeForgottenPassword = ({token}) => {
                             id="newPasswordCheck"
                             name="newPasswordCheck"
                             autoComplete="false"
-                            placeholder="Verificar nueva contraseña"
+                            placeholder="e.g. MJPass123"
                             {...register("newPasswordCheck", {required:true})}
                         />
                     </div>

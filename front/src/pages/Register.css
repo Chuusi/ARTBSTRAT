@@ -4,11 +4,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-image: url("Artbstrat_home_05.jpg");
 }
 
 .register-form-container{
     border: 1px solid black;
     padding: 20px;
+    background-color: white;
 }
 
 .register-title {

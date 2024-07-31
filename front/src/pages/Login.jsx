@@ -57,7 +57,7 @@ export const Login = () => {
                             id="email"
                             name="email"
                             autoComplete="true"
-                            placeholder="Correo"
+                            placeholder="e.g. email@example.com"
                             {...register("email", {required:true})}
                         />
                         
@@ -83,7 +83,7 @@ export const Login = () => {
                             id="password"
                             name="password"
                             autoComplete="false"
-                            placeholder="Contraseña"
+                            placeholder="e.g. MJPass123"
                             {...register("password", {required:true})}
                         />
                         

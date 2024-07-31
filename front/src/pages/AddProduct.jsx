@@ -61,7 +61,7 @@ export const AddProduct = () => {
                                     type="text"
                                     id="name"
                                     name="name"
-                                    placeholder="Nombre del producto"
+                                    placeholder="e.g. Bouchardit"
                                     autoComplete="false"
                                     {...register("name", {required: true})}
                                 />
@@ -75,7 +75,7 @@ export const AddProduct = () => {
                                     type="number"
                                     id="price"
                                     name="price"
-                                    placeholder="Ejemplo: 21.5"
+                                    placeholder="e.g. 21.5"
                                     autoComplete="false"
                                     {...register("price", {required: true})}
                                     
@@ -90,7 +90,7 @@ export const AddProduct = () => {
                                     type="text"
                                     id="dimensions"
                                     name="dimensions"
-                                    placeholder="Ejemplo: 35cm x 20cm"
+                                    placeholder="e.g. 35cm x 20cm"
                                     autoComplete="false"
                                     {...register("dimensions", {required: false})}
                                 />
@@ -107,7 +107,7 @@ export const AddProduct = () => {
                                     id="composition"
                                     name="composition"
                                     autoComplete="false"
-                                    placeholder="Ejemplo: 100% algodón"
+                                    placeholder="e.g. 100% algodón"
                                     {...register("composition", {required: false})}
                                 />
                             </div>
@@ -121,7 +121,7 @@ export const AddProduct = () => {
                                     id="stock"
                                     name="stock"
                                     autoComplete="false"
-                                    placeholder="Ejemplo: 4"
+                                    placeholder="e.g. 4"
                                     {...register("stock", {required: false})}
                                 />
                             </div>
@@ -135,7 +135,7 @@ export const AddProduct = () => {
                                     id="description"
                                     name="description"
                                     autoComplete="false"
-                                    placeholder="Descripción al gusto"
+                                    placeholder="e.g. Totebag informal, ideal para llevar a las terracitas..."
                                     {...register("description", {required: false})}
                                 />
                             </div>

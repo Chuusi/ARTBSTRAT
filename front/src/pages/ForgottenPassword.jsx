@@ -45,6 +45,7 @@ export const ForgottenPassword = () => {
                             id="email"
                             name="email"
                             autoComplete="false"
+                            placeholder="e.g. email@example.com"
                             {...register("email", {required: true})}
                         />
                     </div>

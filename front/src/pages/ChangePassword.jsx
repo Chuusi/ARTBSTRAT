@@ -63,7 +63,7 @@ export const ChangePassword = () => {
                             id="password"
                             name="password"
                             autoComplete="true"
-                            placeholder="Antigua contraseña"
+                            placeholder="e.g. MJPass123"
                             {...register("password", {required:true})}
                         />
                         
@@ -90,7 +90,7 @@ export const ChangePassword = () => {
                             id="newPassword"
                             name="newPassword"
                             autoComplete="false"
-                            placeholder="Nueva contraseña"
+                            placeholder="e.g. PassPP456"
                             {...register("newPassword", {required:true})}
                         />
                         
@@ -117,7 +117,7 @@ export const ChangePassword = () => {
                             id="checkNewPassword"
                             name="checkNewPassword"
                             autoComplete="false"
-                            placeholder="Verificar nueva contraseña"
+                            placeholder="e.g. PassPP456"
                             {...register("checkNewPassword", {required:true})}
                         />
                         

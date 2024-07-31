@@ -88,7 +88,7 @@ export const Register = () => {
                                 type="text"
                                 id="name"
                                 name="name"
-                                placeholder="Nombre de usuario"
+                                placeholder="e.g. PeterP"
                                 autoComplete="false"
                                 {...register("name", {required: true})}
                             />
@@ -102,7 +102,7 @@ export const Register = () => {
                                 type="email"
                                 id="email"
                                 name="email"
-                                placeholder="Correo"
+                                placeholder="e.g. email@example.com"
                                 autoComplete="false"
                                 {...register("email", {required: true})}
                             />
@@ -127,7 +127,7 @@ export const Register = () => {
                                 type="password"
                                 id="password"
                                 name="password"
-                                placeholder="Contraseña"
+                                placeholder="e.g. MJPass123"
                                 autoComplete="false"
                                 {...register("password", {required: true})}
                                 
@@ -143,7 +143,7 @@ export const Register = () => {
                                 id="address"
                                 name="address"
                                 autoComplete="false"
-                                placeholder="Dirección postal"
+                                placeholder="e.g. 69th Road, en Forest Hills"
                                 {...register("address", {required: false})}
                             />
                         </div>
@@ -157,6 +157,7 @@ export const Register = () => {
                                 id="dateOfBirth"
                                 name="dateOfBirth"
                                 autoComplete="false"
+                                placeholder="e.g. 01/08/62"
                                 {...register("dateOfBirth", {required: false})}
                             />
                         </div>
@@ -168,7 +169,7 @@ export const Register = () => {
 
                         <div className="register-button-container">
                             <button
-                                className="register-submit-button"
+                                className="login-submit-button"
                                 type="submit"
                                 disabled={send}
                             >

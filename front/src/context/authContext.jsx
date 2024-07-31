@@ -1,5 +1,6 @@
 import { createContext, useContext, useMemo, useState } from "react";
 import { getLogedUser } from "../services/user.service";
+import { alertaSuccess } from "../utils";
 
 const AuthContext = createContext();
 
@@ -48,6 +49,7 @@ export const AuthContextProvider = ({children}) => {
     const logout = () => {
         localStorage.removeItem("user");
         setUser(null);
+        alertaSuccess("Sesión cerrada", 2000);
     }
 
     //* useMemo para que escuche user y allUser y almacene el resto y que quede inmutable

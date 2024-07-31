@@ -1,15 +1,14 @@
 const User = require("../api/models/User.model");
-const {verifyToken} = require("../utils/token");
+const { verifyToken } = require("../utils/token");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const isAuth = async(req,res,next) => {
+const isAuth = async (req, res, next) => {
+    const token = req?.headers?.authorization?.replace("Bearer ", "");
 
-    const token = req.headers.authorization?.replace("Bearer ", "");
-    
-    if(token == "undefined"){
+    if (token == "undefined") {
         return next(new Error("No autorizado, no hay token"));
-    };
+    }
 
     try {
         const decoded = verifyToken(token);
@@ -19,11 +18,10 @@ const isAuth = async(req,res,next) => {
     } catch (error) {
         return next(error);
     }
-
 };
 
-const isAuthAdmin = async(req,res,next) => {
-    const token = req.headers.authorization?.replace("Bearer ", "");
+const isAuthAdmin = async (req, res, next) => {
+    const token = req?.headers?.authorization?.replace("Bearer ", "");
     if (token == "undefined") {
         return next(new Error("No autorizado, no hay token"));
     }
@@ -31,8 +29,8 @@ const isAuthAdmin = async(req,res,next) => {
     try {
         const decoded = verifyToken(token);
         req.user = await User.findById(decoded.id);
-        
-        if(req.user.role !== "admin"){
+
+        if (req.user.role !== "admin") {
             return next(new Error("No autorizado, no eres admin"));
         }
         next();
@@ -44,4 +42,4 @@ const isAuthAdmin = async(req,res,next) => {
 module.exports = {
     isAuth,
     isAuthAdmin,
-}
+};
