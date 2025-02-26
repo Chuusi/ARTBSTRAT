@@ -1,2 +1,2 @@
 # ARTBSTRAT
-Proyecto de página de tienda para NEOLAND
+Proyecto de página de tienda con registro, venta y blog
